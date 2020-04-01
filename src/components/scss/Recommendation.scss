@@ -1,0 +1,19 @@
+.recommendation {
+  background-color: white;
+  display: flex;
+  overflow-y: hidden;
+
+  h1 {
+    $font-position: 30px;
+    font-weight: normal;
+    position: absolute;
+    margin: $font-position 0 0 $font-position;
+    font-size: 18px;
+  }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

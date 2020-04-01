@@ -1,0 +1,36 @@
+.food-container {
+  box-sizing: border-box;
+  height: 100%;
+  width: 45%;
+  display: flex;
+  align-items: center;
+
+  .food {
+    margin: 20px 10px 0 10px;
+    position: relative;
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    button {
+      $box-size: 30px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      height: $box-size;
+      width: $box-size;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+.analytic {
+  display: flex;
+  position: relative;
+  align-items: center;
+  overflow: hidden;
+
+  h2 {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+  }
+
+  .nutrition {
+    padding-left: 20px;
+    height: 100%;
+    width: 100px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    li {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      height: 45px;
+    }
+  }
+
+  .nutrition-graph {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 85%;
+    height: 100%;
+    position: relative;
+
+    li {
+      height: 45px;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      padding-right: 10px;
+      div {
+        height: 25px;
+        margin-right: 7px;
+        border-radius: 20px;
+      }
+    }
+
+    .recommended-amount {
+      position: absolute;
+      right: 25%;
+      height: 90%;
+      border-right: 2px dashed lightgray;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#calorie {
+  background-color: #142459;
+}
+
+#carbohydrate {
+  background-color: #176bad;
+}
+
+#protein {
+  background-color: #19aade;
+}
+
+#fat {
+  background-color: #1ac9e6;
+}
+
+#sugar {
+  background-color: #64d1d3;
+}
+
+#salt {
+  background-color: #6ce1be;
+}
+
+#cholesterol {
+  background-color: #97f2d2;
+}
+
+#saturated-fat {
+  background-color: #c4ece3;
+}
+
+#trans-fat {
+  background-color: #bcd9cb;
+}
