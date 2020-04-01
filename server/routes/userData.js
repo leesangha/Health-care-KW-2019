@@ -1,6 +1,6 @@
-import * as express from "express";
-import * as db from "../dbconnection";
-import { predictPreference } from "../predictPreference";
+const express = require("express");
+const db = require("../dbconnection");
+const { predictPreference } = require("../predictPreference");
 
 const router = express.Router();
 
@@ -42,4 +42,4 @@ router.post("/preference", (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;
