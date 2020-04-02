@@ -1,44 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 2019 광운대학교 산학연계SW 프로젝트
 
-## Available Scripts
+광운대학교 산학연계SW 프로젝트로 진행되는 AI를 활용한 건강식단 프로그램입니다. 
 
-In the project directory, you can run:
+#### Requirement
+* Node.js
+* python3
+  * numpy
 
-### `yarn start`
+#
+#### 아나콘다 이용 시
+아나콘다 설치 경로 내부의 파이썬 경로를 확인해야합니다.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+해당 경로는 이후 `server/recommendation-model/recommend.js` 에서 options의 pythonPath로 설정해주어야합니다.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+일반적인 아나콘다 설치 경로는 다음과 같습니다.
 
-### `yarn test`
+* OSX `/opt/anaconda3/env/[DIRECTORY]/bin/python`
+* Window `C:/Users/[YOURNAME]/anaconda3/envs/[DIRECTORY]/python`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+#### VSCode 이용 시
+VSCode에서 실행되는 터미널 환경에서 파이썬이 올바르게 동작해야합니다.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. 아나콘다로 파이썬 환경 구축 시
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+git bash 터미널 실행 후, 홈 디렉토리로 이동해서 .bashrc를 생성해주세요
+```bash
+cd ~
+code .bashrc
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+아래 코드를 추가하고 저장해주세요. 해당 터미널 환경에서 아나콘다가 활성화할 수 있도록 하는 bash 파일입니다.
 
-### `yarn eject`
+아나콘다 설치 경로에 따라 해당 파일이 없을 수 있습니다.
+```bash
+source ~/anaconda3/etc/profile.d/conda.sh
+```
+로컬 서버를 실행시킬 때, 아나콘다 가상 환경을 activate 시켜주세요.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#
+#### 사용 방법
+`server/recommendation-model/recommned.js` 에서 
+> pythonPath: '/opt/anaconda3/envs/tf1/bin/python3'
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+해당 부분을 자신이 구축한 파이썬 경로로 지정해주세요.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. 로컬 서버 실행
+```shell
+node server/server.js
+```
+2. 리액트 앱 실행
+```npm
+npm start
+```
