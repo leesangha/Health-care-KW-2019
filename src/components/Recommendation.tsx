@@ -35,7 +35,7 @@ function Recommendation() {
         .then(req => req.json())
         .then(data => {
           let predictedFoodList: Array<number> = [];
-          data.pref.forEach((obj: { food_no: number}) =>
+          data.pref.forEach((obj: { food_no: number }) =>
             predictedFoodList.push(obj.food_no)
           );
           setFoodList(predictedFoodList);
