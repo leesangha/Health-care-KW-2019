@@ -8,6 +8,8 @@ const userConfig = {
   database: "maetdb",
 };
 const connection = new Mssql.ConnectionPool(userConfig);
-connection.connect();
+connection.connect()
+  .then(() => console.log('Success maetdb connect'))
+  .catch((err) => console.error(err));
 
 module.exports = connection;
