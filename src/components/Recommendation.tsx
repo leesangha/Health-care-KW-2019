@@ -5,7 +5,7 @@ import { PacmanLoader } from "react-spinners";
 
 function getFoodImage(foodList: Array<number>) {
   let imgSrcList: string[] = [];
-  for (let i = 0; i < 6; ++i) {
+  for (let i = 0; i < 15; ++i) {
     const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
     imgSrcList.push(imgSrc);
   }
