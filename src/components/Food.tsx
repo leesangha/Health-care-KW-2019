@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTired } from "@fortawesome/free-regular-svg-icons";
+import { faTired } from "@fortawesome/free-solid-svg-icons";
 import "./scss/Food.scss";
 
 type FoodProps = {
@@ -40,10 +40,12 @@ function Food({ imageSrc, num }: FoodProps) {
   return (
     <div className="food-container">
       <div className="food">
-        <img src={imageSrc} alt="foodImage" />
-        <button onClick={onClick}>
-          <FontAwesomeIcon size="2x" color="rgb(30, 31, 42)" icon={faTired} />
-        </button>
+        <div>
+          <img src={imageSrc} alt="foodImage" />
+          <button onClick={onClick}>
+            <FontAwesomeIcon size="2x" color="rgb(255, 202, 0)" icon={faTired} />
+          </button>
+        </div>
       </div>
     </div>
   );
