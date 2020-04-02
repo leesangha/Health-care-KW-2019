@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
+import getUserNumber from "./getUserNumber";
 import "./scss/DateAnalytic.scss";
 
 // 사용자의 영양 권장량을 가져오는 함수
 function getNutritionRecommended(): Promise<number[]> {
   const recommendedNutrition: string | null = sessionStorage.getItem("recommended_nutrition");
+  const userNumber = getUserNumber();
 
   return recommendedNutrition === null
     ? new Promise((resolve, reject) => {
         fetch("/userData/nutrition", {
           method: "POST",
+          body: JSON.stringify({ userNumber }),
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -31,9 +34,12 @@ function getNutritionRecommended(): Promise<number[]> {
 
 // 사용자의 일일 영양 섭취량을 가져오는 함수
 function getNutritionIntake(): Promise<number[]> {
+  const userNumber = getUserNumber();
+
   return new Promise((resolve, reject) => {
     fetch("/userData/intake", {
       method: "POST",
+      body: JSON.stringify({ userNumber }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
