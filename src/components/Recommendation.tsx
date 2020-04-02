@@ -21,8 +21,8 @@ function Recommendation() {
     const sessionInfo = sessionStorage.getItem("info");
 
     if (sessionInfo !== null) {
-      const userInfo: { user_no: number } = JSON.parse(sessionInfo);
-      const userNumber = userInfo.user_no;
+      const userInfo: [{ user_no: number }] = JSON.parse(sessionInfo);
+      const userNumber = userInfo[0].user_no;
 
       fetch("/userData/preference", {
         method: "POST",
