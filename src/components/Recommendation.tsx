@@ -26,7 +26,7 @@ function Recommendation() {
 
       fetch("/userData/preference", {
         method: "POST",
-        body: JSON.stringify({ userNumber: userNumber }),
+        body: JSON.stringify({ userNumber }),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
