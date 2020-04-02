@@ -11,24 +11,42 @@
     padding: 80px 10px 50px 10px;
     width: 200px;
 
-    div {
+    .box {
       position: relative;
+      border: 1px solid #d6d6d6;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px #a7a7a7;
+
       img {
-        height: 100%;
+        height: calc(100% - 35px);
         width: 100%;
         object-fit: cover;
         border-radius: 10px;
       }
-      button {
-        $box-size: 30px;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin: 0;
-        background: none;
-        border: none;
-        height: $box-size;
-        width: $box-size;
+
+      div {
+        height: 35px;
+        button {
+          $box-size: 30px;
+          background: none;
+          border: none;
+          height: $box-size;
+          width: $box-size;
+        }
+
+        .like-button {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          margin: 0;
+        }
+
+        .dislike-button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin: 0;
+        }
       }
     }
   }
