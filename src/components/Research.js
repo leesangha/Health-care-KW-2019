@@ -1,19 +1,10 @@
-import React, { useState,useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 
 function Research() {
-    const [inputs, setInputs]=useState();
     const onChange = useCallback(e=>{
-        const { name, value } = e.target;
-        setInputs({
-          ...inputs,
-          [name]: value,
-        });
-        console.log(inputs) 
-        }
-     ,
-      [inputs]
-    );
+
+    });
     return(
         <div>
             <ol>
