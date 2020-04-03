@@ -5,9 +5,9 @@ const { predictPreference } = require("../predictPreference");
 const router = express.Router();
 
 router.post("/nutrition", (req, res) => {
-  // 1을 유저 번호로 수젛애햐합니다.
-  db.query(`read_user_nutirtion'1'`, (err, rows) => {
-    if (err) console.log("error");
+  db.query(`read_user_nutrition'${req.body.userNumber}'`,
+    (err, rows) => {
+    if (err) console.log("Nutrition 정보를 가져오는데 실패했습니다.");
     else {
       res.send(rows.recordsets[0][0]);
     }
@@ -15,9 +15,9 @@ router.post("/nutrition", (req, res) => {
 });
 
 router.post("/intake", (req, res) => {
-  // 1을 유저 번호로 수젛애햐합니다.
-  db.query(`read_user_today_nutrition'1'`, (err, rows) => {
-    if (err) console.log("error");
+  db.query(`read_user_today_nutrition'${req.body.userNumber}'`,
+    (err, rows) => {
+    if (err) console.log("Intake 정보를 가져오는데 실패했습니다.");
     else {
       res.send(rows.recordsets[0][0]);
     }
@@ -26,7 +26,6 @@ router.post("/intake", (req, res) => {
 
 router.post("/preference", (req, res) => {
   const userNumber = req.body.userNumber;
-  console.log("in preference Router " + userNumber);
   db.query("select * from user_preference", async (err, rows) => {
     const usersPreferences = rows.recordset;
 
