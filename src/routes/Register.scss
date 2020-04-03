@@ -1,0 +1,26 @@
+.register-page {
+  height: calc(100% - 50px);
+  position: relative;
+  overflow: hidden;
+
+  form {
+    background: blue;
+  }
+
+  svg {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    animation: bot-to-top 2s ease-out;
+    filter: drop-shadow(2px 2px 2px crimson);
+  }
+
+  @keyframes bot-to-top {
+    0% {
+      bottom: -40px;
+    }
+    50% {
+      bottom: 40px;
+    }
+  }
+}
