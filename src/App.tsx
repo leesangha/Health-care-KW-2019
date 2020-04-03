@@ -5,6 +5,7 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import Home from "./routes/Home";
 import Register from "./routes/Register";
+import Statistics from "./routes/Statistics";
 
 function App() {
   const [isLogin, setLog] = useState(
@@ -25,6 +26,7 @@ function App() {
           render={props => <Login {...props} setLog={setLog} />}
         />
         <Route path="/register" component={Register} />
+        <Route path="/statistics" component={Statistics} />
       </Switch>
     </>
   );
