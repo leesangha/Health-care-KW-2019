@@ -6,7 +6,7 @@ function SignUp({ history }) {
     address: "",
     password: "",
     age: "",
-    sex: "",
+    sex: "남",
   });
   const { name, address, password, age, sex } = inputs;
 
@@ -27,7 +27,7 @@ function SignUp({ history }) {
       address: "",
       password: "",
       age: "",
-      sex: "",
+      sex: "남",
     });
   };
 
@@ -45,7 +45,9 @@ function SignUp({ history }) {
         console.log(data.text);
         if (data.text !== "success") {
           isSuccess();
-          history.push("/");
+        }
+        else{
+          history.push("/Research");
         }
       });
   };
@@ -91,8 +93,11 @@ function SignUp({ history }) {
           <input name="age" placeholder="age" onChange={onChange} value={age} />
           <br />
           <li>Sex</li>
-          <input name="sex" placeholder="sex" onChange={onChange} value={sex} />
-        </ul>
+          <select name = "sex" onChange={onChange} value={sex}>
+            <option value="남" selected>남자</option>
+            <option value="여">여자</option>
+          </select>
+          </ul>
       </p>
       <button onClick={onClick}> 제출</button>
     </div>
