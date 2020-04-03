@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/nutrition", (req, res) => {
   // 1을 유저 번호로 수젛애햐합니다.
-  db.query(`read_user_nutirtion'1'`, (err, rows) => {
+  db.query(`read_user_nutirtion'0'`, (err, rows) => {
     if (err) console.log("error");
     else {
       res.send(rows.recordsets[0][0]);
@@ -16,7 +16,7 @@ router.post("/nutrition", (req, res) => {
 
 router.post("/intake", (req, res) => {
   // 1을 유저 번호로 수젛애햐합니다.
-  db.query(`read_user_today_nutrition'1'`, (err, rows) => {
+  db.query(`read_user_today_nutrition'0'`, (err, rows) => {
     if (err) console.log("error");
     else {
       res.send(rows.recordsets[0][0]);
@@ -25,7 +25,7 @@ router.post("/intake", (req, res) => {
 });
 
 router.post("/preference", (req, res) => {
-  const userNumber = req.body.userNumber;
+  const userNumber = req.body.userNumber | 0;
   console.log("in preference Router " + userNumber);
   db.query("select * from user_preference", async (err, rows) => {
     const usersPreferences = rows.recordset;
