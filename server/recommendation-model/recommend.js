@@ -4,7 +4,7 @@ function recommend(preferenceList, userNumber) {
   return new Promise((resolve, reject) => {
     const options = {
       mode: "json",
-      pythonPath: "C:/ProgramData/Anaconda3/python",
+      pythonPath: 'C:/Users/sangh/Anaconda3/envs/tf1/python',
       pythonOptions: ["-u"],
       scriptPath: __dirname
     };
