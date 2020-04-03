@@ -9,7 +9,7 @@ function runRecommendationModel(preferenceList, userNumber) {
 
   const options = {
     mode: "text",
-    pythonPath: "/Users/dncks/Anaconda3/envs/tf1/python",
+    pythonPath: "/opt/anaconda3/envs/tf1/bin/python3",
     pythonOptions: ["-u"],
     scriptPath: __dirname,
     args: [preferenceList, shape, userNumber],
