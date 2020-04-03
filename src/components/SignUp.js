@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 function SignUp({ history }) {
   const [inputs, setInputs] = useState({
@@ -47,12 +47,17 @@ function SignUp({ history }) {
           isSuccess();
         }
         else{
-          console.log('push');
           history.push("/Research");
         }
       });
   };
 
+  useEffect(() => {
+    const isLogin = sessionStorage.getItem("isLogin");
+    if (isLogin) {
+      history.push("/");
+    }
+  }, [history]);
 
   return (
     <div>
