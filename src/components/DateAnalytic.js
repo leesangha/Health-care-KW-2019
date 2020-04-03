@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import getUserNumber from "./getUserNumber";
 import "./scss/DateAnalytic.scss";
 
 // 사용자의 영양 권장량을 가져오는 함수
-function getNutritionRecommended(): Promise<number[]> {
-  const recommendedNutrition: string | null = sessionStorage.getItem("recommended_nutrition");
-  const userNumber = getUserNumber();
+function getNutritionRecommended() {
+  const recommendedNutrition = sessionStorage.getItem("recommended_nutrition");
 
   return recommendedNutrition === null
     ? new Promise((resolve, reject) => {
         fetch("/userData/nutrition", {
           method: "POST",
-          body: JSON.stringify({ userNumber }),
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -33,13 +30,10 @@ function getNutritionRecommended(): Promise<number[]> {
 }
 
 // 사용자의 일일 영양 섭취량을 가져오는 함수
-function getNutritionIntake(): Promise<number[]> {
-  const userNumber = getUserNumber();
-
+function getNutritionIntake() {
   return new Promise((resolve, reject) => {
     fetch("/userData/intake", {
       method: "POST",
-      body: JSON.stringify({ userNumber }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -47,16 +41,16 @@ function getNutritionIntake(): Promise<number[]> {
     })
       .then((res) => res.json())
       .then((data) => {
-        const values: number[] = Object.values(data);
-        resolve(values.map((v: number) => Math.round(v * 100) / 100.0));
+        const values = Object.values(data);
+        resolve(values.map((v) => Math.round(v * 100) / 100.0));
       })
       .catch((err) => reject(err));
   });
 }
 
 function DateAnalytic() {
-  const [intake, setIntake] = useState<number[]>([]);
-  const [ratio, setRatio] = useState<number[]>([]);
+  const [intake, setIntake] = useState([]);
+  const [ratio, setRatio] = useState([]);
 
   const nutritionList = [
     "calorie",
@@ -71,7 +65,7 @@ function DateAnalytic() {
   ];
 
   const fetchData = useCallback(async () => {
-    const [recommendedNutrition, nutritionIntake] = await Promise.all<number[], number[]>([
+    const [recommendedNutrition, nutritionIntake] = await Promise.all([
       getNutritionRecommended(),
       getNutritionIntake(),
     ]);
@@ -87,20 +81,14 @@ function DateAnalytic() {
   }, [fetchData]);
 
   useEffect(() => {
-    const getElementsStyle = (
-      nutritionArray: string[]
-    ): (CSSStyleDeclaration | null)[] =>
-      nutritionArray.map((nutrition) => {
-        const htmlElement: HTMLElement | null = document.getElementById(
-          nutrition
-        );
-        return htmlElement === null ? null : htmlElement.style;
-      });
+    const getElementsStyle = (nutritionArray) => {
+      return nutritionArray.map(
+        (nutrition) => document.getElementById(nutrition).style
+      );
+    };
     const elementsStyle = getElementsStyle(nutritionList);
     for (let i = 0; i < elementsStyle.length; ++i) {
-      if (elementsStyle[i] !== null)
-        (elementsStyle[i] as CSSStyleDeclaration).width =
-          (75 * ratio[i]).toString() + "%";
+      elementsStyle[i].width = (75 * ratio[i]).toString() + "%";
     }
   }, [nutritionList, ratio]);
 

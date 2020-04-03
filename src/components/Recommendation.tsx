@@ -9,6 +9,8 @@ function getFoodImage(foodList: Array<number>) {
     const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
     imgSrcList.push(imgSrc);
   }
+  console.log(imgSrcList);
+
   return imgSrcList.map((src: string) => <Food key={src} imageSrc={src} />);
 }
 
@@ -19,12 +21,12 @@ function Recommendation() {
     const sessionInfo = sessionStorage.getItem("info");
 
     if (sessionInfo !== null) {
-      const userInfo: [{ user_no: number }] = JSON.parse(sessionInfo);
-      const userNumber = userInfo[0].user_no;
+      const userInfo: { user_no: number } = JSON.parse(sessionInfo);
+      const userNumber = userInfo.user_no;
 
       fetch("/userData/preference", {
         method: "POST",
-        body: JSON.stringify({ userNumber }),
+        body: JSON.stringify({ userNumber: userNumber }),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
