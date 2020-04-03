@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
+import "./Register.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 function Register(props) {
   const register = (regInfo) => {
@@ -48,18 +52,29 @@ function Register(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <h1>파일 업로드</h1>
-      <input
-        type="file"
-        accept="image/jpeg,image/png,image/jpg"
-        name="img"
-        onChange={onChange}
-      />
-      <input type="submit" value="제출" />
-      <br />
-      {preview}
-    </form>
+    <>
+      <Header />
+      <section className="register-page">
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <h1>파일 업로드</h1>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/jpg"
+            name="img"
+            onChange={onChange}
+          />
+          <input type="submit" value="제출" />
+          <br />
+          {preview}
+        </form>
+        <FontAwesomeIcon
+          className="test"
+          icon={faPlusCircle}
+          size="3x"
+          color="red"
+        />
+      </section>
+    </>
   );
 }
 
