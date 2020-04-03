@@ -24,3 +24,4 @@ yarn-error.log*
 *.xml
 *.iml
 *.pyc
+test.*
