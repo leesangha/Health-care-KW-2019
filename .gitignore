@@ -47,3 +47,6 @@ server/darkflow_2/darkflow/cython_utils/nms.c
 server/darkflow_2/darkflow/cython_utils/nms.cpython-37m-darwin.so
 server/darkflow_2/testset/out/3c3b03baa31b06a01e3feccd616cf7d2.jpg
 server/recommendation-model/__pycache__/recommendation_model_np.cpython-37.pyc
+
+test.*
+__pycache__

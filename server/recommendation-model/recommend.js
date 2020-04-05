@@ -1,29 +1,40 @@
 const { PythonShell } = require("python-shell");
 
-function getListShape(list) {
-  return [list.length, list[0].length];
-}
-
-function runRecommendationModel(preferenceList, userNumber) {
-  const shape = getListShape(preferenceList);
-
-  const options = {
-    mode: "text",
-    pythonPath: "/Users/dncks/Anaconda3/envs/tf1/python",
-    pythonOptions: ["-u"],
-    scriptPath: __dirname,
-    args: [preferenceList, shape, userNumber],
-  };
-
+function recommend(preferenceList, userNumber) {
   return new Promise((resolve, reject) => {
-    let result_recommendation = [];
-    PythonShell.run("recommend_test01.py", options, (err, result) => {
-      if (err || result === undefined) reject(err);
-      else result.forEach((v) => result_recommendation.push(Number(v)));
-      resolve(result_recommendation);
-      console.log(result_recommendation);
+    const options = {
+      mode: "json",
+      pythonPath: "C:/ProgramData/Anaconda3/python",
+      pythonOptions: ["-u"],
+      scriptPath: __dirname
+    };
+  
+    const shell = new PythonShell("recommend_test01.py", options);
+    const data = {
+      preference: preferenceList,
+      userNumber
+    };
+    console.log(data);
+  
+    shell.send({
+      ...data
+    });
+  
+    let result;
+  
+    shell.on("message", ({ predicted }) => {
+      result = predicted;
+    });
+  
+    shell.on("close", () => {
+      console.log("python code ended...");
+      resolve(result);
+    });
+
+    shell.on("stderr", (stderr) => {
+      reject(stderr);
     });
   });
 }
 
-module.exports.recommend = runRecommendationModel;
+module.exports.recommend = recommend;
