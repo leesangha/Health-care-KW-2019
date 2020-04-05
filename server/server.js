@@ -3,7 +3,7 @@ const path = require("path");
 const router = require("./routes/router");
 const loginRouter = require("./routes/login");
 const addUserRouter = require("./routes/addUser");
-const hateRouter = require("./routes/hate");
+const foodRouter = require("./routes/food");
 const userDataRouter = require("./routes/userData");
 const uploadRouter = require("./routes/uploads");
 
@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/addUser", addUserRouter);
 app.use("/process/login", loginRouter);
-app.use("/hate", hateRouter);
+app.use("/food", foodRouter);
 app.use("/userData", userDataRouter);
 app.use("/uploads", uploadRouter);
 
