@@ -7,7 +7,7 @@ router.post("/dislike", (req, res) => {
   const foodNumber = req.body.foodNumber;
 
   db.query(
-    `change_user_preference '${userNumber}','${foodNumber}','0'`,
+    `change_user_preference '${userNumber}','${foodNumber}','1'`,
     (err, rows) => {
       if (err) console.error("선호도 내림에서 오류가 발생했습니다.");
       else {
@@ -18,7 +18,7 @@ router.post("/dislike", (req, res) => {
   );
 });
 
-router.post('/like', (req, res) => {
+router.post("/like", (req, res) => {
   const userNumber = req.body.userNumber;
   const foodNumber = req.body.foodNumber;
 
@@ -31,6 +31,19 @@ router.post('/like', (req, res) => {
       }
     }
   );
+});
+
+router.post("/name", (req, res) => {
+  db.query("read_food_nutrition", (err, result) => {
+    if (err) {
+      console.error("음식 이름을 가져오는데 실패했습니다.");
+      return;
+    }
+    // console.log(result.recordset);
+    res.send({
+      result: result.recordset,
+    });
+  });
 });
 
 module.exports = router;
