@@ -14,7 +14,6 @@ function recommend(preferenceList, userNumber) {
       preference: preferenceList,
       userNumber
     };
-    console.log(data);
   
     shell.send({
       ...data
