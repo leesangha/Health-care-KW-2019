@@ -24,6 +24,18 @@
         border-radius: 10px;
       }
 
+      img:hover {
+        opacity: 0.5;
+        transition: 0.4s;
+      }
+
+      p {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+      }
+
       div {
         height: 35px;
         button {
