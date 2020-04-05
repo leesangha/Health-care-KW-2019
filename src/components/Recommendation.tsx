@@ -9,7 +9,14 @@ function getFoodImage(foodList: Array<number>) {
     const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
     imgSrcList.push(imgSrc);
   }
-  return imgSrcList.map((src: string) => <Food key={src} imageSrc={src} />);
+  console.log(foodList);
+  return imgSrcList.map((src: string, index: number) => (
+    <Food
+      key={src}
+      imageSrc={src}
+      foodNumber={foodList[index]}
+    />
+  ));
 }
 
 function Recommendation() {
