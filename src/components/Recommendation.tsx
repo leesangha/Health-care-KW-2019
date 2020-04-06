@@ -5,17 +5,12 @@ import { PacmanLoader } from "react-spinners";
 
 function getFoodImage(foodList: Array<number>) {
   let imgSrcList: string[] = [];
-  for (let i = 0; i < 15; ++i) {
+  for (let i = 0; i < 30; ++i) {
     const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
     imgSrcList.push(imgSrc);
   }
-  console.log(foodList);
   return imgSrcList.map((src: string, index: number) => (
-    <Food
-      key={src}
-      imageSrc={src}
-      foodNumber={foodList[index]}
-    />
+    <Food key={src} imageSrc={src} foodNumber={foodList[index]} />
   ));
 }
 
@@ -29,16 +24,16 @@ function Recommendation() {
       const userInfo: [{ user_no: number }] = JSON.parse(sessionInfo);
       const userNumber = userInfo[0].user_no;
 
-      fetch("/userData/preference", {
+      fetch("/userData/preference/main", {
         method: "POST",
         body: JSON.stringify({ userNumber }),
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
+          Accept: "application/json",
         }
       })
-        .then(req => req.json())
-        .then(data => {
+        .then((req) => req.json())
+        .then((data) => {
           let predictedFoodList: Array<number> = [];
           data.pref.forEach((obj: { food_no: number }) =>
             predictedFoodList.push(obj.food_no)
