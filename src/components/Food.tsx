@@ -9,6 +9,10 @@ type FoodProps = {
   foodNumber: number;
 };
 
+type FoodInfoType = {
+  result: { food_name: string }[]
+}
+
 const init = {
   method: "POST",
   headers: {
@@ -16,6 +20,18 @@ const init = {
     Accept: "application/json",
   },
 };
+
+function getFoodInfo(): Promise<FoodInfoType> {
+  return new Promise((resolve, reject) => {
+    fetch("/food/name", init)
+      .then((res: Response) => res.json())
+      .then((data: FoodInfoType) => {
+        sessionStorage.setItem("foodInfo", JSON.stringify(data));
+        resolve(data);
+      })
+      .catch((err: Error) => reject(err));
+  })
+}
 
 function Food({ imageSrc, foodNumber }: FoodProps) {
   // const food_no = imageSrc.split(".")[0].split("/")[2];
@@ -49,25 +65,18 @@ function Food({ imageSrc, foodNumber }: FoodProps) {
       });
   };
 
-  const getFoodName = useCallback(() => {
+  const getFoodName = useCallback(async () => {
     let foodInfo: string | null = sessionStorage.getItem("foodInfo");
 
-    if (foodInfo === null) {
-      fetch("/food/name", init)
-        .then((res: Response) => res.json())
-        .then((data) =>
-          sessionStorage.setItem("foodInfo", JSON.stringify(data))
-        );
-    }
-    foodInfo = sessionStorage.getItem("foodInfo");
-    const _foodInfo: { result: { food_name: string }[] } = JSON.parse(
-      foodInfo as string
-    );
+    let _foodInfo: FoodInfoType =
+      foodInfo === null ? await getFoodInfo() : JSON.parse(foodInfo);
+
     setFoodName(_foodInfo.result[foodNumber].food_name);
   }, [foodNumber]);
 
   useEffect(() => {
-    getFoodName();
+    getFoodName()
+      .catch(e => console.error(e));
   }, [getFoodName]);
 
   return (
