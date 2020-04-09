@@ -30,13 +30,15 @@ function quickSort(list, left = 0, right = list.length - 1) {
   return list;
 }
 
-async function predict(preference, userNumber) {
+async function predict(preference, foodNumberList, userNumber) {
   try {
     let predicted_preference = await recommend(preference, userNumber);
+
     predicted_preference = predicted_preference.map((item, index) => ({
-      food_no: index,
-      predicted_preference: item,
+      food_no: foodNumberList[index],
+      predicted_preference: item
     }));
+
     return quickSort(predicted_preference);
   } catch (err) {
     console.error(err);

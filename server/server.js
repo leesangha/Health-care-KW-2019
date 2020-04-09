@@ -3,22 +3,22 @@ const path = require("path");
 const router = require("./routes/router");
 const loginRouter = require("./routes/login");
 const addUserRouter = require("./routes/addUser");
-const hateRouter = require("./routes/hate");
+const foodRouter = require("./routes/food");
 const userDataRouter = require("./routes/userData");
-const uploadRouter = require("./routes/uploads");
+const fileRouter = require("./routes/file");
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 4002;
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "uploads")));
+app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 
 app.use("/addUser", addUserRouter);
 app.use("/process/login", loginRouter);
-app.use("/hate", hateRouter);
+app.use("/food", foodRouter);
 app.use("/userData", userDataRouter);
-app.use("/uploads", uploadRouter);
+app.use("/file", fileRouter);
 
 app.use("/", router);
 
