@@ -6,6 +6,7 @@ const addUserRouter = require("./routes/addUser");
 const foodRouter = require("./routes/food");
 const userDataRouter = require("./routes/userData");
 const uploadRouter = require("./routes/uploads");
+const ingredientRouter = require('./routes/search')
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/process/login", loginRouter);
 app.use("/food", foodRouter);
 app.use("/userData", userDataRouter);
 app.use("/uploads", uploadRouter);
+app.use("/search_ingredient",ingredientRouter);
 
 app.use("/", router);
 
