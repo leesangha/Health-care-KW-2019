@@ -32,12 +32,25 @@ router.post('/preference/main', (req, res) => {
       res.send({ err: "Null Preference Error" });
     } else {
       const preferences = userPreferences.map(userPreference => Object.values(userPreference));
+      console.log(preferences);
       let foodNumberList = Object.keys(userPreferences[0]);
       foodNumberList = foodNumberList.map(s => Number(s.slice(3, s.length)));
 
       const predicted = await predictPreference(preferences, foodNumberList, userNumber);
-      res.send({ pref: predicted });
+      res.send(predicted);
     }
+  });
+});
+
+router.post("/foodLoss", (req, res) => {
+  const userNumber = req.body.userNumber;
+  db.query(`calculate_nutrition"${userNumber}"`, (err, result) => {
+    if (err) {
+      console.error("음식 오차함수 계산에 실패했습니다.");
+      return;
+    }
+    const loss = result.recordset.map(({result}) => 100 / result);
+    res.send(loss);
   });
 });
 
