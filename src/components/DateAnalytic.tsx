@@ -83,7 +83,8 @@ function DateAnalytic() {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    fetchData()
+      .catch(err => console.error(err));
   }, [fetchData]);
 
   useEffect(() => {

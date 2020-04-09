@@ -77,7 +77,8 @@ function Recommendation() {
   useEffect(() => {
     const userNumber = getUserNumber();
     if (userNumber !== -1) {
-      predictData(userNumber);
+      predictData(userNumber)
+        .catch(err => console.error(err));
     }
   }, [predictData]);
 
