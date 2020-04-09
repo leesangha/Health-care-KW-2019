@@ -77,7 +77,6 @@ router.post('/history', (req, res) => {
       imgSrc : fileNameList.map(filename => _path + '/' + filename)
     }
   });
-  console.log(imgFiles);
 
   res.send(imgFiles);
 });
