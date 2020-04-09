@@ -1,26 +1,28 @@
 import React from "react";
-import './scss/Food.scss';
+import "./scss/FoodHistory.scss";
 
 type PropsType = {
   date: string;
   imgSrc: string[];
 };
 
-function FoodHistory({ date, imgSrc }: PropsType) {
-  const images = (src: string): JSX.Element => {
-    return (
-      <div className="food">
-        <div className="box">
-          <img src={src} alt="섭취 이미지" />
-        </div>
-      </div>
-    )
-  };
-
+function FoodImages({src}: {src: string}) {
   return (
-    <div className="food-container">
+    <div className="taken-food-container">
+      <div className="taken-food-box">
+        <img src={src} alt="섭취 이미지" />
+      </div>
+    </div>
+  )
+}
+
+function FoodHistory({ date, imgSrc }: PropsType) {
+  return (
+    <div className="history-wrapper">
       <h2>{date}</h2>
-      {imgSrc.map(src => images(src))}
+      <div className="history">
+        {imgSrc.map((src) => <FoodImages key={src} src={src} />)}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,35 @@
+.history-wrapper {
+  overflow: hidden;
+  height: 30vh;
+  margin-bottom: 5px;
+  position: relative;
+
+  h2 {
+    font-weight: 600;
+    font-size: medium;
+    padding-top: 10px;
+    padding-left: 10px;
+    color: black;
+  }
+}
+
+.history {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  .taken-food-container {
+    display: flex;
+    padding: 5px 2.5px 0 2.5px;
+
+    .taken-food-box {
+      width: 30vh;
+      //padding-top: 30px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
