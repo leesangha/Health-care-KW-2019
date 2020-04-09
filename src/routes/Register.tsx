@@ -1,17 +1,22 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {ChangeEvent, useEffect, useMemo, useRef, useState} from "react";
 import Header from "../components/Header";
 import "./Register.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import getUserNumber from "../components/getUserNumber";
+import FoodHistory from "../components/FoodHistory";
+import RegisterWelcome from "../components/RegisterWelcome";
 
 type FileStateType = {
   file: File | null;
   previewURL: string | null;
 };
 
+type UserImageListType = {
+  date: string;
+  imgSrc: string[];
+};
+
 function Register() {
-  const userNumber = getUserNumber();
+  const userNumber = useMemo(() => getUserNumber(), []);
 
   const register = (regInfo: FormData) => {
     fetch("/file/uploads", {
@@ -53,6 +58,8 @@ function Register() {
       );
   }, [state]);
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files === null) return;
@@ -67,41 +74,62 @@ function Register() {
     reader.readAsDataURL(file);
   };
 
+  const [userImageList, setUserImageList] = useState<UserImageListType[]>([]);
+
   useEffect(() => {
     fetch("/file/history", {
       method: "POST",
       body: JSON.stringify({ userNumber }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-    }).then((res: Response) => console.log(res.body));
+    })
+      .then((res: Response) => res.json())
+      .then((data: UserImageListType[]) => setUserImageList(data.reverse()));
   }, [userNumber]);
+  
+  const [mouseOver, setMouseOver] = useState<boolean>(false);
 
   return (
-    <>
+    <div className="register-page-container">
       <Header />
-      <section className="register-page">
-        <article></article>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <h1>파일 업로드</h1>
+      <form
+        ref={formRef}
+        className="upload"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
+        <label
+          onMouseOver={() => setMouseOver(true)}
+          onMouseOut={() => setMouseOver(false)}
+        >
+          {state.previewURL === null ? (
+            <RegisterWelcome mouseOver={mouseOver} />
+          ) : null}
           <input
+            id="file"
+            className="input-file"
             type="file"
             accept="image/jpeg,image/png,image/jpg"
             name="img"
             onChange={onChange}
           />
-          <input type="submit" value="제출" />
-          <br />
-          {preview}
-        </form>
-        <FontAwesomeIcon
-          className="test"
-          icon={faPlusCircle}
-          size="3x"
-          color="red"
-        />
+        </label>
+        {/*<input type="submit" value="제출" />*/}
+        {preview}
+      </form>
+      <section className="register-page">
+        <article className="history-page">
+          {userImageList.length !== 0 ? (
+            userImageList.map(({ date, imgSrc }, index) => (
+              <FoodHistory key={index} date={date} imgSrc={imgSrc} />
+            ))
+          ) : (
+            <p>등록한 음식이 없어요.</p>
+          )}
+        </article>
       </section>
-    </>
+    </div>
   );
 }
 
