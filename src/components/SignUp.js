@@ -47,6 +47,9 @@ function SignUp({ history }) {
           isSuccess();
           history.push("/");
         }
+        else{
+          history.push("/research");
+        }
       });
   };
 

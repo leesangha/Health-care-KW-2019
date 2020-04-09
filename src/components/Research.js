@@ -66,9 +66,10 @@ function Research() {
 
     const add_ingredient = () =>{
 
-      const sign = source.filter(item => item ===correct);
-      console.log(sign);
-      if(sign !== []){
+      const arr = source.filter(item => correct ===item);
+
+      if(arr !==[]){
+        console.log('동작');
         setInputs({
           search:'',
           isSearch:false,
@@ -79,6 +80,20 @@ function Research() {
       
     }
 
+    const register = () =>{
+      fetch("/", {
+        method: "POST",
+        body: JSON.stringify({source:source}),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }).then((res) => res.json())
+      .then((data) => {
+      console.log(data);
+      })
+    }
+
     return(
         <div>
             <div className="QnA_Form">
@@ -86,7 +101,7 @@ function Research() {
                 <li>못먹는 재료가 있나요?</li>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
                 <button onClick = {search_ingredient}>검색</button><button onClick ={add_ingredient}>추가</button>
-                <button>제출</button>
+                <button onClick = {register}>제출</button>
                
                {
                  isSearch ===true

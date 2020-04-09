@@ -7,6 +7,7 @@ const foodRouter = require("./routes/food");
 const userDataRouter = require("./routes/userData");
 const uploadRouter = require("./routes/uploads");
 const ingredientRouter = require('./routes/search')
+const registerRouter = require('./routes/register');
 
 const app = express();
 app.use(express.json());
@@ -21,7 +22,7 @@ app.use("/food", foodRouter);
 app.use("/userData", userDataRouter);
 app.use("/uploads", uploadRouter);
 app.use("/search_ingredient",ingredientRouter);
-
+app.use("/register",registerRouter);
 app.use("/", router);
 
 app.listen(PORT, () => {
