@@ -32,7 +32,6 @@ router.post('/preference/main', (req, res) => {
       res.send({ err: "Null Preference Error" });
     } else {
       const preferences = userPreferences.map(userPreference => Object.values(userPreference));
-      console.log(preferences);
       let foodNumberList = Object.keys(userPreferences[0]);
       foodNumberList = foodNumberList.map(s => Number(s.slice(3, s.length)));
 
