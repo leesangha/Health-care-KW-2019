@@ -15,6 +15,7 @@ router.post("/nutrition", (req, res) => {
 });
 
 router.post("/intake", (req, res) => {
+  console.log("유저 번호 : "+req.body.userNumber);
   db.query(`read_user_today_nutrition'${req.body.userNumber}'`,
     (err, rows) => {
     if (err) console.log("Intake 정보를 가져오는데 실패했습니다.");

@@ -11,7 +11,7 @@ router.post("/dislike", (req, res) => {
     (err, rows) => {
       if (err) console.error("선호도 내림에서 오류가 발생했습니다.");
       else {
-        //console.log('success for hate');
+        
         res.send(rows.recordsets);
       }
     }
