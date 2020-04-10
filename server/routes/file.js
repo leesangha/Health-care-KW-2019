@@ -62,7 +62,14 @@ router.post('/history', (req, res) => {
   const userNumber = req.body.userNumber;
   const userPath = path.resolve('server', 'uploads', userNumber.toString());
 
-  const dirs = fs.readdirSync(userPath);
+  let dirs;
+  try {
+    fs.readdirSync(userPath);
+  } catch (e) {
+    fs.mkdirSync(userPath);
+  } finally {
+    dirs = fs.readdirSync(userPath);
+  }
   const fileDirs = dirs.map(dir => path.join(userPath, dir));
 
   const imgFiles = fileDirs.map(dir => {
