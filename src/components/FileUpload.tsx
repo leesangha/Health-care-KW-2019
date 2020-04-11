@@ -1,10 +1,11 @@
 import React, {
-  ChangeEvent, useCallback,
+  ChangeEvent,
+  useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import RegisterWelcome from "./RegisterWelcome";
+import FoodAnalysis from "./FoodAnalysis";
 
 type FileStateType = {
   file: File | null;
@@ -18,7 +19,6 @@ function FileUpload({ userNumber }: { userNumber: number }) {
     previewURL: null,
   });
   const [preview, setPreview] = useState<JSX.Element | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -26,13 +26,18 @@ function FileUpload({ userNumber }: { userNumber: number }) {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+
+    if (file === undefined) {
+      setPreview(null);
+      return null;
+    }
+
     reader.onloadend = () =>
       setState({
         file: file,
         previewURL: reader.result as string,
       });
     reader.readAsDataURL(file);
-    formRef.current?.submit();
   };
 
   const register = useCallback((regInfo: FormData) => {
@@ -71,7 +76,6 @@ function FileUpload({ userNumber }: { userNumber: number }) {
 
   return (
     <form
-      ref={formRef}
       className="upload"
       onSubmit={handleSubmit}
       encType="multipart/form-data"
@@ -80,9 +84,7 @@ function FileUpload({ userNumber }: { userNumber: number }) {
         onMouseOver={() => setMouseOver(true)}
         onMouseOut={() => setMouseOver(false)}
       >
-        {state.previewURL === null ? (
-          <RegisterWelcome mouseOver={mouseOver} />
-        ) : null}
+        {preview === null ? <RegisterWelcome mouseOver={mouseOver} /> : preview}
         <input
           className="input-file"
           type="file"
@@ -91,12 +93,7 @@ function FileUpload({ userNumber }: { userNumber: number }) {
           onChange={onChange}
         />
       </label>
-      <input
-        className="input-file"
-        type="submit"
-        value="제출"
-      />
-      {preview}
+      <FoodAnalysis preview={preview} />
     </form>
   );
 }
