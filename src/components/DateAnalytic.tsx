@@ -43,7 +43,7 @@ function getNutritionIntake(): Promise<number[]> {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-      },
+      }
     })
       .then((res) => res.json())
       .then((data) => {
