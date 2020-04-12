@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-
+import "./scss/SignUp.scss";
 function SignUp({ history }) {
   const [inputs, setInputs] = useState({
     name: "",
@@ -8,11 +8,12 @@ function SignUp({ history }) {
     age: "",
     sex: "",
   });
-  const { name, address, password, age, sex } = inputs;
+  const { name, address, password, age } = inputs;
 
   const onChange = useCallback(
     (e) => {
       const { name, value } = e.target;
+      console.log(value);
       setInputs({
         ...inputs,
         [name]: value,
@@ -48,6 +49,7 @@ function SignUp({ history }) {
           history.push("/");
         }
         else{
+          sessionStorage.setItem('number',data.user_no);
           history.push("/research");
         }
       });
@@ -61,44 +63,41 @@ function SignUp({ history }) {
   }, [history]);
 
   return (
-    <div>
-      <p>회원가입 페이지 입니다.</p>
-      <p>
-        서식
-        <ul>
-          <li>이름</li>
+      <div className ="signup-page">
+          <div className ="signup-container">
+          <img src="/images/maet-logo.png" alt="팀 로고" />
           <input
             name="name"
             placeholder="name"
             onChange={onChange}
             value={name}
           />
-          <br />
-          <li>ID</li>
           <input
             name="address"
             placeholder="address"
             onChange={onChange}
             value={address}
-          />
-          <br />
-          <li>PASSWORD</li>
+          />       
           <input
             name="password"
             placeholder="password"
             onChange={onChange}
             value={password}
+            type ="password"
           />
-          <br />
-          <li>AGE</li>
-          <input name="age" placeholder="age" onChange={onChange} value={age} />
-          <br />
-          <li>Sex</li>
-          <input name="sex" placeholder="sex" onChange={onChange} value={sex} />
-        </ul>
-      </p>
-      <button onClick={onClick}> 제출</button>
-    </div>
+          <input
+           name="age" 
+           placeholder="age" 
+           onChange={onChange} 
+           value={age} />
+          <div className = "select">
+          <label>남<input type = "radio" name = "sex" value = "남" onChange = {onChange}/></label>
+          <label>여<input type = "radio" name = "sex" value = "여" onChange = {onChange}/></label>
+          </div>
+      <button onClick={onClick}>제출</button>
+        </div>
+      
+      </div>
   );
 }
 export default SignUp;

@@ -81,15 +81,16 @@ function Research() {
     }
 
     const register = () =>{
-      fetch("/", {
+      fetch("/register", {
         method: "POST",
-        body: JSON.stringify({source:source}),
+        body: JSON.stringify({source:source, user_no : sessionStorage.getItem('number')}),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       }).then((res) => res.json())
       .then((data) => {
+
       console.log(data);
       })
     }
