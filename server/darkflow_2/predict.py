@@ -8,12 +8,12 @@ jsonDict = json.loads(jsonString)
 userNumber = jsonDict['userNumber']
 #print(userNumber)
 '''
-userNumber = 2
+#userNumber = 2
 options = {"model" : 'C:/hwcare/Health-care-KW-2019/server/darkflow_2/cfg/tiny-yolo-voc-3c.cfg'
 , "load" :  38735
 , "threshold":0.2, "labels":"C:/hwcare/Health-care-KW-2019/server/darkflow_2/labels.txt" }
 tfnet = TFNet(options)
-imgcv = cv2.imread("")
+imgcv = cv2.imread("C:/hwcare/Health-care-KW-2019/server/darkflow_2/testset/gae.jpg")
 result = tfnet.return_predict(imgcv)
 print(result)
 
