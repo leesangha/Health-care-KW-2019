@@ -1,13 +1,15 @@
 .recommendation {
   background-color: white;
   display: flex;
-  overflow-y: hidden;
+  flex: 1;
+  overflow: auto;
+  padding: 0 10px;
 
   h1 {
     $font-position: 30px;
     font-weight: normal;
     position: absolute;
-    margin: $font-position 0 0 $font-position;
+    margin: $font-position 0 0 ($font-position - 10px);
     font-size: 18px;
   }
 }

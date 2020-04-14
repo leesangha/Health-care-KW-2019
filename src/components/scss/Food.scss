@@ -1,36 +1,69 @@
 .food-container {
   box-sizing: border-box;
-  height: 100%;
-  width: 45%;
   display: flex;
   align-items: center;
 
   .food {
-    margin: 20px 10px 0 10px;
-    position: relative;
-    width: 100%;
-    height: 60%;
+    box-sizing: border-box;
     overflow: hidden;
-    border-radius: 5px;
     display: flex;
     justify-content: center;
+    padding: 80px 10px 50px 10px;
+    width: 200px;
 
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
+    .box {
+      position: relative;
+      border: 1px solid #d6d6d6;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px #a7a7a7;
 
-    button {
-      $box-size: 30px;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      margin: 0;
-      background: none;
-      border: none;
-      height: $box-size;
-      width: $box-size;
+      img {
+        height: calc(100% - 35px);
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      img:hover {
+        opacity: 0.5;
+        transition: 0.4s;
+      }
+
+      p {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        text-align: center;
+      }
+
+      div {
+        height: 35px;
+        button {
+          $box-size: 30px;
+          background: none;
+          border: none;
+          height: $box-size;
+          width: $box-size;
+        }
+
+        svg {
+          filter: drop-shadow(0 0 2px black);
+        }
+
+        .like-button {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          margin: 0;
+        }
+
+        .dislike-button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          margin: 0;
+        }
+      }
     }
   }
 }

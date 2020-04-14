@@ -30,13 +30,14 @@ cd ~
 code .bashrc
 ```
 
-아래 코드를 추가하고 저장해주세요. 해당 터미널 환경에서 아나콘다가 활성화할 수 있도록 하는 bash 파일입니다.
-
-아나콘다 설치 경로에 따라 해당 파일이 없을 수 있습니다.
+아나콘다 설치 경로 내부의 conda.sh를 실행 시킬 수 있도록 .bashrc에 아래 코드를 추가해주세요. 
+해당 터미널 환경에서 아나콘다가 활성화할 수 있도록 하는 bash 파일입니다.
 ```bash
 source ~/anaconda3/etc/profile.d/conda.sh
 ```
-로컬 서버를 실행시킬 때, 아나콘다 가상 환경을 activate 시켜주세요.
+아나콘다 설치 경로에 따라 해당 파일이 없을 수 있습니다.
+
+꼭 아나콘다 설치 경로 내부에 있는 `/etc/profile.d/conda.sh`로 지정해주세요.
 
 #
 #### 사용 방법
@@ -46,10 +47,17 @@ source ~/anaconda3/etc/profile.d/conda.sh
 해당 부분을 자신이 구축한 파이썬 경로로 지정해주세요.
 
 1. 로컬 서버 실행
+
+아나콘다 가상 환경을 activate 시켜주세요.
 ```shell
+conda activate [자신의 가상환경 이름]
 node server/server.js
 ```
 2. 리액트 앱 실행
 ```npm
 npm start
+```
+또는 yarn 이용 시
+```yarn
+yarn start
 ```

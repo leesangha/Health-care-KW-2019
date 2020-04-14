@@ -26,8 +26,7 @@ router.post("/intake", (req, res) => {
 
 router.post("/preference", (req, res) => {
   const userNumber = req.body.userNumber;
-  console.log("in preference Router " + userNumber);
-  db.query("select * from user_preference", async (err, rows) => {
+  db.query("select * from user_preference order by user_no asc", async (err, rows) => {
     const usersPreferences = rows.recordset;
 
     if (usersPreferences === undefined || err) res.send({ err: "error" });

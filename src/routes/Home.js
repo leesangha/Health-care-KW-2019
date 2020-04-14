@@ -3,7 +3,6 @@ import "./Home.scss";
 import Recommendation from "../components/Recommendation";
 import DateAnalytic from "../components/DateAnalytic";
 import Header from "../components/Header";
-import AddButton from "../components/AddButton";
 
 function Home({ isLogin, history }) {
   useEffect(() => {
@@ -15,8 +14,7 @@ function Home({ isLogin, history }) {
   return (
     <>
       <Header />
-      <AddButton />
-      <section>
+      <section className="homepage">
         <DateAnalytic />
         <Recommendation />
       </section>
