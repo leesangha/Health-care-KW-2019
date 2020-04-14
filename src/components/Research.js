@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import Search_Result from './Search_Result';
+import Result from './Result';
+import "./scss/Research.scss"
 
-function Research() {
+function Research({history}) {
     const [inputs, setInputs] = useState({
         search: '',
         isSearch:false,
@@ -10,7 +11,7 @@ function Research() {
         correct:'',
     })
     const {search,isSearch,list,source,correct} = inputs;
-    // const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
+   
     const onChange = useCallback(
         (e) => {
           const { name, value } = e.target;
@@ -30,7 +31,7 @@ function Research() {
           })
         }
       
-        const dataRemove =(item)=>{
+      const dataRemove =(item)=>{
           console.log(`삭제합니다 ${item}`);
           setInputs({
             ...inputs,
@@ -92,6 +93,7 @@ function Research() {
       .then((data) => {
 
       console.log(data);
+      history.push('/');
       })
     }
 
@@ -100,14 +102,16 @@ function Research() {
             <div className="QnA_Form">
             <ol>
                 <li>못먹는 재료가 있나요?</li>
+                <label>못먹는 재료가 있나요?</label>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
-                <button onClick = {search_ingredient}>검색</button><button onClick ={add_ingredient}>추가</button>
-                <button onClick = {register}>제출</button>
+                <button id= "find" onClick = {search_ingredient}>검색</button>
+                <button id= "add"onClick ={add_ingredient}>추가</button>
+                <button id = "submit"onClick = {register}>제출</button>
                
                {
                  isSearch ===true
-                 ? (<Search_Result list={list} onRemove ={onRemove}/>)
-                 : (<Search_Result list={source} onRemove={dataRemove}/>)
+                 ? (<Result list={list} onRemove ={onRemove}/>)
+                 : (<Result list={source} onRemove={dataRemove}/>)
                }
                 
             </ol>

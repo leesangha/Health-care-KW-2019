@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function Search_Result({list, onRemove}){
+function Result({list, onRemove}){
     return (
         <div>
             {list.map((item, index) =>(
@@ -19,4 +19,4 @@ function Item({item,k, onRemove}){
 }
 
 
-export default Search_Result;
+export default Result;
