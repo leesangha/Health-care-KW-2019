@@ -12,7 +12,12 @@ type FileStateType = {
   previewURL: string | null;
 };
 
-function FileUpload({ userNumber }: { userNumber: number }) {
+type PropsType = {
+  userNumber: number,
+  // uploadState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+}
+
+function FileUpload({ userNumber }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
   const [state, setState] = useState<FileStateType>({
     file: null,
@@ -46,7 +51,7 @@ function FileUpload({ userNumber }: { userNumber: number }) {
       body: regInfo,
     })
       .then((res) => res.json())
-      .then((data) => alert(data.msg));
+      .then((data) => console.log(data));
   }, []);
 
   const handleSubmit = (
