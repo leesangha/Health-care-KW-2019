@@ -18,7 +18,7 @@ const init = {
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-  },
+  }
 };
 
 function getFoodInfo(): Promise<FoodInfoType> {

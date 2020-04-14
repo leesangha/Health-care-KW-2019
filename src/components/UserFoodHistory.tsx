@@ -6,7 +6,12 @@ type UserImageListType = {
   imgSrc: string[];
 };
 
-function UserFoodHistory({ userNumber }: { userNumber: number }) {
+type PropsType = {
+  userNumber: number,
+  // uploadState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+}
+
+function UserFoodHistory({ userNumber }: PropsType) {
   const [userImageList, setUserImageList] = useState<UserImageListType[]>([]);
 
   useEffect(() => {
@@ -15,7 +20,7 @@ function UserFoodHistory({ userNumber }: { userNumber: number }) {
       body: JSON.stringify({ userNumber }),
       headers: {
         "Content-Type": "application/json",
-      },
+      }
     })
       .then((res: Response) => res.json())
       .then((data: UserImageListType[]) => setUserImageList(data.reverse()));
@@ -33,6 +38,6 @@ function UserFoodHistory({ userNumber }: { userNumber: number }) {
       </article>
     </section>
   );
-};
+}
 
 export default UserFoodHistory;
