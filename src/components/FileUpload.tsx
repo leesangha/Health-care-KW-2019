@@ -17,6 +17,10 @@ type PropsType = {
   setUploadState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+type PredictionType = {
+  label: string
+}[] | null
+
 function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
   const [state, setState] = useState<FileStateType>({
@@ -24,6 +28,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
     previewURL: null,
   });
   const [preview, setPreview] = useState<JSX.Element | null>(null);
+  const [prediction, setPrediction] = useState<PredictionType>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -51,7 +56,10 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
       body: regInfo,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setPrediction(data);
+      });
   }, []);
 
   const handleSubmit = (
@@ -100,7 +108,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
           onChange={onChange}
         />
       </label>
-      <FoodAnalysis preview={preview} />
+      <FoodAnalysis preview={preview} result={prediction} />
     </form>
   );
 }
