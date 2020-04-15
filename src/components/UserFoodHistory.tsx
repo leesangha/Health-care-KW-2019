@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import FoodHistory from "./FoodHistory";
 
 type UserImageListType = {
@@ -8,13 +8,16 @@ type UserImageListType = {
 
 type PropsType = {
   userNumber: number,
-  // uploadState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+  uploadState: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>
+  ]
 }
 
-function UserFoodHistory({ userNumber }: PropsType) {
+function UserFoodHistory({ userNumber, uploadState} : PropsType) {
   const [userImageList, setUserImageList] = useState<UserImageListType[]>([]);
 
-  useEffect(() => {
+  const getUserFoodHistory = useCallback(() => {
     fetch("/file/history", {
       method: "POST",
       body: JSON.stringify({ userNumber }),
@@ -25,6 +28,15 @@ function UserFoodHistory({ userNumber }: PropsType) {
       .then((res: Response) => res.json())
       .then((data: UserImageListType[]) => setUserImageList(data.reverse()));
   }, [userNumber]);
+
+  useEffect(getUserFoodHistory, [getUserFoodHistory]);
+
+  useEffect(() => {
+    if (uploadState[0]) {
+      getUserFoodHistory()
+    }
+  }, [getUserFoodHistory, uploadState]);
+
   return (
     <section className="register-page">
       <article className="history-page">
