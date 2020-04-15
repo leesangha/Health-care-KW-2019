@@ -14,10 +14,10 @@ type FileStateType = {
 
 type PropsType = {
   userNumber: number,
-  // uploadState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+  setUploadState: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function FileUpload({ userNumber }: PropsType) {
+function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
   const [state, setState] = useState<FileStateType>({
     file: null,
@@ -59,6 +59,8 @@ function FileUpload({ userNumber }: PropsType) {
       target: { img: { files: FileList } };
     }
   ) => {
+    setUploadState(true);
+
     e.preventDefault();
     const formData = new FormData();
 
