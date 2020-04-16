@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./Home.scss";
-import Recommendation from "../components/Recommendation";
-import DateAnalytic from "../components/DateAnalytic";
+import Recommendation from "../components/Home/Recommendation";
+import DateAnalytic from "../components/Home/DateAnalytic";
 import Header from "../components/Header";
 
 function Home({ isLogin, history }) {
