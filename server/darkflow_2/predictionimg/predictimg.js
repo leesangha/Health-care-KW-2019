@@ -1,30 +1,29 @@
 const { PythonShell } = require("python-shell");
 
-function recommend(preferenceList, userNumber) {
+function predictimg(userNumber) {
   return new Promise((resolve, reject) => {
     const options = {
       mode: "json",
-      pythonPath: "/opt/anaconda3/envs/tf1/bin/python3",
+      pythonPath: "C:/ProgramData/Anaconda3/python.exe",
       pythonOptions: ["-u"],
-      scriptPath: __dirname
+      scriptPath: 'C:/hwcare/Health-care-KW-2019/server/darkflow_2'
     };
-  
-    const shell = new PythonShell("recommend_test01.py", options);
+
+    const shell = new PythonShell("predict.py", options);
     const data = {
-      preference: preferenceList,
       userNumber
     };
-  
+
     shell.send({
       ...data
     });
-  
+
     let result;
-  
+
     shell.on("message", ({ predicted }) => {
       result = predicted;
     });
-  
+
     shell.on("close", () => {
       console.log("python code ended...");
       resolve(result);
@@ -33,7 +32,7 @@ function recommend(preferenceList, userNumber) {
     shell.on("stderr", (stderr) => {
       reject(stderr);
     });
+
   });
 }
-
-module.exports.recommend = recommend;
+module.exports.predictimg = predictimg; 

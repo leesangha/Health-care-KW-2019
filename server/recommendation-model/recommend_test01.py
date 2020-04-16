@@ -3,6 +3,11 @@ import numpy as np
 import json
 import sys
 
+
+def z_score_normalization(array):
+    return (array - array.mean()) / np.std(array)
+
+
 jsonString = sys.stdin.readline()
 jsonDict = json.loads(jsonString)
 
@@ -13,7 +18,8 @@ R = np.array(R, dtype=np.float32)
 
 model = RM.RecommendModel(R)
 model.train()
-predicted = list(model.predict(userNumber))
+predicted = model.predict(userNumber)
+predicted = list(z_score_normalization(predicted))
 
 result = {"predicted": predicted}
 print(json.dumps(result))

@@ -43,7 +43,7 @@ function getNutritionIntake(): Promise<number[]> {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-      },
+      }
     })
       .then((res) => res.json())
       .then((data) => {
@@ -83,7 +83,8 @@ function DateAnalytic() {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    fetchData()
+      .catch(err => console.error(err));
   }, [fetchData]);
 
   useEffect(() => {

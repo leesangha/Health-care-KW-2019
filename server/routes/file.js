@@ -20,7 +20,15 @@ const storage = multer.diskStorage({
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir);
     }
-    callback(null, userDir);
+
+    const today = moment().format("YYMMDD");
+    const fileDir = path.join(userDir, today);
+
+    if (!fs.existsSync(fileDir)) {
+      fs.mkdirSync(fileDir)
+    }
+
+    callback(null, fileDir);
   },
   filename: (req, file, callback) => {
     const extension = path.extname(file.originalname);
@@ -40,15 +48,44 @@ const upload = multer({
 });
 
 router.use((req, res, next) => {
-  console.log("uploads 미들웨어 호출됨.");
+  console.log("file 미들웨어 호출됨.");
 
   next();
 });
 
-router.post("/", upload.single("img"), (req, res) => {
-  console.log(req.body);
+router.post("/uploads", upload.single("img"), (req, res) => {
   console.log(req.file);
   console.log(req.file.filename);
+});
+
+router.post('/history', (req, res) => {
+  const userNumber = req.body.userNumber;
+  const userPath = path.resolve('server', 'uploads', userNumber.toString());
+
+  let dirs;
+  try {
+    fs.readdirSync(userPath);
+  } catch (e) {
+    fs.mkdirSync(userPath);
+  } finally {
+    dirs = fs.readdirSync(userPath);
+  }
+  const fileDirs = dirs.map(dir => path.join(userPath, dir));
+
+  const imgFiles = fileDirs.map(dir => {
+    const fileNameList = fs.readdirSync(dir);
+    const list = dir.split('/');
+    const last = list.length - 1;
+    const dirName = path.join(list[last - 2], list[last - 1], list[last]);
+    const _path = 'http://localhost:4002/' + dirName;
+
+    return {
+      date : list[last],
+      imgSrc : fileNameList.map(filename => _path + '/' + filename)
+    }
+  });
+
+  res.send(imgFiles);
 });
 
 module.exports = router;

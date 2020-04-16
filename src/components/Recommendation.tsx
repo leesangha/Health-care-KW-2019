@@ -1,52 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./scss/Recommendation.scss";
 import Food from "./Food";
 import { PacmanLoader } from "react-spinners";
+import { foodListSort } from "./foodListSort";
+import getUserNumber from "./getUserNumber";
 
 function getFoodImage(foodList: Array<number>) {
   let imgSrcList: string[] = [];
-  for (let i = 0; i < 15; ++i) {
+  for (let i = 0; i < 30; ++i) {
     const imgSrc = `http://localhost:4002/images/${foodList[i]}.png`;
     imgSrcList.push(imgSrc);
   }
-  console.log(foodList);
   return imgSrcList.map((src: string, index: number) => (
-    <Food
-      key={src}
-      imageSrc={src}
-      foodNumber={foodList[index]}
-    />
+    <Food key={src} imageSrc={src} foodNumber={foodList[index]} />
   ));
 }
+
+const init = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+};
+
+function fetchPreference(userNumber: number): Promise<DataType> {
+  return new Promise((resolve, reject) => {
+    fetch("/userData/preference/main", {
+      ...init,
+      body: JSON.stringify({ userNumber }),
+    })
+      .then((req) => req.json())
+      .then((data: DataType) => resolve(data))
+      .catch((err) => reject(err));
+  });
+}
+
+function fetchLoss(userNumber: number): Promise<number[]> {
+  return new Promise((resolve, reject) => {
+    fetch("/userData/foodLoss", {
+      ...init,
+      body: JSON.stringify({ userNumber }),
+    })
+      .then((req: Response) => req.json())
+      .then((data: number[]) => resolve(data))
+      .catch((err) => reject(err));
+  });
+}
+
+type DataType = {
+  food_no: number;
+  predicted_preference: number;
+}[];
 
 function Recommendation() {
   const [foodList, setFoodList] = useState<Array<number>>();
 
-  useEffect(() => {
-    const sessionInfo = sessionStorage.getItem("info");
+  const predictData = useCallback(async (userNumber: number) => {
+    const [preference, loss] = await Promise.all([
+      fetchPreference(userNumber),
+      fetchLoss(userNumber),
+    ]);
 
-    if (sessionInfo !== null) {
-      const userInfo: [{ user_no: number }] = JSON.parse(sessionInfo);
-      const userNumber = userInfo[0].user_no;
-
-      fetch("/userData/preference", {
-        method: "POST",
-        body: JSON.stringify({ userNumber }),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        }
-      })
-        .then(req => req.json())
-        .then(data => {
-          let predictedFoodList: Array<number> = [];
-          data.pref.forEach((obj: { food_no: number }) =>
-            predictedFoodList.push(obj.food_no)
-          );
-          setFoodList(predictedFoodList);
-        });
-    }
+    const result = preference.map(({ food_no, predicted_preference }) => ({
+      food_no,
+      result: predicted_preference * loss[food_no],
+    }));
+    const sorted = foodListSort(result);
+    console.log(sorted);
+    const predicted: number[] | undefined = foodListSort(result)?.map(
+      ({ food_no }) => food_no
+    );
+    setFoodList(predicted);
   }, []);
+
+  useEffect(() => {
+    const userNumber = getUserNumber();
+    if (userNumber !== -1) {
+      predictData(userNumber)
+        .catch(err => console.error(err));
+    }
+  }, [predictData]);
 
   return foodList === undefined ? (
     <div className="loader">

@@ -1,10 +1,53 @@
-.register-page {
-  height: calc(100% - 50px);
-  position: relative;
+.register-page-container {
   overflow: hidden;
+  position: relative;
 
-  form {
-    background: blue;
+  .upload {
+    display: flex;
+    //flex-direction: column;
+    align-items: center;
+    //justify-content: center;
+    height: 40vh;
+
+    .welcome {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .input-file {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+
+    img {
+      width: 40vh;
+      height: 40vh;
+      object-fit: cover;
+    }
+  }
+}
+
+.register-page {
+  height: calc(100% - 50px - 40vh);
+  overflow: auto;
+  background-color: #fbfbfb;
+
+  p {
+    height: calc(60vh - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      margin-bottom: 20px;
+    }
   }
 
   svg {

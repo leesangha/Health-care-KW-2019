@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./scss/Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSmile } from "@fortawesome/free-regular-svg-icons";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
   const clearStorage = () => {
@@ -19,7 +19,12 @@ function Header() {
       </nav>
       <div className="right-side">
         <Link to="/login">
-          <FontAwesomeIcon icon={faSmile} onClick={clearStorage} />
+          <FontAwesomeIcon
+            icon={faUserCircle}
+            size="2x"
+            onClick={clearStorage}
+            color="#A5A5A5"
+          />
         </Link>
       </div>
     </header>

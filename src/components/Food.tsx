@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTired, faGrinHearts } from "@fortawesome/free-solid-svg-icons";
 import "./scss/Food.scss";
@@ -9,9 +9,34 @@ type FoodProps = {
   foodNumber: number;
 };
 
+type FoodInfoType = {
+  result: { food_name: string }[]
+}
+
+const init = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+};
+
+function getFoodInfo(): Promise<FoodInfoType> {
+  return new Promise((resolve, reject) => {
+    fetch("/food/name", init)
+      .then((res: Response) => res.json())
+      .then((data: FoodInfoType) => {
+        sessionStorage.setItem("foodInfo", JSON.stringify(data));
+        resolve(data);
+      })
+      .catch((err: Error) => reject(err));
+  })
+}
+
 function Food({ imageSrc, foodNumber }: FoodProps) {
   // const food_no = imageSrc.split(".")[0].split("/")[2];
   const [mouseOver, setMouseOver] = useState<boolean>(false);
+  const [foodName, setFoodName] = useState<string>();
   const info = {
     userNumber: getUserNumber(),
     foodNumber,
@@ -19,12 +44,8 @@ function Food({ imageSrc, foodNumber }: FoodProps) {
 
   const like = () => {
     fetch("/food/like", {
-      method: "POST",
+      ...init,
       body: JSON.stringify(info),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -35,12 +56,8 @@ function Food({ imageSrc, foodNumber }: FoodProps) {
   const dislike = () => {
     //DB 선호도 내리기
     fetch("/food/dislike", {
-      method: "POST",
+      ...init,
       body: JSON.stringify(info),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -48,11 +65,25 @@ function Food({ imageSrc, foodNumber }: FoodProps) {
       });
   };
 
+  const getFoodName = useCallback(async () => {
+    let foodInfo: string | null = sessionStorage.getItem("foodInfo");
+
+    let _foodInfo: FoodInfoType =
+      foodInfo === null ? await getFoodInfo() : JSON.parse(foodInfo);
+
+    setFoodName(_foodInfo.result[foodNumber].food_name);
+  }, [foodNumber]);
+
+  useEffect(() => {
+    getFoodName()
+      .catch(e => console.error(e));
+  }, [getFoodName]);
+
   return (
     <div className="food-container">
       <div className="food">
         <div className="box">
-          {mouseOver ? <p>{foodNumber}</p> : null}
+          {mouseOver ? <p>{foodName}</p> : null}
           <img
             src={imageSrc}
             alt="foodImage"
@@ -60,21 +91,19 @@ function Food({ imageSrc, foodNumber }: FoodProps) {
             onMouseOut={() => setMouseOver(false)}
           />
           <div>
-            <button
-              className="like-button"
-              onClick={like}
-            >
+            <button className="like-button" onClick={like}>
               <FontAwesomeIcon
                 size="2x"
                 color="rgb(255, 202, 0)"
                 icon={faGrinHearts}
               />
             </button>
-            <button
-              className="dislike-button"
-              onClick={dislike}
-            >
-              <FontAwesomeIcon size="2x" color="rgb(255, 202, 0)" icon={faTired} />
+            <button className="dislike-button" onClick={dislike}>
+              <FontAwesomeIcon
+                size="2x"
+                color="rgb(255, 202, 0)"
+                icon={faTired}
+              />
             </button>
           </div>
         </div>

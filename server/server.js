@@ -8,13 +8,14 @@ const userDataRouter = require("./routes/userData");
 const uploadRouter = require("./routes/uploads");
 const ingredientRouter = require('./routes/search')
 const registerRouter = require('./routes/register');
+const fileRouter = require("./routes/file");
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 4002;
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "uploads")));
+app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 
 app.use("/addUser", addUserRouter);
 app.use("/process/login", loginRouter);
@@ -23,6 +24,8 @@ app.use("/userData", userDataRouter);
 app.use("/uploads", uploadRouter);
 app.use("/search_ingredient",ingredientRouter);
 app.use("/register",registerRouter);
+app.use("/file", fileRouter);
+
 app.use("/", router);
 
 app.listen(PORT, () => {

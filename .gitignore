@@ -50,3 +50,5 @@ server/recommendation-model/__pycache__/recommendation_model_np.cpython-37.pyc
 
 test.*
 __pycache__
+*.jpg
+*.jpeg
