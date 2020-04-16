@@ -1,3 +1,4 @@
+const {predictImg} = require("../darkflow_2/img-prediction/predictImg");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -7,9 +8,8 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, res, callback) => {
-    console.log(req.body.img);
-
     const uploadsPath = path.resolve("server", "uploads");
+
     if (!fs.existsSync(uploadsPath)) {
       fs.mkdirSync(uploadsPath);
     }
@@ -47,15 +47,13 @@ const upload = multer({
   },
 });
 
-router.use((req, res, next) => {
-  console.log("file 미들웨어 호출됨.");
 
-  next();
-});
+router.post("/uploads", upload.single("img"), async (req, res) => {
+  const userNumber = Number(req.body.id);
+  const today = moment().format("YYMMDD");
 
-router.post("/uploads", upload.single("img"), (req, res) => {
-  console.log(req.file);
-  console.log(req.file.filename);
+  const result = await predictImg(userNumber, today, req.file.filename);
+  res.send(result);
 });
 
 router.post('/history', (req, res) => {

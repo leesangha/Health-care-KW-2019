@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import getUserNumber from "./getUserNumber";
-import "./scss/DateAnalytic.scss";
+import getUserNumber from "../getUserNumber";
+import "../scss/DateAnalytic.scss";
 
 // 사용자의 영양 권장량을 가져오는 함수
 function getNutritionRecommended(): Promise<number[]> {

@@ -12,13 +12,23 @@ type FileStateType = {
   previewURL: string | null;
 };
 
-function FileUpload({ userNumber }: { userNumber: number }) {
+type PropsType = {
+  userNumber: number,
+  setUploadState: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+type PredictionType = {
+  label: string
+}[] | null
+
+function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
   const [state, setState] = useState<FileStateType>({
     file: null,
     previewURL: null,
   });
   const [preview, setPreview] = useState<JSX.Element | null>(null);
+  const [prediction, setPrediction] = useState<PredictionType>(null);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -46,7 +56,10 @@ function FileUpload({ userNumber }: { userNumber: number }) {
       body: regInfo,
     })
       .then((res) => res.json())
-      .then((data) => alert(data.msg));
+      .then((data) => {
+        console.log(data);
+        setPrediction(data);
+      });
   }, []);
 
   const handleSubmit = (
@@ -54,6 +67,8 @@ function FileUpload({ userNumber }: { userNumber: number }) {
       target: { img: { files: FileList } };
     }
   ) => {
+    setUploadState(true);
+
     e.preventDefault();
     const formData = new FormData();
 
@@ -93,7 +108,7 @@ function FileUpload({ userNumber }: { userNumber: number }) {
           onChange={onChange}
         />
       </label>
-      <FoodAnalysis preview={preview} />
+      <FoodAnalysis preview={preview} result={prediction} />
     </form>
   );
 }

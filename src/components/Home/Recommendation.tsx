@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "./scss/Recommendation.scss";
+import "../scss/Recommendation.scss";
 import Food from "./Food";
 import { PacmanLoader } from "react-spinners";
 import { foodListSort } from "./foodListSort";
-import getUserNumber from "./getUserNumber";
+import getUserNumber from "../getUserNumber";
 
 function getFoodImage(foodList: Array<number>) {
   let imgSrcList: string[] = [];

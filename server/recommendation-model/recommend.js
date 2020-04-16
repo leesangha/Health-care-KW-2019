@@ -8,23 +8,23 @@ function recommend(preferenceList, userNumber) {
       pythonOptions: ["-u"],
       scriptPath: __dirname
     };
-  
+
     const shell = new PythonShell("recommend_test01.py", options);
     const data = {
       preference: preferenceList,
       userNumber
     };
-  
+
     shell.send({
       ...data
     });
-  
+
     let result;
-  
+
     shell.on("message", ({ predicted }) => {
       result = predicted;
     });
-  
+
     shell.on("close", () => {
       console.log("python code ended...");
       resolve(result);

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTired, faGrinHearts } from "@fortawesome/free-solid-svg-icons";
-import "./scss/Food.scss";
-import getUserNumber from "./getUserNumber";
+import "../scss/Food.scss";
+import getUserNumber from "../getUserNumber";
 
 type FoodProps = {
   imageSrc: string;
@@ -18,7 +18,7 @@ const init = {
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-  },
+  }
 };
 
 function getFoodInfo(): Promise<FoodInfoType> {

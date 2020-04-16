@@ -2,19 +2,40 @@ from darkflow.net.build import TFNet
 import cv2
 import json
 import sys
-'''
-jsonString = sys.stdin.readline()
-jsonDict = json.loads(jsonString)
-userNumber = jsonDict['userNumber']
-#print(userNumber)
-'''
-#userNumber = 2
-options = {"model" : 'C:/hwcare/Health-care-KW-2019/server/darkflow_2/cfg/tiny-yolo-voc-3c.cfg'
-, "load" :  38735
-, "threshold":0.2, "labels":"C:/hwcare/Health-care-KW-2019/server/darkflow_2/labels.txt" }
-tfnet = TFNet(options)
-imgcv = cv2.imread("C:/hwcare/Health-care-KW-2019/server/darkflow_2/testset/gae.jpg")
-result = tfnet.return_predict(imgcv)
-print(result)
+import numpy as np
+from pathlib import Path
 
-# 사진 추가 -> db 저장 -> python 코드로 판별 ->음식 결과 정보 반환 -> 데이터를 db에서 읽도록 변환 -> 음식정보 읽어오기  
+
+def json_default(value):
+    if isinstance(value, np.float32):
+        return float(value)
+
+
+userNumber = sys.stdin.readline().rstrip()
+date = sys.stdin.readline().rstrip()
+img = sys.stdin.readline().rstrip()
+
+file_path = Path(__file__).parent
+cfg_path = file_path / 'cfg' / 'tiny-yolo-voc-3c.cfg'
+label_path = file_path / 'labels.txt'
+
+options = {
+    "model": str(cfg_path),
+    "load": 38735,
+    "threshold": 0.2,
+    "labels": str(label_path),
+    "backup": str(file_path / 'ckpt')
+}
+
+upload_dir = file_path.parent / 'uploads'
+img_path = upload_dir / userNumber / date / img
+
+tfnet = TFNet(options)
+imgcv = cv2.imread(str(img_path))
+results = tfnet.return_predict(imgcv)
+
+for result in results:
+    print(json.dumps(result, default=json_default))
+
+# 사진 추가 -> db 저장 -> python 코드로 판별 -> 음식 결과 정보 반환
+#       -> 데이터를 db에서 읽도록 변환 -> 음식정보 읽어오기
