@@ -52,3 +52,4 @@ test.*
 __pycache__
 *.jpg
 *.jpeg
+yarn.lock
