@@ -1,11 +1,12 @@
 const { PythonShell } = require("python-shell");
 const path = require('path');
+const { pythonPath } = require('../../pythonPath');
 
 function predictImg(userNumber, date, imgFileName) {
   return new Promise((resolve) => {
     const options = {
       mode: "text",
-      pythonPath: "/opt/anaconda3/envs/maet/bin/python3",
+      pythonPath,
       pythonOptions: ["-u"],
       scriptPath: path.resolve('server', 'darkflow_2')
     };
