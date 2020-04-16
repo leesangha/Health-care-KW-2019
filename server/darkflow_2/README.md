@@ -14,9 +14,12 @@ Python3, tensorflow >= 1.14.0, numpy, opencv 3, cython.
     ```
     python3 setup.py build_ext --inplace
     ```
+    또는
+    ```
+    python setup.py build_ext --inplace
+    ```
 
 2. pip 이용하여 설치
     ```
     pip install .
     ```
-
