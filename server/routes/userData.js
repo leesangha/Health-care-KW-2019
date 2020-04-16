@@ -14,6 +14,16 @@ router.post("/nutrition", (req, res) => {
   });
 });
 
+router.post("/intake_week", (req, res) => {
+  db.query(`read_user_week_nutrition'${req.body.userNumber}'`,
+    (err, rows) => {
+    if (err) console.log("Intake 정보를 가져오는데 실패했습니다.");
+    else {
+      res.send(rows.recordsets[0]);
+    }
+  });
+});
+
 router.post("/intake", (req, res) => {
   db.query(`read_user_today_nutrition'${req.body.userNumber}'`,
     (err, rows) => {
