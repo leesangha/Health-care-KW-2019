@@ -12,8 +12,9 @@
   * cython
 
 ### 서버 환경 구성
-1. 해당 darkflow 폴더 경로로 들어가 줍니다.
-   그후 setup.py 실행시켜줍니다.
+1. 해당 darkflow 폴더 경로로 들어가 줍니다. 그 후 setup.py 실행시켜줍니다.
+   
+   서버에서 YOLO 모델을 실행하기 위해서 필요한 작업입니다.
 ```
 python3 setup.py build_ext --inplace
 ```
