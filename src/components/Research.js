@@ -110,7 +110,7 @@ function Research({history}) {
                
                {
                  isSearch ===true
-                 ? (<Result list={list} onRemove ={onRemove}/>)
+                 ? (<Result  list={list} onRemove ={onRemove}/>)
                  : (<Result list={source} onRemove={dataRemove}/>)
                }
                 
