@@ -1,0 +1,32 @@
+@font-face{
+    font-family: DX;
+    font-weight: 200;
+    font-style: normal;
+    src:url("../fonts/DXHanlgrum-KSCpc-EUC-H.ttf") format("truetype"),
+        }
+
+ 
+.QnA_Form{
+
+    label{
+        font-family: DX;
+    }
+    input{
+        height: auto;
+        line-height: normal;
+        padding: .8em,.5em;
+    }
+    button {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+        width: 270px;
+        height: 30px;
+        background-color: #95c7ff;
+        color: white;
+        font-size: 15px;
+        border: none;
+      }
+     
+
+}
