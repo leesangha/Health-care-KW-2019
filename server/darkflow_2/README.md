@@ -5,7 +5,7 @@
 
 ## Dependencies
 
-Python3, tensorflow >= 1.14.0, numpy, opencv 3, cython.
+python3, tensorflow >= 1.14.0, numpy, opencv 3, cython, Visual C++ 14.0
 
 ### Getting started
 
