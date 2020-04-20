@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../scss/FoodAnalysis.scss";
 import { CircleLoader } from "react-spinners";
+import AnalysisResultList from "./AnalysisResultList";
 
 type PropsType = {
   preview: JSX.Element | null,
@@ -52,7 +53,7 @@ function FoodAnalysis({ preview, result }: PropsType) {
           </div>
         )
         : state === State.SUCCESS
-          ? result?.map(({label}, index) => <p key={index}>{label}</p>)
+          ? <AnalysisResultList result={result!} />
           : state === State.NOT_FOOD
             ? <p>음식이 아닙니다.</p>
             : null
