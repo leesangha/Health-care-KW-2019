@@ -1,6 +1,5 @@
 import React ,{useState,useEffect,useCallback} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from 'react-autocomplete';
 import "./scss/Autocom.scss"
 export default function Autocom() {
 
@@ -40,20 +39,26 @@ export default function Autocom() {
         console.log('음식 받아오기');
         getFood();
     },[])
-
- 
-
+    
     return(
-        <div style={{width:300, height:150}}>
-           <Autocomplete
-            id="free-solo-demo"
-            freeSolo
-            Popper
-            options={food_list}
-            renderInput={(params) => (
-          <TextField {...params} label="음식을 입력하세요" margin="normal" variant="outlined" />
-        )}
-      />
+        <div>
+           <Autocomplete 
+           items={food_list}
+           getItemValue={item=>item} 
+           shouldItemRender={(item, food) => item.toLowerCase().indexOf(food.toLowerCase()) > -1}          
+           name="food"
+           value={food}
+           onChange={e => setInputs({
+               food:e.target.value
+           })}
+           onSelect={val=>setInputs({food:val})}
+           renderItem={(item,highlighted) =>
+            <div key={item}
+            style={{ height:40, backgroundColor: highlighted ? 'lightblue' : 'transparent'} }>
+                {item}
+            </div>
+            }
+           />
            
         </div>
     )
