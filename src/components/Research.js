@@ -101,8 +101,8 @@ function Research({history}) {
         <div>
             <div className="QnA_Form">
             <ol>
-                <li>못먹는 재료가 있나요?</li>
-                <label>못먹는 재료가 있나요?</label>
+                
+                <label>못먹는 재료가 있나요?<br/></label>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
                 <button id= "find" onClick = {search_ingredient}>검색</button>
                 <button id= "add"onClick ={add_ingredient}>추가</button>
@@ -110,7 +110,7 @@ function Research({history}) {
                
                {
                  isSearch ===true
-                 ? (<Result  list={list} onRemove ={onRemove}/>)
+                 ? (<Result list={list} onRemove ={onRemove}/>)
                  : (<Result list={source} onRemove={dataRemove}/>)
                }
                 

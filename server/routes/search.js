@@ -11,5 +11,15 @@ router.post("/", (req, res) => {
     }
   );
 });
+router.post("/Allfood", (req,res) => {
+  console.log('allfood');
+  db.query(`Select food_name from food_nutrition`,(err,rows) => {
+    if(err)
+    console.log(err);
+    else 
+    res.send(rows.recordset);
+  })
+ // res.send({success:'success'});
+})
 
 module.exports = router;
