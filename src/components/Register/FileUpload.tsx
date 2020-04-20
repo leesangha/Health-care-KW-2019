@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import RegisterWelcome from "./RegisterWelcome";
 import FoodAnalysis from "./FoodAnalysis";
 
@@ -13,13 +8,15 @@ type FileStateType = {
 };
 
 type PropsType = {
-  userNumber: number,
-  setUploadState: React.Dispatch<React.SetStateAction<boolean>>
-}
+  userNumber: number;
+  setUploadState: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-type PredictionType = {
-  label: string
-}[] | null
+type PredictionType =
+  | {
+      label: string;
+    }[]
+  | null;
 
 function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
@@ -30,7 +27,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [preview, setPreview] = useState<JSX.Element | null>(null);
   const [prediction, setPrediction] = useState<PredictionType>(null);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files === null) return;
 
@@ -52,7 +49,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
 
   const register = useCallback((regInfo: FormData) => {
     fetch("/file/uploads", {
-      method: "post",
+      method: "POST",
       body: regInfo,
     })
       .then((res) => res.json())

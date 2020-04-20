@@ -4,8 +4,29 @@
 
 #### Requirement
 * Node.js
+* Visual C++ 14.0
 * python3
   * numpy
+  * opencv
+  * tensorflow >= 1.14.0
+  * cython
+
+### 서버 환경 구성
+1. 해당 darkflow 폴더 경로로 들어가 줍니다. 그 후 setup.py 실행시켜줍니다.
+   
+   서버에서 YOLO 모델을 실행하기 위해서 필요한 작업입니다.
+```
+python3 setup.py build_ext --inplace
+```
+또는
+```
+python setup.py build_ext --inplace
+```
+
+2. pip 이용하여 설치
+```
+pip install .
+```
 
 #
 #### 아나콘다 이용 시
@@ -41,8 +62,8 @@ source ~/anaconda3/etc/profile.d/conda.sh
 
 #
 #### 사용 방법
-`server/recommendation-model/recommned.js` 에서 
-> pythonPath: '/opt/anaconda3/envs/tf1/bin/python3'
+`server/pythonPath.js 에서 
+> pythonPath = '/opt/anaconda3/envs/tf1/bin/python3'
 
 해당 부분을 자신이 구축한 파이썬 경로로 지정해주세요.
 

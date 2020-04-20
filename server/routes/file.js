@@ -47,6 +47,10 @@ const upload = multer({
   },
 });
 
+router.post((req, res, next) => {
+  console.log('file 미들웨어 실행됨.');
+  next();
+})
 
 router.post("/uploads", upload.single("img"), async (req, res) => {
   const userNumber = Number(req.body.id);
@@ -72,7 +76,7 @@ router.post('/history', (req, res) => {
 
   const imgFiles = fileDirs.map(dir => {
     const fileNameList = fs.readdirSync(dir);
-    const list = dir.split('/');
+    const list = dir.split(path.sep);
     const last = list.length - 1;
     const dirName = path.join(list[last - 2], list[last - 1], list[last]);
     const _path = 'http://localhost:4002/' + dirName;

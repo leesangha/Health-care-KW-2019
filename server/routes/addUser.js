@@ -23,7 +23,9 @@ router.use(function addUserRouter(req, res) {
                 console.log(address);
                 console.log(password + name + age + sex);
               } else {
-                res.send({ text: "success" });
+                res.send({ text: "success",
+                user_no : rows.recordset[0].user_no
+             });
               }
             }
           );
