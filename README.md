@@ -62,7 +62,7 @@ source ~/anaconda3/etc/profile.d/conda.sh
 
 #
 #### 사용 방법
-`server/pythonPath.js 에서 
+`server/pythonPath.js` 에서
 > pythonPath = '/opt/anaconda3/envs/tf1/bin/python3'
 
 해당 부분을 자신이 구축한 파이썬 경로로 지정해주세요.
