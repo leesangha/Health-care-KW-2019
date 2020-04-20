@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("../dbconnection");
-const { predictPreference } = require("../predictPreference");
+const { predictPreference, predictAllFoodPreference } = require("../predictPreference");
 
 const router = express.Router();
 
@@ -36,6 +36,23 @@ router.post('/preference/main', (req, res) => {
       foodNumberList = foodNumberList.map(s => Number(s.slice(3, s.length)));
 
       const predicted = await predictPreference(preferences, foodNumberList, userNumber);
+      res.send(predicted);
+    }
+  });
+});
+
+router.post('/preference/all', (req, res) => {
+  const userNumber = req.body.userNumber;
+  db.query('read_user_preference', async (err, result) => {
+    let userPreferences = result.recordset;
+    if (err || userPreferences === undefined) {
+      res.send({ err: "Null Preference Error" });
+    } else {
+      let preference = userPreferences.map((object) => {
+        const values = Object.values(object);
+        return values.slice(1, values.length);
+      });
+      const predicted = await predictAllFoodPreference(preference, userNumber);
       res.send(predicted);
     }
   });
