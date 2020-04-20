@@ -26,7 +26,7 @@ const init = {
 
 function fetchPreference(userNumber: number): Promise<DataType> {
   return new Promise((resolve, reject) => {
-    fetch("/userData/preference/main", {
+    fetch("/userData/preference/all", {
       ...init,
       body: JSON.stringify({ userNumber }),
     })
