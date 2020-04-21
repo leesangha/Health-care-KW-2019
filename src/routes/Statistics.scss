@@ -1,14 +1,6 @@
-// .line_chart1{
-//     width:300px;
-//     height:25%;
-// }
-// .line_chart2{
-//     width:30em;
-//     height:25%;
-// }
 
-*{margin: 0; padding: 0}
-body {padding: 20px;}
+.statistics {padding: 20px;
+    -ms-user-select: none;-webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 
 /* temp grid */
 .col-6 {
@@ -46,11 +38,32 @@ body {padding: 20px;}
         box-sizing: border-box;
         cursor: pointer;
     }
-    input[type="radio"]:checked + label{
+    #label1{
         background-color: #454a60;
         color: #fff;
     }
+    input[type="radio"]:checked +label {
+        background-color: #454a60;
+        color: #fff;
+    }
+
 }
 
 .주간 {
+    float: left;
+    height:auto;
+    margin-bottom: 1em;
+}
+
+#title_week {
+    height:auto;
+    display: inline-block;
+}
+
+.week_statistics {
+    width : auto;
+    height : 250px;
+    float : right;
+    padding-top : 2em;
+    padding-left: 2em;
 }
