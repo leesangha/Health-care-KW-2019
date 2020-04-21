@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Button from '@material-ui/core/Button'
 
 function Result({list, onRemove}){
     return (
@@ -13,7 +13,8 @@ function Result({list, onRemove}){
 function Item({item,k, onRemove}){
     return(
         <div>
-            <b>{item}</b><button onClick ={() => onRemove(item)}>삭제</button> 
+          <label><b>{item}</b><Button id="remove" variant='contained' color="secondary" onClick ={() => onRemove(item)}>x</Button> 
+          </label>
         </div>
     )
 }
