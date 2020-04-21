@@ -7,49 +7,46 @@
 //     height:25%;
 // }
 
-*{margin: 0; padding: 0}
-body {padding: 20px;}
-
 /* temp grid */
 .col-6 {
-    width: 50%;
-    }
+  width: 50%;
+}
 
 .only-sr {
-    overflow: hidden !important;
-    position: absolute !important;
-    left: -9999px !important;
-    width: 1px;
+  overflow: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
 }
 
 /* form | radio */
 .radio-items {
-    display: table;
-    width: 6em;
+  display: table;
+  width: 6em;
+  height: 3em;
+  float: right;
+  margin-right: 5em;
+  border: 1px solid #454a60;
+  border-radius: 4px;
+  box-sizing: border-box;
+  > div {
+    display: table-cell;
     height: 3em;
-    float: right;
-    margin-right: 5em;
-    border: 1px solid #454a60;
-    border-radius: 4px;
+    line-height: 3em;
+    border-left: 1px solid #454a60;
+    text-align: center;
+  }
+  label {
+    display: block;
+    width: 100%;
+    color: #454a60;
     box-sizing: border-box;
-    > div {
-        display: table-cell;
-        height: 3em;
-        line-height: 3em;
-        border-left: 1px solid #454a60;
-        text-align: center;
-    }
-    label {
-        display: block;
-        width: 100%;
-        color: #454a60;
-        box-sizing: border-box;
-        cursor: pointer;
-    }
-    input[type="radio"]:checked + label{
-        background-color: #454a60;
-        color: #fff;
-    }
+    cursor: pointer;
+  }
+  input[type="radio"]:checked + label {
+    background-color: #454a60;
+    color: #fff;
+  }
 }
 
 .주간 {
