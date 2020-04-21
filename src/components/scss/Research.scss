@@ -1,20 +1,30 @@
-
+@font-face{
+    font-family: Ssangmun;
+    src:url('../fonts/Typo_SsangmunDongB.ttf') format('truetype');
+    
+}
+@font-face{
+    font-family: maple;
+    src:url('../fonts/Maplestory\ Light.ttf') format('truetype');
+    
+}
  img{
     height: 30px;
     margin-left: 40%;
-    margin-top: 10%;
+    margin-top: 2%;
 }
 .back{
-    background:url('../img/gaelle-marcel-8FBGykN3XcQ-unsplashl.jpg');
+    background:url('/images/gaelle-marcel-8FBGykN3XcQ-unsplashl.jpg');
     background-size: cover;
     height: auto;
-    width:90%;
-    margin-left: 3%;
+    width:95%;
+    margin-left: 0.5%;
     align-items: center;
     
     border: solid 1px lightgrey;
 
 .QnA_Form{
+    font-family: Ssangmun;
 
     padding:20px;
 
@@ -24,6 +34,7 @@
     }
 
     input{
+        font-family: maple;
         border-radius: 0.5em;
         width: 10em;
         height: 2em;
@@ -33,7 +44,11 @@
     input::placeholder{
         color: #7e91ae;
     }
+    label{
+        font-family: maple;
+    }
     button {
+        font-family: Ssangmun;
         display: inline-block;
         justify-content: center;
         margin-top: 0px;
@@ -45,6 +60,7 @@
         border: none;
       }
      #remove{
+         font-family: maple;
          display: inline;
          justify-content: center;
          background-color: rgb(255, 214, 223);
@@ -64,6 +80,7 @@
      }
 
      .list{
+        
         margin-top: 10px;
         opacity: 0.9!important;
         //border:solid 1px #ffffff;
@@ -75,7 +92,5 @@
        // background: linear-gradient(to right,#ebf2fb,#eff3fa,#f6f8fb,#ffffff);
         //border-radius: 1em;
     }
-     
-
 }
 }
