@@ -47,11 +47,6 @@ const upload = multer({
   },
 });
 
-router.post((req, res, next) => {
-  console.log('file 미들웨어 실행됨.');
-  next();
-})
-
 router.post("/uploads", upload.single("img"), async (req, res) => {
   const userNumber = Number(req.body.id);
   const today = moment().format("YYMMDD");
