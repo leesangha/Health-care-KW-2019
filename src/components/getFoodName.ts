@@ -1,6 +1,6 @@
 type FoodInfoType = {
-  result: { food_name: string }[]
-}
+  result: { food_name: string }[];
+};
 
 function getFoodInfo(): Promise<FoodInfoType> {
   return new Promise((resolve, reject) => {
@@ -17,12 +17,13 @@ function getFoodInfo(): Promise<FoodInfoType> {
         resolve(data);
       })
       .catch((err: Error) => reject(err));
-  })
+  });
 }
 
 export default async function getFoodName(foodNumber: number): Promise<string> {
-  const foodInfo = sessionStorage.getItem('foodInfo');
-  const _foodInfo: FoodInfoType = foodInfo === null ? await getFoodInfo() : JSON.parse(foodInfo);
+  const foodInfo = sessionStorage.getItem("foodInfo");
+  const _foodInfo: FoodInfoType =
+    foodInfo === null ? await getFoodInfo() : JSON.parse(foodInfo);
 
-  return _foodInfo.result[foodNumber].food_name;
+  return _foodInfo.result[foodNumber]?.food_name;
 }
