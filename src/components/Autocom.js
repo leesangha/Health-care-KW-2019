@@ -40,13 +40,16 @@ export default function Autocom() {
         getFood();
     },[])
     
+    const onClick=() =>{
+        console.log(food);
+    }
     return(
         <div>
            <Autocomplete 
+           style={{height:200}}
            items={food_list}
            getItemValue={item=>item} 
            shouldItemRender={(item, food) => item.toLowerCase().indexOf(food.toLowerCase()) > -1}          
-           name="food"
            value={food}
            onChange={e => setInputs({
                food:e.target.value
@@ -59,6 +62,8 @@ export default function Autocom() {
             </div>
             }
            />
+           <button onClick={onClick}>검색</button>
+
            
         </div>
     )

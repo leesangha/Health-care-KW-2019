@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Result from './Result';
+import Button from '@material-ui/core/Button'
 import "./scss/Research.scss"
 
 function Research({history}) {
@@ -20,6 +21,14 @@ function Research({history}) {
             [name]: value,
           });
 
+          if(value===''){
+            setInputs({
+              ...inputs,
+              [name]:value,
+              isSearch:false
+            })  
+          }
+          
         },
         [inputs]
       );
@@ -100,13 +109,26 @@ function Research({history}) {
     return(
         <div>
             <div className="QnA_Form">
+            <h3>못먹는 재료가 있나요?</h3>
             <ol>
-                
-                <label>못먹는 재료가 있나요?<br/></label>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
-                <button id= "find" onClick = {search_ingredient}>검색</button>
-                <button id= "add"onClick ={add_ingredient}>추가</button>
-                <button id = "submit"onClick = {register}>제출</button>
+                <Button id= "find" 
+                onClick = {search_ingredient} 
+                variant="contained" 
+                color="primary">
+                  검색</Button>
+
+                <Button id= "add"
+                onClick ={add_ingredient} 
+                variant="contained" 
+                color="primary">
+                  추가</Button>
+
+                <Button id = "submit"
+                onClick = {register}  
+                variant="contained" 
+                color="primary">
+                  제출</Button>
                
                {
                  isSearch ===true
