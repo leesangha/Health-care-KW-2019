@@ -1,49 +1,42 @@
+.QnA_Form {
+  label {
+    font: icon;
+  }
 
- 
-.QnA_Form{
-
-    label{
-        font: icon;
-    }
-
-    input{
-        border-radius: 0.5em;
-        width: 10em;
-        height: 2em;
-        font-size: 15px;
-    }
-    input::placeholder{
-        color: #7e91ae;
-        
-    }
-    button {
-        display: inline-block;
-        justify-content: center;
-        margin-top: 0px;
-        width: 100px;
-        height: 30px;
-        background-color: #95c7ff;
-        color: white;
-        font-size: 15px;
-        border: none;
-      }
-     #remove{
-         display: inline;
-         justify-content: center;
-         background-color: rgb(255, 214, 223);
-         align-items: right;
-         width: auto;
-         font-size: 15px;
-         color: rgb(248, 116, 116);
-         padding-top: 0px;
-         margin-top: 6px;
-         margin-left: 10px;
-
-     }
-     #remove:hover{
-         background-color: crimson;
-         color:  #ffffff;
-     }
-     
-
+  input {
+    border-radius: 0.5em;
+    width: 10em;
+    height: 2em;
+    font-size: 15px;
+  }
+  input::placeholder {
+    color: #7e91ae;
+  }
+  button {
+    display: inline-block;
+    justify-content: center;
+    margin-top: 0;
+    width: 100px;
+    height: 30px;
+    background-color: #95c7ff;
+    color: white;
+    font-size: 15px;
+    border: none;
+  }
+  #remove {
+    display: inline;
+    justify-content: center;
+    background-color: rgb(255, 214, 223);
+    align-items: right;
+    width: auto;
+    font-size: 15px;
+    color: rgb(248, 116, 116);
+    padding-top: 0px;
+    margin-top: 6px;
+    margin-left: 10px;
+  }
+  #remove:hover {
+    background-color: crimson;
+    color: #ffffff;
+  }
 }
