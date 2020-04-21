@@ -8,10 +8,11 @@ function Research({history}) {
         search: '',
         isSearch:false,
         list: [],
+        string:[],
         source:[],
         correct:'',
     })
-    const {search,isSearch,list,source,correct} = inputs;
+    const {search,isSearch,list,string,source,correct} = inputs;
    
     const onChange = useCallback(
         (e) => {
@@ -61,7 +62,7 @@ function Research({history}) {
         .then((res) => res.json())
         .then((data) => {
           const arr=data.map(elem => elem.food_name);
-          console.log('arr :' + arr);
+          //console.log('arr :' + arr);
           setInputs({
           ...inputs,
           isSearch:true,
@@ -80,10 +81,14 @@ function Research({history}) {
 
       if(arr !==[]){
         console.log('동작');
+        const temp = list;
+        //console.log('string' + string);
+        //console.log(temp);
         setInputs({
           search:'',
           isSearch:false,
           list:[],
+          string:string.concat(temp),
           source:source.concat(correct),
         })  
       }
@@ -93,7 +98,7 @@ function Research({history}) {
     const register = () =>{
       fetch("/register", {
         method: "POST",
-        body: JSON.stringify({source:source, user_no : sessionStorage.getItem('number')}),
+        body: JSON.stringify({source:string.join(','), user_no : sessionStorage.getItem('number')}),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
