@@ -27,35 +27,51 @@ enum Food {
 }
 
 function convertResult(result: ResultType) {
-  return result.map(async (elements) => {
-    const label = elements.label;
+  return result.map((elements) => {
+    let label = elements.label;
     const initList = Object.values(Food);
 
-    if (initList.includes(label)) {
-      return {
-        ...elements,
-        label: await getFoodName(Food[label as keyof typeof Food])
-      }
-    } else {
-      return {
-        ...elements,
-        label: await getFoodName(Number(label))
-      }
-    }
-  })
+    return initList.includes(label)
+      ? getFoodName(Food[label as keyof typeof Food]).then(
+          (foodName: string) => ({
+            ...elements,
+            label: foodName,
+          })
+        )
+      : getFoodName(Number(label)).then((foodName: string) => ({
+          ...elements,
+          label: foodName,
+        }));
+  });
 }
 
 function AnalysisResultList({ result }: PropsType) {
-  const [convertedResult, setResult] = useState<ResultType>();
+  const [labels, setLabels] = useState<(string | number)[]>(result.map(_result => _result['label']));
+
+  const convertLabel = useCallback((list: (string | number)[]): Promise<string>[] => {
+    return list.map(async (label): Promise<string> => {
+      let foodNumber: Food | number;
+
+      foodNumber = typeof label === "string" ? Food[label as keyof typeof Food] : label;
+
+      try {
+        return getFoodName(foodNumber);
+      } catch (err) {
+        throw new Error(`Unhandled food name error: ${err}`);
+      }
+    })
+  }, []);
 
   useEffect(() => {
-    const converted = convertResult(result);
-    setResult(converted);
-  }, []);
+    const _labels = result.map(_result => _result['label']);
+    const converted = Promise.all(convertLabel(_labels));
+    converted.then((foodNames: string[]) => setLabels(foodNames));
+  }, [convertLabel, result]);
+
   return (
     <ul>
-      {convertResult(result).map((label, index) => (
-        <li key={index}>{label.then(v => v)}</li>
+      {labels.map((label, index) => (
+        <li key={index}>{label}</li>
       ))}
     </ul>
   );
