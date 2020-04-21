@@ -63,3 +63,5 @@ server/darkflow_2/build/temp.macosx-10.9-x86_64-3.7/darkflow/cython_utils/cy_yol
 server/darkflow_2/build/lib.macosx-10.9-x86_64-3.7/darkflow/cython_utils/nms.cpython-37m-darwin.so
 server/darkflow_2/build/lib.macosx-10.9-x86_64-3.7/darkflow/cython_utils/cy_yolo_findboxes.cpython-37m-darwin.so
 server/darkflow_2/build/lib.macosx-10.9-x86_64-3.7/darkflow/cython_utils/cy_yolo2_findboxes.cpython-37m-darwin.so
+
+yarn.lock
