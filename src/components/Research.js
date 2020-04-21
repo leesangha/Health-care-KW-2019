@@ -108,8 +108,11 @@ function Research({history}) {
 
     return(
         <div>
+          <div className="page">
+          <div className="back">
             <div className="QnA_Form">
-            <h3>못먹는 재료가 있나요?</h3>
+              <img src="/images/maet-logo.png" alt="팀 로고"/>
+            <h3>1.못먹는 재료가 있나요?</h3>
             <ol>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
                 <Button id= "find" 
@@ -130,15 +133,24 @@ function Research({history}) {
                 color="primary">
                   제출</Button>
                
+               <div className="list">
+                 {
+                 isSearch ===true
+                 ?(<label><b>{search}</b>가 포함된 음식 리스트</label>)
+                 : (null)
+               }
                {
                  isSearch ===true
                  ? (<Result list={list} onRemove ={onRemove}/>)
                  : (<Result list={source} onRemove={dataRemove}/>)
                }
+               </div>
                 
             </ol>
             </div>
+          </div>
         </div>
+     </div>
     )
     
 

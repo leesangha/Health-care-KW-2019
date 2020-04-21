@@ -1,7 +1,22 @@
 
- 
+
+.back{
+    background: #ffffff;;
+    height: auto;
+    width:90%;
+    margin-left: 3%;
+    align-items: center;
+    margin-top: 10%;
+    border: solid 1px lightgrey;
+
 .QnA_Form{
 
+    padding:20px;
+
+    img{
+        height: 30px;
+        margin-left: 40%;
+    }
     label{
         font: icon;
     }
@@ -12,6 +27,7 @@
         height: 2em;
         font-size: 15px;
     }
+
     input::placeholder{
         color: #7e91ae;
         
@@ -20,7 +36,7 @@
         display: inline-block;
         justify-content: center;
         margin-top: 0px;
-        width: 100px;
+        width: 50px;
         height: 30px;
         background-color: #95c7ff;
         color: white;
@@ -34,6 +50,7 @@
          align-items: right;
          width: auto;
          font-size: 15px;
+         
          color: rgb(248, 116, 116);
          padding-top: 0px;
          margin-top: 6px;
@@ -41,9 +58,22 @@
 
      }
      #remove:hover{
-         background-color: crimson;
+         background-color: rgb(255, 31, 31);
          color:  #ffffff;
      }
+
+     .list{
+        margin-top: 10px;
+        border:solid 1px #ffffff;
+        background: #f6f8fb;
+        border-radius: 1em;
+        }
+    .list:hover{
+        border: solid 2px #ebf2fb;
+        background: linear-gradient(to right,#ebf2fb,#eff3fa,#f6f8fb,#ffffff);
+        border-radius: 2%;
+    }
      
 
+}
 }
