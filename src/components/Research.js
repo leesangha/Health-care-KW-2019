@@ -109,9 +109,9 @@ function Research({history}) {
     return(
         <div>
           <div className="page">
+          <img src="/images/maet-logo.png" alt="팀 로고"/>
           <div className="back">
             <div className="QnA_Form">
-              <img src="/images/maet-logo.png" alt="팀 로고"/>
             <h3>1.못먹는 재료가 있나요?</h3>
             <ol>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
