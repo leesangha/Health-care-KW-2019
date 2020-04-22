@@ -2,18 +2,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import getFoodName from "../getFoodName";
 
 type PropsType = { result: {label: string }[] };
-type ResultType = { label: string }[];
-
-type LabelType =
-  | "bab"
-  | "gaeranmali"
-  | "melchi"
-  | "dufu"
-  | "kongnamul"
-  | "musengchae"
-  | "kimchi"
-  | "sigumchi"
-  | number;
 
 enum Food {
   bab = 21,
@@ -26,25 +14,6 @@ enum Food {
   sigumchi = 517,
 }
 
-function convertResult(result: ResultType) {
-  return result.map((elements) => {
-    let label = elements.label;
-    const initList = Object.values(Food);
-
-    return initList.includes(label)
-      ? getFoodName(Food[label as keyof typeof Food]).then(
-          (foodName: string) => ({
-            ...elements,
-            label: foodName,
-          })
-        )
-      : getFoodName(Number(label)).then((foodName: string) => ({
-          ...elements,
-          label: foodName,
-        }));
-  });
-}
-
 function AnalysisResultList({ result }: PropsType) {
   const [labels, setLabels] = useState<(string | number)[]>(result.map(_result => _result['label']));
 
@@ -52,7 +21,13 @@ function AnalysisResultList({ result }: PropsType) {
     return list.map(async (label): Promise<string> => {
       let foodNumber: Food | number;
 
-      foodNumber = typeof label === "string" ? Food[label as keyof typeof Food] : label;
+      foodNumber = typeof label === "number"
+        ? label
+        : Object.values(Food).includes(label)
+          ? Food[label as keyof typeof Food]
+          : -1;
+
+      if (foodNumber === -1) throw new Error('Unhandled food number error');
 
       try {
         return getFoodName(foodNumber);
