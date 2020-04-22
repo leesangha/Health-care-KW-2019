@@ -46,14 +46,12 @@ export default function Autocom(props) {
       <ReactAutocomplete
         inputProps={inputProps}
         items={foodList}
-
         wrapperStyle={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: 50,
+          height: "100%",
         }}
-
         menuStyle={{
           borderRadius: '3px',
           boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
