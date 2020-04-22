@@ -56,7 +56,7 @@ export default function Autocom() {
                food:e.target.value
            })}
            onSelect={val=>setInputs({food:val})}
-
+           
            renderItem={(item,highlighted) =>
             <div key={item}
             style={{ height:40, backgroundColor: highlighted ? 'lightblue' : 'transparent'} }>

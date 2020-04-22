@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState,useEffect } from 'react';
 import Result from './Result';
 import Button from '@material-ui/core/Button'
 import "./scss/Research.scss"
@@ -14,6 +14,16 @@ function Research({history}) {
     })
     const {search,isSearch,list,string,source,correct} = inputs;
    
+    useEffect(() =>{
+      if(list.length===0){
+        setInputs({
+          ...inputs,
+          search:'',
+          isSearch:false,
+        }) 
+      }
+    },[list])
+
     const onChange = useCallback(
         (e) => {
           const { name, value } = e.target;
@@ -76,23 +86,41 @@ function Research({history}) {
         });
 
     }
+    
+    
 
     const add_ingredient = () =>{
 
-      const arr = source.filter(item => correct ===item);
-      console.log(arr);
-
-      if(arr !==[]){
-        console.log('동작');
-        const temp = list;
+      const arr = source.filter(item => search ===item);
+      //추가할 음식 리스트가 0개,
+      // 이전에 검색했던 재료와 겹치지않는다면
+      if(list.length===0){
+        console.log('음식리스트가 비어있습니다');
         setInputs({
+          ...inputs,
           search:'',
           isSearch:false,
-          list:[],
-          string:string.concat(temp),
-          source:source.concat(correct),
-        })  
+        })
       }
+      else{
+         if(arr !==[]){
+          console.log('동작');
+          const temp = {
+            key:search,
+            list:list,
+          };
+          console.log(temp);
+          setInputs({
+            search:'',
+            isSearch:false,
+            list:[],
+            string:string.concat(temp),
+            source:source.concat(correct),
+          })  
+        }
+      }
+      
+      
       
     }
 
