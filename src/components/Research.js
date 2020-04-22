@@ -23,6 +23,10 @@ function Research({history}) {
         }) 
       }
     },[list])
+    useEffect(() => {
+
+
+    },[source])
 
     const onChange = useCallback(
         (e) => {
@@ -91,7 +95,9 @@ function Research({history}) {
 
     const add_ingredient = () =>{
 
-      const arr = source.map(item => {if(item ===correct) return item; });
+      const arr = (source.indexOf(correct)===-1)
+      // console.log(arr);
+      // console.log(correct);
       //추가할 음식 리스트가 0개,
       // 이전에 검색했던 재료와 겹치지않는다면
       if(list.length===0){
@@ -103,11 +109,11 @@ function Research({history}) {
         })
       }
       else{
-         if(arr.length===0){
-          console.log('동작');
+         if(arr){
+          //console.log('동작');
           const temp = {
             key:search,
-            list:list,
+            list:list.join(','),
           };
           console.log(temp);
           setInputs({
@@ -119,7 +125,7 @@ function Research({history}) {
           })  
         }
         else{
-          console.log(`겹치는 재료 : ${arr}`)
+          console.log(`겹치는 재료 : ${correct}`)
         }
        
       }
@@ -129,18 +135,26 @@ function Research({history}) {
     }
 
     const register = () =>{
+      console.log(string);
+      const elems = string.map(item => item.list);
+      console.log(elems.join(','));
+     
+
+      
+
       fetch("/register", {
         method: "POST",
-        body: JSON.stringify({source:string.join(','), user_no : sessionStorage.getItem('number')}),
+        body: JSON.stringify({source:elems.join(','), user_no : sessionStorage.getItem('number')}),
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       }).then((res) => res.json())
       .then((data) => {
-      //console.log(data);
-      history.push('/');
+      console.log(data);
+      //history.push('/');
       })
+
     }
 
     return(
