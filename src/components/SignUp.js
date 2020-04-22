@@ -1,14 +1,24 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect,useRef } from "react";
 import "./scss/SignUp.scss";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 function SignUp({ history }) {
   const [inputs, setInputs] = useState({
     name: "",
     address: "",
     password: "",
     age: "",
-    sex: "",
+    sex: "남",
   });
-  const { name, address, password, age } = inputs;
+  const { name, address, password, age,sex } = inputs;
+
+  const nameRef=useRef();
+  const addressRef=useRef();
+  const passwordRef=useRef();
+  const ageRef=useRef();
+  const buttonRef=useRef();
 
   const onChange = useCallback(
     (e) => {
@@ -18,6 +28,11 @@ function SignUp({ history }) {
         ...inputs,
         [name]: value,
       });
+      if(nameRef.current.value && addressRef.current.value
+        && passwordRef.current.value && ageRef.current.value
+       ){
+        buttonRef.current.style.backgroundColor="#248aff";
+      }
     },
     [inputs]
   );
@@ -71,12 +86,16 @@ function SignUp({ history }) {
             placeholder="name"
             onChange={onChange}
             value={name}
+            id = "name"
+            ref={nameRef}
           />
           <input
             name="address"
             placeholder="address"
             onChange={onChange}
             value={address}
+            id = "address"
+            ref={addressRef}
           />       
           <input
             name="password"
@@ -84,17 +103,26 @@ function SignUp({ history }) {
             onChange={onChange}
             value={password}
             type ="password"
+            id = "password"
+            ref={passwordRef}
           />
           <input
            name="age" 
            placeholder="age" 
            onChange={onChange} 
-           value={age} />
-          <div className = "select">
-          <label>남<input type = "radio" name = "sex" value = "남" onChange = {onChange}/></label>
-          <label>여<input type = "radio" name = "sex" value = "여" onChange = {onChange}/></label>
-          </div>
-      <button onClick={onClick}>제출</button>
+           value={age}
+           id = "age"
+           ref={ageRef}
+            />
+        <div className="genderbox">
+               <RadioGroup aria-label="gender" id = "gender" name="sex" value={sex} onChange={onChange} >
+                 <label>Sex  :</label>
+                남 <FormControlLabel  id ="sex" value="남"  control={<Radio/>}/>
+                여 <FormControlLabel  id ="sex" value="여"  control={<Radio/>}/>
+               </RadioGroup>
+        </div>
+         
+      <button ref ={buttonRef} onClick={onClick}>제출</button>
         </div>
       
       </div>

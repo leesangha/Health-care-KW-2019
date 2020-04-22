@@ -1,3 +1,14 @@
+@font-face{
+  font-family: Ssangmun;
+  src:url('../fonts/Typo_SsangmunDongB.ttf') format('truetype');
+  
+}
+@font-face{
+  font-family: maple;
+  src:url('../fonts/Maplestory\ Light.ttf') format('truetype');
+  
+}
+
 .signup-page{
     height: 100%;
     width: 100%;
@@ -20,20 +31,41 @@
         margin-bottom: 30px;
       }
       input {
+        font-family: maple;
         width: 270px;
         height: 30px;
         margin-bottom: 15px;
       }
-      .select{
-        input{
-          width:30px;
-          height:12px;
-        }
+      .genderbox{
+        font-family: maple;
         width: 270px;
-        height: 30px;
-        margin-bottom: 5px;
+        height: 40px;
+        #gender{
+          label{
+            margin-right: 20px;
+          }
+         
+        }
       }
+      .MuiFormGroup-root {
+        display: inline-block;
+    }
+    .MuiRadio-root{
+      font-family: maple;
+      color: #95c7ff;
+    }
+    .MuiFormControlLabel-root {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      /* margin-left: -11px; */
+      margin-right: 16px;
+      vertical-align: middle;
+      -webkit-tap-highlight-color: transparent;
+  }
+
       button {
+        font-family: maple;
         display: flex;
         justify-content: center;
         margin-top: 15px;
@@ -44,21 +76,6 @@
         font-size: 15px;
         border: none;
       }
-      .error-message {
-        height: auto;
-        margin-top: 5px;
-        font-size: 14px;
-        color: red;
-      }
-    
-      .hr-sect {
-        display: flex;
-        font-size: 13px;
-        height: 20px;
-        width: 100%;
-        margin: 20px 0;
-        align-items: center;
-        color: rgba(0, 0, 0, 0.35);
-    }
+      
   }        
 }

@@ -8,9 +8,9 @@
     src:url('../fonts/Maplestory\ Light.ttf') format('truetype');
     
 }
- img{
-    opacity: 0.9!important;
-    height: 30px;
+ #logo{
+    
+    height: 50px;
     margin-left: 40%;
     margin-top: 2%;
 }
@@ -21,7 +21,7 @@
     width:100%;
     align-items: center;
     
-    border: solid 1px lightgrey;
+    //border: solid 1px lightgrey;
 
 .QnA_Form{
     font-family: Ssangmun;

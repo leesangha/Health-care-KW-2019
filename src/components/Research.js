@@ -158,7 +158,7 @@ function Research({history}) {
         <div>
           <div className="page">
           <div className="back">
-          <img src="/images/logo_line.png" alt="팀 로고" />
+          <img src="/images/logo_line.png" alt="팀 로고" id = "logo"/>
             <div className="QnA_Form">
             <h3>1.못먹는 재료가 있나요?</h3>
             <ol>
