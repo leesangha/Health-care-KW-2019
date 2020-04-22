@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import getFoodName from "../getFoodName";
-import Autocom from "../Autocom";
+import Autocom from "./Autocom";
 import "./scss/AnalysisResultList.scss";
 
 type PropsType = { result: {label: string }[] };
