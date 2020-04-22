@@ -16,4 +16,14 @@ async function predict(preference, foodNumberList, userNumber) {
   }
 }
 
+async function predictAllFood(preference, userNumber) {
+  let predicted_preference = await recommend(preference, userNumber);
+  predicted_preference = predicted_preference.map((item, index) => ({
+    food_no: index,
+    predicted_preference: item,
+  }));
+  return predicted_preference;
+}
+
 module.exports.predictPreference = predict;
+module.exports.predictAllFoodPreference = predictAllFood;

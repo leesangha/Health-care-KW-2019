@@ -1,5 +1,5 @@
 import React from "react";
-import "./scss/FoodHistory.scss";
+import "../scss/FoodHistory.scss";
 
 type PropsType = {
   date: string;
