@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import RegisterWelcome from "./RegisterWelcome";
 import FoodAnalysis from "./FoodAnalysis";
+import "./scss/FileUpload.scss";
 
 type FileStateType = {
   file: File | null;

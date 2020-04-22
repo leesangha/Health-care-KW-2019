@@ -1,5 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import getFoodName from "../getFoodName";
+import Autocom from "../Autocom";
+import "./scss/AnalysisResultList.scss";
 
 type PropsType = { result: {label: string }[] };
 
@@ -44,11 +46,14 @@ function AnalysisResultList({ result }: PropsType) {
   }, [convertLabel, result]);
 
   return (
-    <ul>
-      {labels.map((label, index) => (
-        <li key={index}>{label}</li>
-      ))}
-    </ul>
+    <div id="list-wrapper">
+      <Autocom />
+      <ul>
+        {labels.map((label, index) => (
+          <li key={index}>{label}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
