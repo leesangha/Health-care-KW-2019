@@ -1,4 +1,4 @@
-const {predictImg} = require("../darkflow_2/img-prediction/predictImg");
+const { predictImg } = require("../darkflow_2/img-prediction/predictImg");
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
     const fileDir = path.join(userDir, today);
 
     if (!fs.existsSync(fileDir)) {
-      fs.mkdirSync(fileDir)
+      fs.mkdirSync(fileDir);
     }
 
     callback(null, fileDir);
@@ -47,12 +47,9 @@ const upload = multer({
   },
 });
 
-router.post((req, res, next) => {
-  console.log('file 미들웨어 실행됨.');
-  next();
-})
-
 router.post("/uploads", upload.single("img"), async (req, res) => {
+  console.log('uploads 라우터 함수 호출됨.');
+
   const userNumber = Number(req.body.id);
   const today = moment().format("YYMMDD");
 
@@ -60,9 +57,15 @@ router.post("/uploads", upload.single("img"), async (req, res) => {
   res.send(result);
 });
 
-router.post('/history', (req, res) => {
+router.post("/history", (req, res) => {
   const userNumber = req.body.userNumber;
-  const userPath = path.resolve('server', 'uploads', userNumber.toString());
+
+  const uploadsPath = path.resolve("server", "uploads");
+
+  if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath);
+  }
+  const userPath = path.resolve(uploadsPath, userNumber.toString());
 
   let dirs;
   try {
@@ -72,19 +75,19 @@ router.post('/history', (req, res) => {
   } finally {
     dirs = fs.readdirSync(userPath);
   }
-  const fileDirs = dirs.map(dir => path.join(userPath, dir));
+  const fileDirs = dirs.map((dir) => path.join(userPath, dir));
 
-  const imgFiles = fileDirs.map(dir => {
+  const imgFiles = fileDirs.map((dir) => {
     const fileNameList = fs.readdirSync(dir);
     const list = dir.split(path.sep);
     const last = list.length - 1;
     const dirName = path.join(list[last - 2], list[last - 1], list[last]);
-    const _path = 'http://localhost:4002/' + dirName;
+    const _path = "http://localhost:4002/" + dirName;
 
     return {
-      date : list[last],
-      imgSrc : fileNameList.map(filename => _path + '/' + filename)
-    }
+      date: list[last],
+      imgSrc: fileNameList.map((filename) => _path + "/" + filename),
+    };
   });
 
   res.send(imgFiles);

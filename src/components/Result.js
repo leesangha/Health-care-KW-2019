@@ -3,14 +3,14 @@ import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 
-function Result({list, onRemove}){
-    return (
-        <div>
-            {list.map((item, index) =>(
-                <Item item={item} key ={index} onRemove={onRemove}/>
-            ))}
-        </div>
-    )
+function Result({ list, onRemove }) {
+  return (
+    <div>
+      {list.map((item, index) => (
+        <Item item={item} key={index} onRemove={onRemove} />
+      ))}
+    </div>
+  );
 }
 function Item({item,k, onRemove}){
     return(
@@ -24,6 +24,5 @@ function Item({item,k, onRemove}){
         </div>
     )
 }
-
 
 export default Result;

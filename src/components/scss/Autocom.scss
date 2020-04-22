@@ -1,3 +1,13 @@
-.auto{
-    display: inline;
+#search-box {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 50px;
+  padding: 10px;
+
+  position: relative;
+  svg {
+    position: absolute;
+    top: 27px;
+    left: 30px;
+  }
 }
