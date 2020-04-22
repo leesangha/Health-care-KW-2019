@@ -91,7 +91,7 @@ function Research({history}) {
 
     const add_ingredient = () =>{
 
-      const arr = source.filter(item => search ===item);
+      const arr = source.map(item => {if(item ===correct) return item; });
       //추가할 음식 리스트가 0개,
       // 이전에 검색했던 재료와 겹치지않는다면
       if(list.length===0){
@@ -103,7 +103,7 @@ function Research({history}) {
         })
       }
       else{
-         if(arr !==[]){
+         if(arr.length===0){
           console.log('동작');
           const temp = {
             key:search,
@@ -118,6 +118,10 @@ function Research({history}) {
             source:source.concat(correct),
           })  
         }
+        else{
+          console.log(`겹치는 재료 : ${arr}`)
+        }
+       
       }
       
       
@@ -134,8 +138,7 @@ function Research({history}) {
         },
       }).then((res) => res.json())
       .then((data) => {
-
-      console.log(data);
+      //console.log(data);
       history.push('/');
       })
     }
