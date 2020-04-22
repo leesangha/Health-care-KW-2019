@@ -23,10 +23,6 @@ function Research({history}) {
         }) 
       }
     },[list])
-    useEffect(() => {
-
-
-    },[source])
 
     const onChange = useCallback(
         (e) => {
@@ -62,6 +58,7 @@ function Research({history}) {
           setInputs({
             ...inputs,
             source:source.filter(elem =>elem !==item),
+            string:string.filter(elem =>elem.key !==item)
           })
         }
 
