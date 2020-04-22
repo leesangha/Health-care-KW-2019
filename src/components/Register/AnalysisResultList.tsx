@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import getFoodName from "../getFoodName";
 import Autocom from "./Autocom";
 import "./scss/AnalysisResultList.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import ListItem from "./ListItem";
 
-type PropsType = { result: { label: string }[] };
+type PropsType = {
+  result: { label: string | number }[]
+};
 
 enum Food {
   bab = 21,
@@ -18,54 +19,76 @@ enum Food {
   sigumchi = 517,
 }
 
+type FoodInfoType = {
+  foodNumber: number | null;
+  foodName: string;
+};
+
+function resultLabelConverter(foodInfoList: { label: string | number }[]): FoodInfoType[] {
+  return foodInfoList.map(({ label }) => {
+    const foodNumber =
+      typeof label === "number"
+        ? label
+        // else "string"
+        : Object.values(Food).includes(label)
+          ? Food[label as keyof typeof Food]
+          : -1;
+
+    if (foodNumber === -1) throw new Error("Unhandled food number error");
+
+    return {
+      foodNumber,
+      foodName: "",
+    };
+  })
+}
+
 function AnalysisResultList({ result }: PropsType) {
-  const [labels, setLabels] = useState<(string | number)[]>(
-    result.map((_result) => _result["label"])
-  );
+  const [foodInfo, modifyFoodInfo]
+    = useState<FoodInfoType[]>(resultLabelConverter(result));
 
-  const convertLabel = useCallback((list: (string | number)[]): Promise<
-    string
-  >[] => {
-    return list.map(
-      async (label): Promise<string> => {
-        let foodNumber: Food | number;
-
-        foodNumber =
-          typeof label === "number"
-            ? label
-            : Object.values(Food).includes(label)
-            ? Food[label as keyof typeof Food]
-            : -1;
-
-        if (foodNumber === -1) throw new Error("Unhandled food number error");
-
-        try {
-          return getFoodName(foodNumber);
-        } catch (err) {
-          throw new Error(`Unhandled food name error: ${err}`);
+  const convertLabel = useCallback(
+    (list: FoodInfoType[]): Promise<FoodInfoType>[] => {
+      return list.map(
+        async (foodInfo): Promise<FoodInfoType> => {
+          const { foodNumber } = foodInfo;
+          try {
+            return {
+              ...foodInfo,
+              foodName: await getFoodName(foodNumber!)
+            }
+          } catch (err) {
+            throw new Error(`Unhandled food name error: ${err}`);
+          }
         }
-      }
-    );
-  }, []);
+      );
+    }, []);
 
   useEffect(() => {
-    const _labels = result.map((_result) => _result["label"]);
-    const converted = Promise.all(convertLabel(_labels));
-    converted.then((foodNames: string[]) => setLabels(foodNames));
+    const _foodInfo = resultLabelConverter(result);
+    const converted = Promise.all(convertLabel(_foodInfo));
+
+    converted.then((res: FoodInfoType[]) => modifyFoodInfo(res));
   }, [convertLabel, result]);
+
+  const removeItem = useCallback((itemIndex: number) => {
+    modifyFoodInfo(
+      foodInfo.filter((info, index) => itemIndex !== index)
+    )
+  }, [foodInfo]);
 
   return (
     <div id="list-wrapper">
       <Autocom />
       <div id="list-box">
         <ul>
-          {labels.map((label, index) => (
-            <li key={index}>
-              <div id="list-item">
-                {label}
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </div>
-            </li>
+          {foodInfo.map(({ foodNumber, foodName }, index) => (
+            <ListItem
+              key={index}
+              index={index}
+              foodName={foodName}
+              onRemove={removeItem}
+            />
           ))}
         </ul>
       </div>
