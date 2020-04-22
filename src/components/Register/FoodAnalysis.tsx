@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../scss/FoodAnalysis.scss";
+import "./scss/FoodAnalysis.scss";
 import { CircleLoader } from "react-spinners";
 import AnalysisResultList from "./AnalysisResultList";
 
