@@ -49,10 +49,11 @@
 
 }
 
-.주간 {
+.주간, .월간{
     float: left;
     height:auto;
     margin-bottom: 1em;
+    width: 1200px;
 }
 
 #title_week {
@@ -61,9 +62,19 @@
 }
 
 .week_statistics {
-    width : auto;
+    width : 350px;
     height : 250px;
     float : right;
     padding-top : 2em;
-    padding-left: 2em;
+}
+
+.그래프{
+    margin-left:10em;
+    float:left;
+    margin-top:1em;
+}
+
+.통계{
+    margin-left:27em;
+    margin-top:1em;
 }
