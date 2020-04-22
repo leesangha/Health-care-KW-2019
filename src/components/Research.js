@@ -43,6 +43,8 @@ function Research({history}) {
       
       const dataRemove =(item)=>{
           console.log(`삭제합니다 ${item}`);
+
+
           setInputs({
             ...inputs,
             source:source.filter(elem =>elem !==item),
@@ -78,12 +80,11 @@ function Research({history}) {
     const add_ingredient = () =>{
 
       const arr = source.filter(item => correct ===item);
+      console.log(arr);
 
       if(arr !==[]){
         console.log('동작');
         const temp = list;
-        //console.log('string' + string);
-        //console.log(temp);
         setInputs({
           search:'',
           isSearch:false,
