@@ -48,7 +48,7 @@ function FoodAnalysis({ preview, result }: PropsType) {
       </label>
       {state === State.LOADING
         ? (
-          <div>
+          <div id="loader-box">
             <CircleLoader />
           </div>
         )
