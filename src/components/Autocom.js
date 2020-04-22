@@ -1,5 +1,6 @@
 import React ,{useState,useEffect,useCallback} from 'react';
 import Autocomplete from 'react-autocomplete';
+import Button from '@material-ui/core/Button'
 import "./scss/Autocom.scss"
 export default function Autocom() {
 
@@ -46,7 +47,7 @@ export default function Autocom() {
     return(
         <div>
            <Autocomplete 
-           style={{height:200}}
+           wrapperStyle={{display:'inline'}}
            items={food_list}
            getItemValue={item=>item} 
            shouldItemRender={(item, food) => item.toLowerCase().indexOf(food.toLowerCase()) > -1}          
@@ -55,6 +56,7 @@ export default function Autocom() {
                food:e.target.value
            })}
            onSelect={val=>setInputs({food:val})}
+
            renderItem={(item,highlighted) =>
             <div key={item}
             style={{ height:40, backgroundColor: highlighted ? 'lightblue' : 'transparent'} }>
@@ -62,7 +64,8 @@ export default function Autocom() {
             </div>
             }
            />
-           <button onClick={onClick}>검색</button>
+           <Button variant="contained" color="primary"
+           onClick={onClick}>검색</Button>
 
            
         </div>

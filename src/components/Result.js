@@ -1,5 +1,7 @@
 import React from 'react';
-import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 
 function Result({list, onRemove}){
     return (
@@ -13,7 +15,11 @@ function Result({list, onRemove}){
 function Item({item,k, onRemove}){
     return(
         <div>
-          <label><b>{item}</b><Button id="remove" variant='contained' color="secondary" onClick ={() => onRemove(item)}>x</Button> 
+          <label><b>{item}</b>
+          <Button id="remove" 
+          onClick ={() => onRemove(item)}>
+          <DeleteIcon/>
+        </Button> 
           </label>
         </div>
     )
