@@ -19,7 +19,7 @@ router.post("/intake_week", (req, res) => {
     (err, rows) => {
     if (err) console.log("Intake 정보를 가져오는데 실패했습니다.");
     else {
-      res.send(rows.recordsets[0]);
+      res.send(rows.recordsets);
     }
   });
 });
