@@ -13,8 +13,8 @@
 
 ### 서버 환경 구성
 1. 해당 darkflow 폴더 경로로 들어가 줍니다. 그 후 setup.py 실행시켜줍니다.
-   
-   서버에서 YOLO 모델을 실행하기 위해서 필요한 작업입니다.
+
+서버에서 YOLO 모델을 실행하기 위해서 필요한 작업입니다.
 ```
 python setup.py build_ext --inplace
 ```
@@ -23,6 +23,7 @@ python setup.py build_ext --inplace
 https://visualstudio.microsoft.com/ko/vs/older-downloads/
 
 재배포 가능 패키지 및 빌드 도구 탭에서 Microsoft Build Tools 2015 업데이트 3 를 설치해주세요.
+
 ![image](https://user-images.githubusercontent.com/36293619/80299717-7b041080-87d1-11ea-91fc-374d89d793e5.png)
 ![image](https://user-images.githubusercontent.com/36293619/80299710-66c01380-87d1-11ea-8da4-57721e23ae99.png)
 
