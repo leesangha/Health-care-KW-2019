@@ -42,8 +42,6 @@ server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo
 server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo_findboxes.cp37-win_amd64.lib
 server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo_findboxes.cp37-win_amd64.exp
 server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo2_findboxes.obj
-server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo2_findboxes.cp37-win_amd64.lib
-server/darkflow_2/build/temp.win-amd64-3.7/Release/darkflow/cython_utils/cy_yolo2_findboxes.cp37-win_amd64.exp
 server/darkflow_2/build/lib.win-amd64-3.7/darkflow/cython_utils/nms.cp37-win_amd64.pyd
 server/darkflow_2/build/lib.win-amd64-3.7/darkflow/cython_utils/cy_yolo_findboxes.cp37-win_amd64.pyd
 server/darkflow_2/build/lib.win-amd64-3.7/darkflow/cython_utils/cy_yolo2_findboxes.cp37-win_amd64.pyd
