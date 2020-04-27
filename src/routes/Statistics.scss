@@ -1,6 +1,9 @@
-
-.statistics {padding: 20px;
-    -ms-user-select: none;-webkit-user-select: none; -khtml-user-select: none; user-select:none;}
+.statistics {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
 
 /* temp grid */
 .col-6 {
@@ -37,56 +40,57 @@
     color: #454a60;
     box-sizing: border-box;
     > div {
-        display: table-cell;
-        height: 3em;
-        line-height: 3em;
-        border-left: 1px solid #454a60;
-        text-align: center;
+      display: table-cell;
+      height: 3em;
+      line-height: 3em;
+      border-left: 1px solid #454a60;
+      text-align: center;
     }
     label {
-        display: block;
-        width: 100%;
-        color: #454a60;
-        box-sizing: border-box;
-        cursor: pointer;
+      display: block;
+      width: 100%;
+      color: #454a60;
+      box-sizing: border-box;
+      cursor: pointer;
     }
-    #label1{
-        background-color: #454a60;
-        color: #fff;
+    #label1 {
+      background-color: #454a60;
+      color: #fff;
     }
-    input[type="radio"]:checked +label {
-        background-color: #454a60;
-        color: #fff;
+    input[type="radio"]:checked + label {
+      background-color: #454a60;
+      color: #fff;
     }
-
+  }
 }
 
-.주간, .월간{
-    float: left;
-    height:auto;
-    margin-bottom: 1em;
-    width: 1200px;
+.주간,
+.월간 {
+  float: left;
+  height: auto;
+  margin-bottom: 1em;
+  width: 1200px;
 }
 
 #title_week {
-    height:auto;
-    display: inline-block;
+  height: auto;
+  display: inline-block;
 }
 
 .week_statistics {
-    width : 350px;
-    height : 250px;
-    float : right;
-    padding-top : 2em;
+  width: 350px;
+  height: 250px;
+  float: right;
+  padding-top: 2em;
 }
 
-.그래프{
-    margin-left:10em;
-    float:left;
-    margin-top:1em;
+.그래프 {
+  margin-left: 10em;
+  float: left;
+  margin-top: 1em;
 }
 
-.통계{
-    margin-left:27em;
-    margin-top:1em;
+.통계 {
+  margin-left: 27em;
+  margin-top: 1em;
 }
