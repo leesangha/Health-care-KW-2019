@@ -1,7 +1,8 @@
 import React, { useCallback, useState,useEffect } from 'react';
 import Result from './Result';
-import Button from '@material-ui/core/Button'
-import "./scss/Research.scss"
+import Button from '@material-ui/core/Button';
+import Random from './Random';
+import "./scss/Research.scss";
 
 function Research({history}) {
     const [inputs, setInputs] = useState({
@@ -194,7 +195,9 @@ function Research({history}) {
                }
                </div>
                 
+
             </ol>
+              <Random/>
             </div>
           </div>
         </div>
