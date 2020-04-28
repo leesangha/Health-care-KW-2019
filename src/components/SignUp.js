@@ -116,7 +116,7 @@ function SignUp({ history }) {
             />
         <div className="genderbox">
                <RadioGroup aria-label="gender" id = "gender" name="sex" value={sex} onChange={onChange} >
-                 <label>Sex  :</label>
+                 <label>성별  :</label>
                 남 <FormControlLabel  id ="sex" value="남"  control={<Radio/>}/>
                 여 <FormControlLabel  id ="sex" value="여"  control={<Radio/>}/>
                </RadioGroup>
