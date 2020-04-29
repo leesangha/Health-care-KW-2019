@@ -7,7 +7,7 @@ const moment = require("moment");
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination: (req, res, callback) => {
+  destination: (req, file, callback) => {
     const uploadsPath = path.resolve("server", "uploads");
 
     if (!fs.existsSync(uploadsPath)) {
@@ -32,10 +32,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     const extension = path.extname(file.originalname);
-    const basename = path.basename(file.originalname, extension);
 
-    const now = moment().format("YYMMDD-hh:mm:ss");
-    callback(null, basename + "-" + now + extension);
+    const now = moment().format("hhmmss");
+    callback(null, now + extension);
   },
 });
 
