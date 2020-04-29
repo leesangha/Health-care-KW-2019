@@ -61,8 +61,7 @@ export default function Autocom(props) {
           fontSize: "90%",
           position: "fixed",
           overflow: "auto",
-          minWidth: '96%',
-          maxHeight: "20%", // TODO: don't cheat, let it flow to the bottom
+          maxHeight: 200, // TODO: don't cheat, let it flow to the bottom
         }}
         shouldItemRender={(item, value) =>
           item.food_name.toLowerCase().indexOf(value.toLowerCase()) > -1
@@ -70,13 +69,8 @@ export default function Autocom(props) {
         getItemValue={(item) => item.food_name}
         renderItem={(item, highlighted) => (
           <div
+            className={highlighted ? "highlighted dropdown-item" : "dropdown-item"}
             key={item.food_no}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              height: 30,
-              backgroundColor: highlighted ? "#eee" : "transparent",
-            }}
           >
             {item.food_name}
           </div>
