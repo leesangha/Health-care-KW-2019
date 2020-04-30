@@ -66,7 +66,7 @@
          opacity: 0.9!important;
          color: rgb(248, 116, 116);
          padding-top: 0px;
-         margin-top: 6px;
+        // margin-top: 6px;
          margin-left: 10px;
 
      }
@@ -81,5 +81,42 @@
         opacity: 0.9!important;
        
         }
+    #picture{
+        height: 200px;
+        width: 300px;
+    }
+    .bbox{
+        height: 300px;
+
+    }
+    #foodname{
+        font-family: maple;
+    }
+    #next{
+        font-family: maple;
+        display: inline;
+        justify-content: center;
+        background-color: #ffffff00;
+        align-items: right;
+        font-size: 15px;
+        opacity: 0.9!important;
+        color:  #95c7ff;
+      
+    }
+    #next:hover{
+        background-color:  #95c7ff;
+        color:  #ffffff;
+    }
+    #change {
+        width: 100px;
+        background-color: #ffffff;
+        color: #95c7ff;
+        font-family: maple;
+    }
+    #change:hover{
+        background-color:  #95c7ff;
+        color:  #ffffff;
+    }
+    
 }
 }
