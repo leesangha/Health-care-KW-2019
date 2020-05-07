@@ -19,6 +19,14 @@ type PredictionType =
     }[]
   | null;
 
+export enum State {
+  INITIAL,
+  WAITING,
+  LOADING,
+  SUCCESS,
+  NOT_FOOD,
+}
+
 function FileUpload({ userNumber, setUploadState }: PropsType) {
   const [mouseOver, setMouseOver] = useState<boolean>(false);
   const [state, setState] = useState<FileStateType>({
@@ -27,6 +35,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
   });
   const [preview, setPreview] = useState<JSX.Element | null>(null);
   const [prediction, setPrediction] = useState<PredictionType>(null);
+  const [submitState, setSubmitState] = useState<State>(State.INITIAL);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -37,9 +46,11 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
 
     if (file === undefined) {
       setPreview(null);
+      setSubmitState(State.INITIAL);
       return null;
     }
 
+    setSubmitState(State.WAITING);
     reader.onloadend = () =>
       setState({
         file: file,
@@ -57,6 +68,14 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
       .then((data) => {
         console.log(data);
         setPrediction(data);
+
+        if (data === null) {
+          setSubmitState(State.WAITING);
+        } else if (data.length === 0) {
+          setSubmitState(State.NOT_FOOD);
+        } else {
+          setSubmitState(State.SUCCESS);
+        }
       });
   }, []);
 
@@ -66,6 +85,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
     }
   ) => {
     setUploadState(true);
+    setSubmitState(State.LOADING);
 
     e.preventDefault();
     const formData = new FormData();
@@ -88,26 +108,43 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
   }, [state]);
 
   return (
-    <form
-      className="upload"
-      onSubmit={handleSubmit}
-      encType="multipart/form-data"
-    >
-      <label
-        onMouseOver={() => setMouseOver(true)}
-        onMouseOut={() => setMouseOver(false)}
+    <div id="form-wrapper">
+      <form
+        className="upload"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
       >
-        {preview === null ? <RegisterWelcome mouseOver={mouseOver} /> : preview}
-        <input
-          className="input-file"
-          type="file"
-          accept="image/jpeg,image/png,image/jpg"
-          name="img"
-          onChange={onChange}
-        />
-      </label>
-      <FoodAnalysis preview={preview} result={prediction} />
-    </form>
+        <label
+          onMouseOver={() => setMouseOver(true)}
+          onMouseOut={() => setMouseOver(false)}
+        >
+          {preview === null ? (
+            <RegisterWelcome mouseOver={mouseOver} />
+          ) : (
+            preview
+          )}
+          <input
+            className="input-file"
+            type="file"
+            accept="image/jpeg,image/png,image/jpg"
+            name="img"
+            onChange={onChange}
+          />
+        </label>
+        {submitState === State.WAITING ? (
+          <label className="submit-button-wrapper">
+            <i className="fas fa-arrow-right fa-2x" />
+            <input
+              className="input-file"
+              type="submit"
+            />
+          </label>
+        ) : null}
+      </form>
+      {submitState !== State.WAITING ? (
+        <FoodAnalysis result={prediction} state={submitState} />
+      ) : null}
+    </div>
   );
 }
 
