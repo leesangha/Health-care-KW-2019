@@ -2,12 +2,12 @@ import React, {useEffect} from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: 300,
-    height: 100
-  },
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     width: 300,
+//     height: 100,
+//   },
+// }));
 
 const marks = [
   {
@@ -24,12 +24,12 @@ const marks = [
   }
 ];
 export default function DiscreteSlider({setScore}) {
-    const classes = useStyles();
+    // const classes = useStyles();
     
     return (
-      <div className={classes.root}>
+      <div className="slider">
         <Typography id="discrete-slider-custom" gutterBottom>
-          Custom marks
+          점수를 매겨주세요
         </Typography>
         <Slider
           defaultValue={5}
