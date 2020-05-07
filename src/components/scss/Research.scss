@@ -10,22 +10,29 @@
 }
  #logo{
     height: 50px;
-    margin-left: 40%;
-    margin-top: 2%;
+    margin-left: 45%;
 }
-.back{
+.page{
     background:url('/images/gaelle-marcel-8FBGykN3XcQ-unsplashl.jpg');
     background-size: cover;
-    height: cover;
+    height: 100%;
     width:100%;
     align-items: center;
 
+.back{
+   
+
 .QnA_Form{
     font-family: Ssangmun;
-
-    padding:20px;
-
-   
+    text-align:center;
+    height: 80%;
+    padding: 20px;
+   .inbox{
+       width: 40%;
+       text-align: left;
+       margin-left: 30%;
+       margin-right: 30%;
+   }
     label{
         font: icon;
     }
@@ -89,8 +96,22 @@
         height: 300px;
 
     }
+    .box{
+        height: 600px;
+    }
     #foodname{
         font-family: maple;
+    }
+    .slider{
+        height: 100px;
+        .MuiSlider-root{
+            width:70%;
+        }
+    }
+    #discrete-slider-custom{
+        font-family: maple;
+        text-align: left;
+        margin-left: 30%;
     }
     #next{
         font-family: maple;
@@ -118,5 +139,6 @@
         color:  #ffffff;
     }
     
+}
 }
 }
