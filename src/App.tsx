@@ -7,7 +7,6 @@ import Home from "./routes/Home";
 import Register from "./routes/Register";
 import Research from "./components/Research";
 import Statistics from "./routes/Statistics";
-import Autocom from "./components/Register/Autocom";
 
 function App() {
   const [isLogin, setLog] = useState(
@@ -30,7 +29,6 @@ function App() {
         />
         <Route path="/register" component={Register} />
         <Route path="/statistics" component={Statistics} />
-        <Route path="/autocom" component={Autocom}/>
       </Switch>
     </>
   );
