@@ -94,9 +94,6 @@ function Research({history}) {
     const add_ingredient = () =>{
 
       const arr = (source.indexOf(correct)===-1)
-      // console.log(arr);
-      // console.log(correct);
-      //추가할 음식 리스트가 0개,
       // 이전에 검색했던 재료와 겹치지않는다면
       if(list.length===0){
         console.log('음식리스트가 비어있습니다');
@@ -161,6 +158,7 @@ function Research({history}) {
           <div className="back">
           <img src="/images/logo_line.png" alt="팀 로고" id = "logo"/>
             <div className="QnA_Form">
+              <div className="inbox">
             <h3>1.못먹는 재료가 있나요?</h3>
             <ol>
                 <input name ="search" placeholder="재료를 검색하세요" onChange={onChange} value = {search}></input>
@@ -199,6 +197,7 @@ function Research({history}) {
             </ol>
               <Random/>
             </div>
+          </div>
           </div>
         </div>
      </div>
