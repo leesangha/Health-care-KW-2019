@@ -8,7 +8,7 @@ export default function Autocom(props) {
   const [inputs, setInputs] = useState({
     food: "",
   });
-  const { foodInfo, modifyFoodInfo } = props;
+  const { foodInfo, modifyFoodInfo, setFoodInsertState } = props;
   const source = sessionStorage.getItem("foodInfo");
   let foodList;
 
@@ -82,7 +82,7 @@ export default function Autocom(props) {
             foodName: food_name,
           });
           modifyFoodInfo(foodInfo);
-          console.log(foodInfo);
+          setFoodInsertState(true);
           setInputs({ food: "" });
         }}
       />

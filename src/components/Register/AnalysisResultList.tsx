@@ -47,6 +47,8 @@ function AnalysisResultList({ result }: PropsType) {
   const [foodInfo, modifyFoodInfo]
     = useState<FoodInfoType[]>(resultLabelConverter(result));
 
+  const [isFoodInsert, setFoodInsertState] = useState<Boolean>(false);
+
   const convertLabel = useCallback(
     (list: FoodInfoType[]): Promise<FoodInfoType>[] => {
       return list.map(
@@ -86,14 +88,15 @@ function AnalysisResultList({ result }: PropsType) {
       <Autocom
         foodInfo={foodInfo}
         modifyFoodInfo={modifyFoodInfo}
+        setFoodInsertState={setFoodInsertState}
       />
-      <button onClick={() => console.log(foodInfo)} />
       <div id="list-box">
         <ul>
           {foodInfo.map(({ foodNumber, foodName }, index) => (
             <ListItem
               key={index}
               index={index}
+              foodInsertState={[isFoodInsert, setFoodInsertState]}
               foodName={foodName}
               onRemove={removeItem}
             />
