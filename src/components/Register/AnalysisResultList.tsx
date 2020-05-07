@@ -77,9 +77,17 @@ function AnalysisResultList({ result }: PropsType) {
     )
   }, [foodInfo]);
 
+  useEffect(() => {
+    console.log("foodInfo is Updated!");
+  }, [foodInfo]);
+
   return (
     <div id="list-wrapper">
-      <Autocom />
+      <Autocom
+        foodInfo={foodInfo}
+        modifyFoodInfo={modifyFoodInfo}
+      />
+      <button onClick={() => console.log(foodInfo)} />
       <div id="list-box">
         <ul>
           {foodInfo.map(({ foodNumber, foodName }, index) => (
