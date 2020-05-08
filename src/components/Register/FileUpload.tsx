@@ -13,11 +13,7 @@ type PropsType = {
   setUploadState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type PredictionType =
-  | {
-      label: string;
-    }[]
-  | null;
+type PredictionType = { label: string }[];
 
 export enum State {
   INITIAL,
@@ -34,7 +30,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
     previewURL: null,
   });
   const [preview, setPreview] = useState<JSX.Element | null>(null);
-  const [prediction, setPrediction] = useState<PredictionType>(null);
+  const [prediction, setPrediction] = useState<PredictionType>([]);
   const [submitState, setSubmitState] = useState<State>(State.INITIAL);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,7 +137,7 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
           </label>
         ) : null}
       </form>
-      {submitState !== State.WAITING ? (
+      {submitState === State.WAITING || State.SUCCESS ? (
         <FoodAnalysis result={prediction} state={submitState} />
       ) : null}
     </div>
