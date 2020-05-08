@@ -7,7 +7,7 @@ import {State} from "./FileUpload";
 type PropsType = {
   result: {
     label: string
-  }[] | null,
+  }[],
   state: State
 };
 
@@ -20,11 +20,7 @@ function FoodAnalysis({ result, state }: PropsType) {
             <CircleLoader />
           </div>
         )
-        : state === State.SUCCESS
-          ? <AnalysisResultList result={result!} />
-          : state === State.NOT_FOOD
-            ? <p>음식이 아닙니다.</p>
-            : null
+        : state === State.SUCCESS ? <AnalysisResultList result={result} /> : null
       }
     </div>
   );
