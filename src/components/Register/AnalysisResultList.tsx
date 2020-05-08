@@ -3,9 +3,11 @@ import getFoodName from "../getFoodName";
 import Autocom from "./Autocom";
 import "./scss/AnalysisResultList.scss";
 import ListItem from "./ListItem";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 type PropsType = {
-  result: { label: string | number }[]
+  result: { label: string | number }[];
 };
 
 enum Food {
@@ -24,7 +26,10 @@ type FoodInfoType = {
   foodName: string;
 };
 
-function resultLabelConverter(foodInfoList: { label: string | number }[]): FoodInfoType[] {
+function resultLabelConverter(
+  foodInfoList: { label: string | number }[]
+): FoodInfoType[] {
+  if (foodInfoList.length === 0) return [];
   return foodInfoList.map(({ label }) => {
     const foodNumber =
       typeof label === "number"
@@ -40,31 +45,32 @@ function resultLabelConverter(foodInfoList: { label: string | number }[]): FoodI
       foodNumber,
       foodName: "",
     };
-  })
+  });
 }
 
 function AnalysisResultList({ result }: PropsType) {
-  const [foodInfo, modifyFoodInfo]
-    = useState<FoodInfoType[]>(resultLabelConverter(result));
+  const [foodInfo, modifyFoodInfo] = useState<FoodInfoType[]>(
+    resultLabelConverter(result)
+  );
 
   const [isFoodInsert, setFoodInsertState] = useState<Boolean>(false);
 
-  const convertLabel = useCallback(
-    (list: FoodInfoType[]): Promise<FoodInfoType>[] => {
-      return list.map(
-        async (foodInfo): Promise<FoodInfoType> => {
-          const { foodNumber } = foodInfo;
-          try {
-            return {
-              ...foodInfo,
-              foodName: await getFoodName(foodNumber!)
-            }
-          } catch (err) {
-            throw new Error(`Unhandled food name error: ${err}`);
-          }
+  const convertLabel = useCallback((list: FoodInfoType[]): Promise<FoodInfoType>[] => {
+    if (list.length === 0) return [];
+    return list.map(
+      async (foodInfo): Promise<FoodInfoType> => {
+        const { foodNumber } = foodInfo;
+        try {
+          return {
+            ...foodInfo,
+            foodName: await getFoodName(foodNumber!),
+          };
+        } catch (err) {
+          throw new Error(`Unhandled food name error: ${err}`);
         }
-      );
-    }, []);
+      }
+    );
+  }, []);
 
   useEffect(() => {
     const _foodInfo = resultLabelConverter(result);
@@ -73,14 +79,15 @@ function AnalysisResultList({ result }: PropsType) {
     converted.then((res: FoodInfoType[]) => modifyFoodInfo(res));
   }, [convertLabel, result]);
 
-  const removeItem = useCallback((itemIndex: number) => {
-    modifyFoodInfo(
-      foodInfo.filter((info, index) => itemIndex !== index)
-    )
-  }, [foodInfo]);
+  const removeItem = useCallback(
+    (itemIndex: number) => {
+      modifyFoodInfo(foodInfo.filter((info, index) => itemIndex !== index));
+    },
+    [foodInfo]
+  );
 
-  useEffect(() => {
-    console.log("foodInfo is Updated!");
+  const onClick = useCallback(() => {
+    console.log(foodInfo);
   }, [foodInfo]);
 
   return (
@@ -92,17 +99,26 @@ function AnalysisResultList({ result }: PropsType) {
       />
       <div id="list-box">
         <ul>
-          {foodInfo.map(({ foodNumber, foodName }, index) => (
-            <ListItem
-              key={index}
-              index={index}
-              foodInsertState={[isFoodInsert, setFoodInsertState]}
-              foodName={foodName}
-              onRemove={removeItem}
-            />
-          ))}
+          {foodInfo.length === 0 ? (
+            <p>음식이 아닙니다.</p>
+          ) : (
+            foodInfo.map(({ foodNumber, foodName }, index) => (
+              <ListItem
+                key={index}
+                index={index}
+                foodInsertState={[isFoodInsert, setFoodInsertState]}
+                foodName={foodName}
+                onRemove={removeItem}
+              />
+            ))
+          )}
         </ul>
       </div>
+      <FontAwesomeIcon
+        icon={faArrowRight}
+        size="2x"
+        onClick={onClick}
+      />
     </div>
   );
 }
