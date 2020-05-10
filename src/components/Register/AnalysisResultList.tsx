@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import getFoodName from "../getFoodName";
 import Autocom from "./Autocom";
 import "./scss/AnalysisResultList.scss";
 import ListItem from "./ListItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import getUserNumber from "../getUserNumber";
 
 type PropsType = {
   result: { label: string | number }[];
@@ -49,6 +51,7 @@ function resultLabelConverter(
 }
 
 function AnalysisResultList({ result }: PropsType) {
+  let history = useHistory();
   const [foodInfo, modifyFoodInfo] = useState<FoodInfoType[]>(
     resultLabelConverter(result)
   );
@@ -87,8 +90,23 @@ function AnalysisResultList({ result }: PropsType) {
   );
 
   const onClick = useCallback(() => {
-    console.log(foodInfo);
-  }, [foodInfo]);
+    if (foodInfo.length === 0) return;
+    const userNumber = getUserNumber();
+    const eaten = {
+      userNumber,
+      eaten: foodInfo.map(({foodNumber}) => foodNumber)
+    };
+
+    fetch("/food/submit", {
+      method: "POST",
+      body: JSON.stringify(eaten),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    });
+    history.push('/');
+  }, [foodInfo, history]);
 
   return (
     <div id="list-wrapper">
@@ -102,7 +120,7 @@ function AnalysisResultList({ result }: PropsType) {
           {foodInfo.length === 0 ? (
             <p>음식이 아닙니다.</p>
           ) : (
-            foodInfo.map(({ foodNumber, foodName }, index) => (
+            foodInfo.map(({ foodName }, index) => (
               <ListItem
                 key={index}
                 index={index}
