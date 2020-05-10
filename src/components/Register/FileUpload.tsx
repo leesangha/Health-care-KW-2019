@@ -20,7 +20,6 @@ export enum State {
   WAITING,
   LOADING,
   SUCCESS,
-  NOT_FOOD,
 }
 
 function FileUpload({ userNumber, setUploadState }: PropsType) {
@@ -67,8 +66,6 @@ function FileUpload({ userNumber, setUploadState }: PropsType) {
 
         if (data === null) {
           setSubmitState(State.WAITING);
-        } else if (data.length === 0) {
-          setSubmitState(State.NOT_FOOD);
         } else {
           setSubmitState(State.SUCCESS);
         }
