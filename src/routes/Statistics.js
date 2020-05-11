@@ -4,10 +4,11 @@ import { Bar } from 'react-chartjs-2';
 import { Helmet } from "react-helmet";
 import getUserNumber from "../components/getUserNumber";
 import "./Statistics.scss";
+import { isNull } from "util";
 
 function Statistics(props) {
   const user_no = getUserNumber();
-  //const user_name = JSON.parse(sessionStorage.getItem("info"))[0].user_name;
+  const user_name = JSON.parse(sessionStorage.getItem("info"))[0].user_name;
   const [states, setStates] = useState([]);
   const [monthStates,setMonthStates] = useState([]);
   const [averages, setAverages] = useState([]);
@@ -42,7 +43,7 @@ function Statistics(props) {
           var num=0;
           for(var i=0; i<7; i++)
           {
-            if(data[0][i].열량 == null)
+            if(data[0][i].열량 == 0)
               num++;
           }
           //averages에 각 평균들 배열로 push
@@ -50,7 +51,10 @@ function Statistics(props) {
           
           for(var i=0; i<9; i++)
           {
-            arr.push(((data[0][6][nutri[i]] + data[0][5][nutri[i]] + data[0][4][nutri[i]] + data[0][3][nutri[i]] + data[0][2][nutri[i]] + data[0][1][nutri[i]] + data[0][0][nutri[i]])/(7-num)).toFixed(2))
+            if(num == 7)
+              arr.push(0)
+            else
+              arr.push(((data[0][6][nutri[i]] + data[0][5][nutri[i]] + data[0][4][nutri[i]] + data[0][3][nutri[i]] + data[0][2][nutri[i]] + data[0][1][nutri[i]] + data[0][0][nutri[i]])/(7-num)).toFixed(2))
           }
           setAverages(arr)
           
@@ -76,7 +80,6 @@ function Statistics(props) {
           var month = new Date().getMonth()+1;
           var nutrition = []
           var myLabel = []
-          var count=0
           console.log(data)
           for(var i=0; i<data[1].length; i++)
           {
@@ -158,7 +161,7 @@ function Statistics(props) {
     }
   }
 //===============================================================
-
+console.log(allUser)
 //======================통계 페이지 오른쪽 파트==========================
   let dif_a = 0;
   let a = []
@@ -180,45 +183,49 @@ function Statistics(props) {
     ranking.push(ranks[user_no])
     ranking_percent.push(Math.round(100/(all_user.length)*(ranking[i]-1)))
     dif_a = (averages[i]-recommends[i]).toFixed(2);
-    var wid_a = (averages[i]/recommends[i]) * 350
+    var wid_a = (averages[i]/recommends[i]) * 400
 
     //섭취한 평균이 더 낮을 경우 ==> 권장량 충족 못한 경우
     if(dif_a < 0)
     {
       a.push((
       <div>
-        <div style={{position:"relative",left:30+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>
+        <div style={{position:"relative",left:80+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>
         <div style={{backgroundColor:back_color[i],position:"relative", zIndex:2, height:30+'px',width:wid_a+'px'}}></div>
         <div style={{backgroundColor:"#D0D3D4",position:"relative", bottom:30+'px',zIndex:1,height:30+'px'}}></div>
-        <div style={{position:"relative",bottom:40+'px',height:"auto"}}><a style={{fontSize:20+'px'}}>0{unit[i]}</a><a style={{fontSize:20+'px',marginLeft:320-unit[i].length*15+'px'}}>{recommends[i].toFixed()+unit[i]}</a></div>
-        <div style={{position: "relative",bottom:40+'px',height:"auto",fontSize:20+'px'}}><a>평균 섭취량 : {averages[i]}{unit[i]}</a></div>
-        <div style={{position: "relative",bottom:30+'px',fontSize:25+'px',height:"auto"}}><a>{Math.abs(dif_a)}{unit[i]} 부족해요!</a></div>
+        <div style={{position:"relative",bottom:40+'px',height:"auto"}}><a style={{fontSize:20+'px'}}>0{unit[i]}</a><a style={{fontSize:20+'px',marginLeft:370-unit[i].length*15+'px'}}>{recommends[i].toFixed()+unit[i]}</a></div>
+        <div style={{position: "relative",bottom:35+'px',height:"auto",fontSize:20+'px'}}><a>평균 섭취량 : {averages[i]}{unit[i]}</a></div>
+        <div style={{position: "relative",bottom:20+'px',fontSize:25+'px',height:"auto"}}><a>{Math.abs(dif_a)}{unit[i]} 부족해요!</a></div>
       </div>
       ))
     }
     else
     {
-      wid_a = 350
+      wid_a = 400
       a.push((
         <div>
-          <div style={{position:"relative",left:30+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>no
+          <div style={{position:"relative",left:80+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>
           <div style={{backgroundColor:back_color[i],position:"relative", zIndex:2, height:30+'px',width:wid_a+'px'}}></div>
           <div style={{backgroundColor:"#D0D3D4",position:"relative", bottom:30+'px',zIndex:1,height:30+'px'}}></div>
-          <div style={{position:"relative",bottom:40+'px',height:"auto"}}><a style={{fontSize:20+'px'}}>0{unit[i]}</a><a style={{fontSize:20+'px',marginLeft:320-unit[i].length*15+'px'}}>{recommends[i].toFixed()+unit[i]}</a></div>
+          <div style={{position:"relative",bottom:40+'px',height:"auto"}}><a style={{fontSize:20+'px'}}>0{unit[i]}</a><a style={{fontSize:20+'px',marginLeft:370-unit[i].length*15+'px'}}>{recommends[i].toFixed()+unit[i]}</a></div>
           <div style={{position: "relative",bottom:40+'px',height:"auto",fontSize:20+'px'}}><a>평균 섭취량 : {averages[i]}{unit[i]}</a></div>
           <div style={{position: "relative",bottom:30+'px',fontSize:25+'px',height:"auto"}}><a>{Math.abs(dif_a)}{unit[i]} 초과됐어요!</a></div>
         </div>
         ))
     }
 
+    var arrow_height = 140 * (100 - ranking_percent[i]) / 100
+
     b.push((
       <div>
           <img src="/images/pyramid.png" width="150" height="150"></img>
-          <div style={{height:"150px",display:"inline"}}>
-              <img src="/images/left.png" width="20" height="20"></img>
-              <a style={{fontSize:"20px"}}> 상위 {ranking_percent[i]}%</a>
+          <div style={{display:"inline"}}>
+              <img src="/images/left.png" width="20" height="20" style={{marginBottom : arrow_height}}></img>
+              <img src="/images/penguin.png" width="25" height="25" style={{marginBottom : arrow_height}}></img>
+              {/* <a style={{marginLeft:"40px",color:"#999999"}}>{ranking[i]}</a>
+              <a>위</a> */}
+              <a style={{fontSize:"25px",marginLeft:"70px"}}>상위 <a style={{color:"blue"}}>{ranking_percent[i]}</a>%</a>
           </div>
-        <a style={{display:"block",marginLeft:"55px"}}>{ranking[i]}등</a>
       </div>
     ))
   }
@@ -246,8 +253,8 @@ function Statistics(props) {
 
       <div id="title_month" style={{display:"none"}}>
         <h1 className="그래프"> {new Date().getMonth()+1}월 그래프 <img src="/images/computer.png" width="50" height="50"></img></h1>
-        <h1 className="통계"> 나의 {new Date().getMonth()+1}월 순위는 ? <img src="/images/ranking.png" width="50" height="50"></img></h1>
-        <a style={{fontSize:"20px", border:"3px double #9ab7d3", borderRadius:"10px"}}>총 회원 수 : {allUser.length + 1}명 </a>
+        <h1 className="통계"> <a style={{color:"blue"}}>{user_name}</a>님의 위치는 ? <img src="/images/ranking.png" width="50" height="50"></img></h1>
+        <a style={{fontSize:"20px", border:"3px solid #9ab7d3", borderRadius:"10px"}}>회원은 총 {allUser.length + 1}명이에요! </a>
       </div>
 
       {states.map((value,index) =>{
