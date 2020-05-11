@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { Bar } from 'react-chartjs-2';
-import { Line } from 'react-chartjs-2';
 import { Helmet } from "react-helmet";
 import getUserNumber from "../components/getUserNumber";
 import "./Statistics.scss";
-import { isNullOrUndefined } from "util";
-import { noAuto } from "@fortawesome/fontawesome-svg-core";
-import { Z_BLOCK } from "zlib";
 
 function Statistics(props) {
   const user_no = getUserNumber();
-  const user_name = JSON.parse(sessionStorage.getItem("info"))[0].user_name;
+  //const user_name = JSON.parse(sessionStorage.getItem("info"))[0].user_name;
   const [states, setStates] = useState([]);
   const [monthStates,setMonthStates] = useState([]);
-  const [null_count,setNull] = useState(0);
   const [averages, setAverages] = useState([]);
   const [allUser,setAllUser] = useState([]);
   let button = 0;
@@ -31,8 +26,6 @@ function Statistics(props) {
   }
 
   useEffect(() => {
-
-    
     if (user_no !== -1) {
       fetch("/userData/intake_week", {
         method: "POST",
@@ -43,19 +36,15 @@ function Statistics(props) {
         }
       })
         .then((res) => res.json())
-        //data에 2차원 배열로 data[0]에는 주간 data, data[1]에는 월간 data
+        //data에 2차원 배열로 data[0]에는 주간 data, data[1]에는 월간 data, data[2]에는 전체 사용자 데이터
         .then((data) => {
-          console.log(data)
-          //null_count에 null인 날짜 수 push
+          //빈 날짜 수 num에 저장
           var num=0;
-          
           for(var i=0; i<7; i++)
           {
             if(data[0][i].열량 == null)
               num++;
           }
-          setNull(num)
-
           //averages에 각 평균들 배열로 push
           var arr = []
           
@@ -86,16 +75,28 @@ function Statistics(props) {
 
           var month = new Date().getMonth()+1;
           var nutrition = []
+          var myLabel = []
+          var count=0
+          console.log(data)
+          for(var i=0; i<data[1].length; i++)
+          {
+            myLabel.push(month+'월 '+data[1][i].주차+'주차')
+          }
           for(var i=0; i<9; i++)
           {
+            var myData = []
+            for(var j=0; j<data[1].length; j++)
+            {
+              myData.push(data[1][j][nutri[i]])
+            }
             nutrition.push({
-              labels: [month+'월 '+data[1][0].주차+'주차',month+'월 '+data[1][1].주차+'주차',month+'월 '+data[1][2].주차+'주차',month+'월 '+data[1][3].주차+'주차',month+'월 '+data[1][4].주차+'주차'],
+              labels: myLabel,
               datasets: [
                 {
                   label: nutri[i],
                   backgroundColor: back_color[i],
                   borderWidth: 2,
-                  data: [data[1][0][nutri[i]], data[1][1][nutri[i]], data[1][2][nutri[i]], data[1][3][nutri[i]], data[1][4][nutri[i]]]
+                  data: myData
                 }
               ]})
           }
@@ -163,6 +164,7 @@ function Statistics(props) {
   let a = []
   let b = []
   let ranking = []
+  let ranking_percent = []
 
   for(var i=0; i<9; i++)
   {
@@ -176,7 +178,7 @@ function Statistics(props) {
     var sorted = all_user.slice().sort(function(a,b){return b-a})
     var ranks = all_user.slice().map(function(v){ return sorted.indexOf(v)+1 });
     ranking.push(ranks[user_no])
-
+    ranking_percent.push(Math.round(100/(all_user.length)*(ranking[i]-1)))
     dif_a = (averages[i]-recommends[i]).toFixed(2);
     var wid_a = (averages[i]/recommends[i]) * 350
 
@@ -199,7 +201,7 @@ function Statistics(props) {
       wid_a = 350
       a.push((
         <div>
-          <div style={{position:"relative",left:30+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>
+          <div style={{position:"relative",left:30+'px',height:"auto"}}><a style={{fontSize:20+'px',marginLeft:290+'px'}}>권장량</a></div>no
           <div style={{backgroundColor:back_color[i],position:"relative", zIndex:2, height:30+'px',width:wid_a+'px'}}></div>
           <div style={{backgroundColor:"#D0D3D4",position:"relative", bottom:30+'px',zIndex:1,height:30+'px'}}></div>
           <div style={{position:"relative",bottom:40+'px',height:"auto"}}><a style={{fontSize:20+'px'}}>0{unit[i]}</a><a style={{fontSize:20+'px',marginLeft:320-unit[i].length*15+'px'}}>{recommends[i].toFixed()+unit[i]}</a></div>
@@ -211,7 +213,12 @@ function Statistics(props) {
 
     b.push((
       <div>
-        <a>{allUser.length + 1}명 중 {ranking[i]}등</a>
+          <img src="/images/pyramid.png" width="150" height="150"></img>
+          <div style={{height:"150px",display:"inline"}}>
+              <img src="/images/left.png" width="20" height="20"></img>
+              <a style={{fontSize:"20px"}}> 상위 {ranking_percent[i]}%</a>
+          </div>
+        <a style={{display:"block",marginLeft:"55px"}}>{ranking[i]}등</a>
       </div>
     ))
   }
@@ -240,7 +247,7 @@ function Statistics(props) {
       <div id="title_month" style={{display:"none"}}>
         <h1 className="그래프"> {new Date().getMonth()+1}월 그래프 <img src="/images/computer.png" width="50" height="50"></img></h1>
         <h1 className="통계"> 나의 {new Date().getMonth()+1}월 순위는 ? <img src="/images/ranking.png" width="50" height="50"></img></h1>
-        <a style={{fontSize:"15px"}}>※주의※ 높은 순위가 좋은 것은 아님 </a>
+        <a style={{fontSize:"20px", border:"3px double #9ab7d3", borderRadius:"10px"}}>총 회원 수 : {allUser.length + 1}명 </a>
       </div>
 
       {states.map((value,index) =>{
@@ -342,7 +349,6 @@ function Statistics(props) {
     </Helmet>
     <div className="week_statistics">
     <a style={{fontSize:30}}>
-      {/* =========b로 수정============ */}
       {b[index]}                                               
       </a>
     </div>
@@ -353,7 +359,5 @@ function Statistics(props) {
   );
 
 }
-
-
 
 export default Statistics;

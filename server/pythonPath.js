@@ -1,1 +1,1 @@
-module.exports.pythonPath = "/opt/anaconda3/envs/maet/bin/python3";
+module.exports.pythonPath = "C:/Users/dncks/Anaconda3/envs/maet/python";
