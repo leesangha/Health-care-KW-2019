@@ -3,13 +3,14 @@
   width: 40vw;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 0;
 
   #list-box {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-
     ul {
       list-style-type: none;
       width: 100%;
@@ -27,7 +28,7 @@
           justify-content: center;
           position: relative;
           box-shadow: 0 0 2.5px rgba(0, 0, 0, 0.6);
-
+          z-index: 1;
           svg {
             position: absolute;
             right: 10px;

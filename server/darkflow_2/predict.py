@@ -21,7 +21,7 @@ label_path = file_path / 'labels.txt'
 
 options = {
     "model": str(cfg_path),
-    "load": 45295,
+    "load": -1,
     "threshold": 0.2,
     "labels": str(label_path),
     "backup": str(file_path / 'ckpt')
