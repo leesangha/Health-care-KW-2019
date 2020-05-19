@@ -51,7 +51,7 @@ function Statistics(props) {
     "#FFCBC1",
   ];
   const unit = ["kcal", "g", "g", "g", "g", "mg", "mg", "g", "g"];
-  for (var i = 0; i < 9; i++) {
+  for (let i = 0; i < 9; i++) {
     recommends.push(
       JSON.parse(sessionStorage.getItem("info"))[0][recommends_arr[i]]
     );
@@ -72,14 +72,14 @@ function Statistics(props) {
         .then((data) => {
           //빈 날짜 수 num에 저장
           var num = 0;
-          for (var i = 0; i < 7; i++) {
-            if (data[0][i].열량 == 0) num++;
+          for (let i = 0; i < 7; i++) {
+            if (data[0][i].열량 === 0) num++;
           }
           //averages에 각 평균들 배열로 push
           var arr = [];
 
-          for (var i = 0; i < 9; i++) {
-            if (num == 7) arr.push(0);
+          for (let i = 0; i < 9; i++) {
+            if (num === 7) arr.push(0);
             else
               arr.push(
                 (
@@ -98,7 +98,7 @@ function Statistics(props) {
 
           //states에 차트 데이터 배열로 push
           var nutrition = [];
-          for (var i = 0; i < 9; i++) {
+          for (let i = 0; i < 9; i++) {
             nutrition.push({
               labels: [
                 data[0][6].날짜,
@@ -132,15 +132,15 @@ function Statistics(props) {
           //monthStates에 차트 데이터 배열로 push
 
           var month = new Date().getMonth() + 1;
-          var nutrition = [];
+          nutrition = [];
           var myLabel = [];
           console.log(data);
-          for (var i = 0; i < data[1].length; i++) {
+          for (let i = 0; i < data[1].length; i++) {
             myLabel.push(month + "월 " + data[1][i].주차 + "주차");
           }
-          for (var i = 0; i < 9; i++) {
+          for (let i = 0; i < 9; i++) {
             var myData = [];
-            for (var j = 0; j < data[1].length; j++) {
+            for (let j = 0; j < data[1].length; j++) {
               myData.push(data[1][j][nutri[i]]);
             }
             nutrition.push({
@@ -169,10 +169,10 @@ function Statistics(props) {
         document.getElementById("label1").style.backgroundColor = "#454a60";
         document.getElementById("label1").style.color = "#fff";
 
-        for (var i = 0; i < states.length; i++) {
+        for (let i = 0; i < states.length; i++) {
           document.getElementsByClassName("주간")[i].style.display = "inline";
         }
-        for (var i = 0; i < monthStates.length; i++) {
+        for (let i = 0; i < monthStates.length; i++) {
           document.getElementsByClassName("월간")[i].style.display = "none";
         }
 
@@ -185,19 +185,19 @@ function Statistics(props) {
         document.getElementById("label1").style.backgroundColor = "#fff";
         document.getElementById("label1").style.color = "#454a60";
 
-        for (var i = 0; i < states.length; i++) {
+        for (let i = 0; i < states.length; i++) {
           document.getElementsByClassName("주간")[i].style.display = "none";
         }
-        for (var i = 0; i < monthStates.length; i++) {
+        for (let i = 0; i < monthStates.length; i++) {
           document.getElementsByClassName("월간")[i].style.display = "inline";
         }
 
         button = 1;
-
-        document.getElementById("title_month").style.display = "inline";
-
         break;
       }
+      default:
+        console.error("Unexpected error");
+        break;
     }
   };
   //===============================================================
@@ -209,10 +209,10 @@ function Statistics(props) {
   let ranking = [];
   let ranking_percent = [];
 
-  for (var i = 0; i < 9; i++) {
+  for (let i = 0; i < 9; i++) {
     //nutri[i]에 해당하는 영양성분 모든 유저들꺼를 다 가져와서 all_user 배열에 push
     var all_user = [];
-    for (var userNo = 0; userNo < allUser.length; userNo++) {
+    for (let userNo = 0; userNo < allUser.length; userNo++) {
       all_user.push(allUser[userNo][nutri[i]]);
     }
     //ranking 배열에 해당하는 영양성분 순위 차례로 저장
@@ -438,9 +438,6 @@ function Statistics(props) {
                 <label for="a2">월간</label>
               </div>
             </div>
-          </div>
-          <div id="title_month" style={{ display: "none" }}>
-            <h1>회원은 총 {allUser.length + 1}명이에요! </h1>
           </div>
 
           {states.map((value, index) => {
