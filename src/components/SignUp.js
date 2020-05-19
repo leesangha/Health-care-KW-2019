@@ -91,7 +91,7 @@ function SignUp({ history }) {
           />
           <input
             name="address"
-            placeholder="address"
+            placeholder="id"
             onChange={onChange}
             value={address}
             id = "address"
