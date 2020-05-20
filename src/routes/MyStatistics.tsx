@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useReducer } from "react";
 import getUserNumber from "../components/getUserNumber";
 import moment from "moment";
+import WeekStatistics from "../components/Statisctics/WeekStatistics";
 
 const ONE_WEEK = 7;
 const NUTRITION_COUNT = 9;
@@ -17,18 +17,6 @@ const backgroundColor = [
   "#C4FAF8",
   "#FFCBC1",
 ];
-
-interface RecommendationType {
-  권장나트륨: number;
-  권장단백질: number;
-  권장당류: number;
-  권장열량: number;
-  권장지방: number;
-  권장콜레스테롤: number;
-  권장탄수화물: number;
-  권장트랜스지방산: number;
-  권장포화지방산: number;
-}
 
 interface DataType {
   나트륨: number;
@@ -69,6 +57,17 @@ function getNutritionAverage(list: DayDataType[]): number[] {
   );
 }
 
+function nutritionGrouping(list: DataType[]) {
+  let group: Array<number[]> = Array.from(Array(NUTRITION_COUNT), () => []);
+  list.forEach((elems) => {
+    const values = Object.values(elems);
+    values.forEach((value, index) => {
+      group[index].push(value);
+    });
+  });
+  return group;
+}
+
 function grouping<T extends DataType>(
   list: T[]
 ): [(string | number)[], Array<number[]>] {
@@ -88,7 +87,7 @@ function grouping<T extends DataType>(
 }
 
 function makeWeekDataset(list: DayDataType[]) {
-  const [date, nutritionIntake] = grouping(list);
+  const [date, nutritionIntake] = grouping(list) as [string[], Array<number[]>];
   const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT);
 
   let dataset = [];
@@ -110,7 +109,7 @@ function makeWeekDataset(list: DayDataType[]) {
 }
 
 function makeMonthDataset(list: WeekDateType[]) {
-  const [week, weekIntake] = grouping(list);
+  const [week, weekIntake] = grouping(list) as [number[], Array<number[]>];
   const month = moment().month() + 1;
   const label = week.map((elem) => `${month}월 ${elem}주차`);
   const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT);
@@ -133,19 +132,88 @@ function makeMonthDataset(list: WeekDateType[]) {
   return dataset;
 }
 
-export default function MyStatistics() {
-  let history = useHistory();
-  const userNumber = getUserNumber();
+export type DatasetType = {
+  labels: (string | number)[];
+  datasets: {
+    label: string;
+    backgroundColor: string;
+    borderWidth: number;
+    data: number[];
+  }[];
+}[];
 
-  if (
-    sessionStorage.getItem("recommended_nutrition") === null ||
-    userNumber === -1
-  ) {
-    history.push("/");
+type State = {
+  weeklyIntakeAverage: number[];
+  weekDataset: DatasetType;
+  monthDataset: DatasetType;
+  usersDataset: DataType[];
+  isWeek: boolean;
+};
+
+type Action =
+  | {
+      type: "SET_AVERAGE";
+      averageList: number[];
+    }
+  | {
+      type: "SET_WEEK_DATASET";
+      dataset: DatasetType;
+    }
+  | {
+      type: "SET_MONTH_DATASET";
+      dataset: DatasetType;
+    }
+  | {
+      type: "TOOGLE_STATE";
+      state: boolean;
+    }
+  | {
+      type: "SET_ALL_USER_DATASET";
+      dataset: DataType[];
+    };
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case "SET_AVERAGE":
+      return {
+        ...state,
+        weeklyIntakeAverage: action.averageList,
+      };
+    case "SET_MONTH_DATASET":
+      return {
+        ...state,
+        monthDataset: action.dataset,
+      };
+    case "SET_WEEK_DATASET":
+      return {
+        ...state,
+        weekDataset: action.dataset,
+      };
+    case "TOOGLE_STATE":
+      return {
+        ...state,
+        isWeek: !action.state,
+      };
+    case "SET_ALL_USER_DATASET":
+      return {
+        ...state,
+        usersDataset: action.dataset,
+      };
+    default:
+      throw new Error("Unhandled error");
   }
-  const recommendation: RecommendationType = JSON.parse(
-    sessionStorage.getItem("recommended_nutrition")!
-  );
+}
+
+export default function MyStatistics() {
+  const userNumber = getUserNumber();
+  const [state, dispatch] = useReducer(reducer, {
+    weeklyIntakeAverage: [],
+    weekDataset: [],
+    monthDataset: [],
+    usersDataset: [],
+    isWeek: true,
+  });
+
 
   useEffect(() => {
     fetch("/userData/intake_week", {
@@ -158,11 +226,46 @@ export default function MyStatistics() {
     })
       .then((res) => res.json())
       .then((data: FetchingDataType) => {
-        getNutritionAverage(data[0]);
-        makeWeekDataset(data[0]);
-        makeMonthDataset(data[1]);
+        dispatch({
+          type: "SET_AVERAGE",
+          averageList: getNutritionAverage(data[0]),
+        });
+        dispatch({
+          type: "SET_WEEK_DATASET",
+          dataset: makeWeekDataset(data[0]),
+        });
+        dispatch({
+          type: "SET_MONTH_DATASET",
+          dataset: makeMonthDataset(data[1]),
+        });
+        dispatch({
+          type: "SET_ALL_USER_DATASET",
+          dataset: data[2],
+        });
       });
   }, [userNumber]);
 
-  return <h1>{userNumber}</h1>;
+  useEffect(() => {
+    const usersDataset = state.usersDataset;
+    if (usersDataset.length !== 0) {
+      const myDataset = usersDataset[userNumber];
+      const myValue = Object.values(myDataset);
+      console.log(myValue);
+
+      const nutritions = nutritionGrouping(usersDataset);
+      nutritions.forEach((elems) => elems.sort((a, b) => b - a));
+
+      const rank = nutritions.map(
+        (elems, index) => elems.findIndex((elem) => elem === myValue[index]) + 1
+      );
+    }
+  }, [state.usersDataset, userNumber]);
+
+  useEffect(() => {
+    console.log(state.weekDataset);
+  }, [state.weekDataset]);
+
+  return state.weekDataset.map((data, index) => {
+    return <WeekStatistics key={index} dataset={data} />
+  });
 }
