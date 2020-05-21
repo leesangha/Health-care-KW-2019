@@ -5,6 +5,7 @@ import WeekStatistics from "../components/Statisctics/WeekStatistics";
 import Header from "../components/Header";
 import { useHistory } from "react-router-dom";
 import "./MyStatistics.scss";
+import MonthStatistics from "../components/Statisctics/MonthStatistics";
 
 const ONE_WEEK = 7;
 const NUTRITION_COUNT = 9;
@@ -91,7 +92,7 @@ function grouping<T extends DataType>(
 
 function makeWeekDataset(list: DayDataType[]) {
   const [date, nutritionIntake] = grouping(list) as [string[], Array<number[]>];
-  const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT);
+  const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT + 1);
 
   let dataset = [];
   for (let i = 0; i < NUTRITION_COUNT; ++i) {
@@ -115,7 +116,7 @@ function makeMonthDataset(list: WeekDateType[]) {
   const [week, weekIntake] = grouping(list) as [number[], Array<number[]>];
   const month = moment().month() + 1;
   const label = week.map((elem) => `${month}월 ${elem}주차`);
-  const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT);
+  const nutritions = Object.keys(list[0]).slice(1, NUTRITION_COUNT + 1);
 
   let dataset = [];
   for (let i = 0; i < NUTRITION_COUNT; ++i) {
@@ -124,8 +125,10 @@ function makeMonthDataset(list: WeekDateType[]) {
       datasets: [
         {
           label: nutritions[i],
+          fill: false,
           backgroundColor: backgroundColor[i],
-          borderWidth: 2,
+          borderWidth: 3,
+          borderColor: backgroundColor[i],
           data: [...weekIntake[i]],
         },
       ],
@@ -150,6 +153,8 @@ type State = {
   weekDataset: DatasetType[];
   monthDataset: DatasetType[];
   usersDataset: DataType[];
+  myPercentage: number[];
+  monthAverageIntake: number[];
   isWeek: boolean;
 };
 
@@ -173,6 +178,14 @@ type Action =
   | {
       type: "SET_ALL_USER_DATASET";
       dataset: DataType[];
+    }
+  | {
+      type: "SET_MY_PERCENTAGE";
+      percentageList: number[];
+    }
+  | {
+      type: "SET_MONTH_AVERAGE_INTAKE";
+      monthAverageList: number[];
     };
 
 interface RecommendationType {
@@ -214,6 +227,16 @@ function reducer(state: State, action: Action) {
         ...state,
         usersDataset: action.dataset,
       };
+    case "SET_MY_PERCENTAGE":
+      return {
+        ...state,
+        myPercentage: action.percentageList,
+      };
+    case "SET_MONTH_AVERAGE_INTAKE":
+      return {
+        ...state,
+        monthAverageIntake: action.monthAverageList,
+      };
     default:
       throw new Error("Unhandled error");
   }
@@ -228,6 +251,8 @@ export default function MyStatistics() {
     weekDataset: [],
     monthDataset: [],
     usersDataset: [],
+    myPercentage: [],
+    monthAverageIntake: [],
     isWeek: true,
   });
   const history = useHistory();
@@ -278,7 +303,7 @@ export default function MyStatistics() {
     if (usersDataset.length !== 0) {
       const myDataset = usersDataset[userNumber];
       const myValue = Object.values(myDataset);
-      console.log(myValue);
+      dispatch({ type: "SET_MONTH_AVERAGE_INTAKE", monthAverageList: myValue });
 
       const nutritions = nutritionGrouping(usersDataset);
       nutritions.forEach((elems) => elems.sort((a, b) => b - a));
@@ -286,12 +311,16 @@ export default function MyStatistics() {
       const rank = nutritions.map(
         (elems, index) => elems.findIndex((elem) => elem === myValue[index]) + 1
       );
+      const percentage = rank.map(
+        (item) => Math.round((item / usersDataset.length) * 100 * 100) / 100
+      );
+      dispatch({ type: "SET_MY_PERCENTAGE", percentageList: percentage });
     }
   }, [state.usersDataset, userNumber]);
 
   useEffect(() => {
-    console.log(state.weekDataset);
-  }, [state.weekDataset]);
+    console.log(state.usersDataset);
+  }, [state.usersDataset]);
 
   const onWeekButtonClick = useCallback(() => {
     dispatch({ type: "TOOGLE_STATE", state: true });
@@ -335,6 +364,16 @@ export default function MyStatistics() {
             dataset={data}
             averageIntake={state.weeklyIntakeAverage[index]}
             recommendation={recommendationValue[index]}
+            unit={unit[index]}
+          />
+        ))}
+      {!state.isWeek &&
+        state.monthDataset.map((data, index) => (
+          <MonthStatistics
+            key={index}
+            dataset={data}
+            monthAverage={state.monthAverageIntake[index]}
+            percentage={state.myPercentage[index]}
             unit={unit[index]}
           />
         ))}
