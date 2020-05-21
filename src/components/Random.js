@@ -40,8 +40,10 @@ function Random({history}) {
   
   return (
     <div id="box">
+      <br/>
       <h3>2.이 음식을 좋아하시나요?</h3>
-      <span id="foodname">{foodName}</span>
+      <br/>
+      <span id="foodname">-{foodName}</span>
       <Picture number={num} setScore={setScore} score={score} />
       <Button id="change" onClick={onClick}>
         다른 음식
@@ -52,7 +54,7 @@ function Random({history}) {
       <Button
         id="next"
         onClick={() => {
-          
+          console.log('next');
         }}>
       제출하고 마치기
       </Button>
