@@ -35,7 +35,6 @@ export default function DiscreteSlider({setScore}) {
           marks={marks}
           color='primary'
           onChangeCommitted={(e, value) => {
-            //console.log(value);
             setScore(value);
           }}
         />
