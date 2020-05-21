@@ -21,18 +21,38 @@
     // 모바일 환경에선 다르게 바꿔야함.
     margin-left: 10px;
 
-    p {
+    div {
       position: absolute;
-      color: #666666;
-      font-size: 1rem;
       top: 52%;
+      height: 0;
       width: 100%;
+    }
+
+    p {
+      color: #666666;
       text-align: center;
+    }
+
+    #recommendation-value {
+      font-size: 1rem;
+    }
+
+    #recommendation-text {
+      font-size: 0.5rem;
+      margin-top: 2px;
     }
   }
 
-  .week-wrapper {
+  .box-wrapper {
     background: white;
     box-shadow: 0 0 7px #D6DADA;
+  }
+
+  .description-text {
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
   }
 }
