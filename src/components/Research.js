@@ -191,7 +191,7 @@ function Research({history}) {
                 
 
             </ol>
-              <Random/>
+              <Random history={history}/>
             </div>
           </div>
           </div>
