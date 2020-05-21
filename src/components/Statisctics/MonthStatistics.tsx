@@ -37,7 +37,7 @@ export default function MonthStatistics({ dataset, monthAverage, percentage, uni
             {Math.round(monthAverage * 100) / 100}
             {unit}
           </p>
-          <p id="recommendation-text">월 평균 섭취위</p>
+          <p id="recommendation-text">월 평균 섭취량</p>
         </div>
         <p className="description-text">영양 섭취량이 상위 {percentage}%입니다.</p>
       </div>

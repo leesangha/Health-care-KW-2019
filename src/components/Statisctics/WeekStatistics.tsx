@@ -35,7 +35,7 @@ export default function WeekStatistics({
   useEffect(() => {
     // 모자란 경우
     if (averageIntake < recommendation) {
-      const lack = recommendation - averageIntake;
+      const lack = Math.round((recommendation - averageIntake) * 100) / 100;
       const data = {
         labels: ["섭취량", "부족량"],
         datasets: [
@@ -51,7 +51,7 @@ export default function WeekStatistics({
       };
       setIntakeDataset(data);
     } else if (averageIntake >= recommendation) {
-      const over = averageIntake - recommendation;
+      const over = Math.round((averageIntake - recommendation) * 100) / 100;
       const data = {
         labels: ["초과량", "섭취량"],
         datasets: [
