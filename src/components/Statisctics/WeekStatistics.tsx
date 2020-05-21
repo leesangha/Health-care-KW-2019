@@ -1,39 +1,86 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
-import { useHistory } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
+import { Bar, Doughnut } from "react-chartjs-2";
 import { DatasetType } from "../../routes/MyStatistics";
-
-interface RecommendationType {
-  권장나트륨: number;
-  권장단백질: number;
-  권장당류: number;
-  권장열량: number;
-  권장지방: number;
-  권장콜레스테롤: number;
-  권장탄수화물: number;
-  권장트랜스지방산: number;
-  권장포화지방산: number;
-}
+import "./WeekStatistics.scss";
 
 type PropsType = {
   dataset: DatasetType;
-  averageIntake?: number;
+  averageIntake: number;
+  recommendation: number;
+  unit: string;
 };
 
-export default function WeekStatistics({dataset, averageIntake}: PropsType) {
-  const history = useHistory();
+type IntakeDataType = {
+  labels: string[];
+  datasets: IntakeDatasetType[];
+};
 
-  if (sessionStorage.getItem("recommended_nutrition") === null) {
-    history.push("/");
-  }
-  const recommendation: RecommendationType = JSON.parse(
-    sessionStorage.getItem("recommended_nutrition")!
-  );
+type IntakeDatasetType = {
+  data: number[];
+  backgroundColor: string[];
+  hoverBackgroundColor: string[];
+};
+
+export default function WeekStatistics({
+  dataset,
+  averageIntake,
+  recommendation,
+  unit,
+}: PropsType) {
+  const [intakeDataset, setIntakeDataset] = useState<IntakeDataType>({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    // 모자란 경우
+    if (averageIntake < recommendation) {
+      const lack = recommendation - averageIntake;
+      const data = {
+        labels: ["섭취량", "부족량"],
+        datasets: [
+          {
+            data: [averageIntake, lack],
+            backgroundColor: [dataset.datasets[0].backgroundColor, "#F6F7FF"],
+            hoverBackgroundColor: [
+              dataset.datasets[0].backgroundColor,
+              "#F6F7FF",
+            ],
+          },
+        ],
+      };
+      setIntakeDataset(data);
+    } else if (averageIntake >= recommendation) {
+      const over = averageIntake - recommendation;
+      const data = {
+        labels: ["초과량", "섭취량"],
+        datasets: [
+          {
+            data: [over, averageIntake],
+            backgroundColor: ["#FF8868", dataset.datasets[0].backgroundColor],
+            hoverBackgroundColor: [
+              "#FF8868",
+              dataset.datasets[0].backgroundColor,
+            ],
+          },
+        ],
+      };
+      setIntakeDataset(data);
+    }
+  }, [averageIntake, dataset.datasets, recommendation]);
 
   return (
     <article id="week-container">
-      <Bar data={dataset} />
-      <div id="weekly-analysis"></div>
+      <div id="chart-container" className="week-wrapper">
+        <Bar data={dataset} />
+      </div>
+      <div id="weekly-analysis" className="week-wrapper">
+        <Doughnut data={intakeDataset} />
+        <p>
+          {Math.round(recommendation * 10) / 10}
+          {unit}
+        </p>
+      </div>
     </article>
   );
 }
