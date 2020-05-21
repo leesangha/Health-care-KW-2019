@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { DatasetType } from "../../routes/MyStatistics";
 import "./WeekStatistics.scss";
@@ -10,12 +10,12 @@ type PropsType = {
   unit: string;
 };
 
-type IntakeDataType = {
+export type DoughnutDataType = {
   labels: string[];
-  datasets: IntakeDatasetType[];
+  datasets: DoughnutDatasetType[];
 };
 
-type IntakeDatasetType = {
+export type DoughnutDatasetType = {
   data: number[];
   backgroundColor: string[];
   hoverBackgroundColor: string[];
@@ -27,7 +27,7 @@ export default function WeekStatistics({
   recommendation,
   unit,
 }: PropsType) {
-  const [intakeDataset, setIntakeDataset] = useState<IntakeDataType>({
+  const [intakeDataset, setIntakeDataset] = useState<DoughnutDataType>({
     labels: [],
     datasets: [],
   });
@@ -71,15 +71,18 @@ export default function WeekStatistics({
 
   return (
     <article id="week-container">
-      <div id="chart-container" className="week-wrapper">
+      <div id="chart-container" className="box-wrapper">
         <Bar data={dataset} />
       </div>
-      <div id="weekly-analysis" className="week-wrapper">
+      <div id="weekly-analysis" className="box-wrapper">
         <Doughnut data={intakeDataset} />
-        <p>
-          {Math.round(recommendation * 10) / 10}
-          {unit}
-        </p>
+        <div>
+          <p id="recommendation-value">
+            {Math.round(recommendation * 10) / 10}
+            {unit}
+          </p>
+          <p id="recommendation-text">권장 섭취량</p>
+        </div>
       </div>
     </article>
   );
