@@ -54,7 +54,8 @@ function Random({history}) {
       <Button
         id="next"
         onClick={() => {
-          console.log('next');
+          alert('환영합니다, 로그인 후 이용해주세요');
+          history.push("/");
         }}>
       제출하고 마치기
       </Button>
