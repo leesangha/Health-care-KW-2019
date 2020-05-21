@@ -1,0 +1,38 @@
+#week-container {
+  margin: 15px 10px;
+  box-sizing: border-box;
+  
+  // grid로 바꿔야합니다.
+  display: flex;
+
+  #chart-container {
+    width: 60vw;
+    padding: 0 5px;
+  }
+  
+  #weekly-analysis {
+    width: 40vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+
+    // 모바일 환경에선 다르게 바꿔야함.
+    margin-left: 10px;
+
+    p {
+      position: absolute;
+      color: #666666;
+      font-size: 1rem;
+      top: 52%;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .week-wrapper {
+    background: white;
+    box-shadow: 0 0 7px #D6DADA;
+  }
+}
