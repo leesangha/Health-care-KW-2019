@@ -24,13 +24,14 @@
 .QnA_Form{
     font-family: Ssangmun;
     text-align:left;
-    height: 80%;
-    padding: 20px;
-   
+    height: 70%;
+    padding: 5%;
     label{
         font: icon;
     }
-
+    .inbox{
+       padding-left: 20%;
+    }
     input{
         font-family: maple;
         border-radius: 0.5em;
@@ -97,8 +98,7 @@
     .slider{
         height: 100px;
         .MuiSlider-root{
-            width:50%;
-            left: 20%;
+            width:400px;
         }
     }
     #discrete-slider-custom{
