@@ -4,8 +4,8 @@ import getFoodName from "../getFoodName";
 import Autocom from "./Autocom";
 import "./scss/AnalysisResultList.scss";
 import ListItem from "./ListItem";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import getUserNumber from "../getUserNumber";
 
 type PropsType = {
@@ -36,10 +36,10 @@ function resultLabelConverter(
     const foodNumber =
       typeof label === "number"
         ? label
-        // else "string"
-        : Object.values(Food).includes(label)
-          ? Food[label as keyof typeof Food]
-          : -1;
+        : // else "string"
+        Object.values(Food).includes(label)
+        ? Food[label as keyof typeof Food]
+        : -1;
 
     if (foodNumber === -1) throw new Error("Unhandled food number error");
 
@@ -58,7 +58,9 @@ function AnalysisResultList({ result }: PropsType) {
 
   const [isFoodInsert, setFoodInsertState] = useState<Boolean>(false);
 
-  const convertLabel = useCallback((list: FoodInfoType[]): Promise<FoodInfoType>[] => {
+  const convertLabel = useCallback((list: FoodInfoType[]): Promise<
+    FoodInfoType
+  >[] => {
     if (list.length === 0) return [];
     return list.map(
       async (foodInfo): Promise<FoodInfoType> => {
@@ -94,7 +96,7 @@ function AnalysisResultList({ result }: PropsType) {
     const userNumber = getUserNumber();
     const eaten = {
       userNumber,
-      eaten: foodInfo.map(({foodNumber}) => foodNumber)
+      eaten: foodInfo.map(({ foodNumber }) => foodNumber),
     };
 
     fetch("/food/submit", {
@@ -102,10 +104,10 @@ function AnalysisResultList({ result }: PropsType) {
       body: JSON.stringify(eaten),
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
-      }
+        Accept: "application/json",
+      },
     });
-    history.push('/');
+    history.push("/");
   }, [foodInfo, history]);
 
   return (
@@ -132,11 +134,7 @@ function AnalysisResultList({ result }: PropsType) {
           )}
         </ul>
       </div>
-      <FontAwesomeIcon
-        icon={faArrowRight}
-        size="2x"
-        onClick={onClick}
-      />
+      <FontAwesomeIcon icon={faArrowRight} size="2x" onClick={onClick} />
     </div>
   );
 }
