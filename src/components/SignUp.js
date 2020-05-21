@@ -83,7 +83,7 @@ function SignUp({ history }) {
           <img src="/images/maet-logo.png" alt="팀 로고" />
           <input
             name="name"
-            placeholder="name"
+            placeholder="이름"
             onChange={onChange}
             value={name}
             id = "name"
@@ -91,7 +91,7 @@ function SignUp({ history }) {
           />
           <input
             name="address"
-            placeholder="id"
+            placeholder="아이디"
             onChange={onChange}
             value={address}
             id = "address"
@@ -99,7 +99,7 @@ function SignUp({ history }) {
           />       
           <input
             name="password"
-            placeholder="password"
+            placeholder="비밀번호"
             onChange={onChange}
             value={password}
             type ="password"
@@ -108,7 +108,7 @@ function SignUp({ history }) {
           />
           <input
            name="age" 
-           placeholder="age" 
+           placeholder="나이" 
            onChange={onChange} 
            value={age}
            id = "age"
