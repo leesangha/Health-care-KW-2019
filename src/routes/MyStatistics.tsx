@@ -1,7 +1,10 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useCallback, useRef } from "react";
 import getUserNumber from "../components/getUserNumber";
 import moment from "moment";
 import WeekStatistics from "../components/Statisctics/WeekStatistics";
+import Header from "../components/Header";
+import { useHistory } from "react-router-dom";
+import "./MyStatistics.scss";
 
 const ONE_WEEK = 7;
 const NUTRITION_COUNT = 9;
@@ -99,7 +102,7 @@ function makeWeekDataset(list: DayDataType[]) {
           label: nutritions[i],
           backgroundColor: backgroundColor[i],
           borderWidth: 2,
-          data: [...nutritionIntake[i]],
+          data: [...nutritionIntake[i].reverse()],
         },
       ],
     });
@@ -140,12 +143,12 @@ export type DatasetType = {
     borderWidth: number;
     data: number[];
   }[];
-}[];
+};
 
 type State = {
   weeklyIntakeAverage: number[];
-  weekDataset: DatasetType;
-  monthDataset: DatasetType;
+  weekDataset: DatasetType[];
+  monthDataset: DatasetType[];
   usersDataset: DataType[];
   isWeek: boolean;
 };
@@ -157,11 +160,11 @@ type Action =
     }
   | {
       type: "SET_WEEK_DATASET";
-      dataset: DatasetType;
+      dataset: DatasetType[];
     }
   | {
       type: "SET_MONTH_DATASET";
-      dataset: DatasetType;
+      dataset: DatasetType[];
     }
   | {
       type: "TOOGLE_STATE";
@@ -171,6 +174,18 @@ type Action =
       type: "SET_ALL_USER_DATASET";
       dataset: DataType[];
     };
+
+interface RecommendationType {
+  권장나트륨: number;
+  권장단백질: number;
+  권장당류: number;
+  권장열량: number;
+  권장지방: number;
+  권장콜레스테롤: number;
+  권장탄수화물: number;
+  권장트랜스지방산: number;
+  권장포화지방산: number;
+}
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
@@ -192,7 +207,7 @@ function reducer(state: State, action: Action) {
     case "TOOGLE_STATE":
       return {
         ...state,
-        isWeek: !action.state,
+        isWeek: action.state,
       };
     case "SET_ALL_USER_DATASET":
       return {
@@ -204,6 +219,8 @@ function reducer(state: State, action: Action) {
   }
 }
 
+const unit = ["kcal", "g", "g", "g", "g", "mg", "mg", "g", "g"];
+
 export default function MyStatistics() {
   const userNumber = getUserNumber();
   const [state, dispatch] = useReducer(reducer, {
@@ -213,7 +230,18 @@ export default function MyStatistics() {
     usersDataset: [],
     isWeek: true,
   });
+  const history = useHistory();
 
+  if (sessionStorage.getItem("recommended_nutrition") === null) {
+    history.push("/");
+  }
+  const recommendation: RecommendationType = JSON.parse(
+    sessionStorage.getItem("recommended_nutrition")!
+  );
+  let recommendationValue: number[] = Object.values(recommendation);
+  for (let i = 1; i <= 3; i++) {
+    recommendationValue[recommendationValue.length - i] = 0;
+  }
 
   useEffect(() => {
     fetch("/userData/intake_week", {
@@ -265,7 +293,51 @@ export default function MyStatistics() {
     console.log(state.weekDataset);
   }, [state.weekDataset]);
 
-  return state.weekDataset.map((data, index) => {
-    return <WeekStatistics key={index} dataset={data} />
-  });
+  const onWeekButtonClick = useCallback(() => {
+    dispatch({ type: "TOOGLE_STATE", state: true });
+    rightButtonRef.current?.classList.remove("select");
+    leftButtonRef.current?.classList.add("select");
+  }, []);
+
+  const onMonthButtonClick = useCallback(() => {
+    dispatch({ type: "TOOGLE_STATE", state: false });
+    rightButtonRef.current?.classList.add("select");
+    leftButtonRef.current?.classList.remove("select");
+  }, []);
+
+  const leftButtonRef = useRef<HTMLButtonElement>(null);
+  const rightButtonRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <>
+      <Header />
+      <div id="button-wrapper">
+        <button
+          className="select-button select left"
+          ref={leftButtonRef}
+          onClick={onWeekButtonClick}
+        >
+          주간
+        </button>
+        <button
+          className="select-button right"
+          ref={rightButtonRef}
+          onClick={onMonthButtonClick}
+        >
+          월간
+        </button>
+      </div>
+      {state.isWeek &&
+        state.weekDataset.map((data, index) => (
+          // <h1 key={index}>Hello</h1>
+          <WeekStatistics
+            key={index}
+            dataset={data}
+            averageIntake={state.weeklyIntakeAverage[index]}
+            recommendation={recommendationValue[index]}
+            unit={unit[index]}
+          />
+        ))}
+    </>
+  );
 }
