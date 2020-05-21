@@ -174,7 +174,7 @@ function Research({history}) {
                 onClick = {register}  
                 variant="contained" 
                 color="primary">
-                  제출</Button>
+                  등록</Button>
                
                <div className="list">
                  {
