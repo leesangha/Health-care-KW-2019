@@ -143,7 +143,7 @@ function Research({history}) {
       }).then((res) => res.json())
       .then((data) => {
       console.log(data);
-      history.push('/');
+      alert('기피재료 등록완료' + source)
       })
 
     }
